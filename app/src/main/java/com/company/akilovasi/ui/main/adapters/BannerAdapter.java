@@ -22,6 +22,7 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
     private List<Banner> banners;
 
     private final BannerListCallback bannerListCallback;
+    private LayoutInflater layoutInflater;
 
     public BannerAdapter(@NonNull BannerListCallback bannerListCallback) {
         banners = new ArrayList<>();
@@ -36,7 +37,12 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
 
     @Override
     public BannerViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        return BannerViewHolder.create(LayoutInflater.from(viewGroup.getContext()), viewGroup, bannerListCallback);
+        if (layoutInflater == null) {
+            layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        }
+        ItemListMainBinding binding =
+                DataBindingUtil.inflate(layoutInflater, R.layout.item_list_main, viewGroup, false);
+        return new BannerViewHolder(binding,bannerListCallback);
     }
 
     @Override
@@ -52,12 +58,6 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
     static class BannerViewHolder extends RecyclerView.ViewHolder {
 
         ItemListMainBinding binding;
-
-        public static BannerViewHolder create(LayoutInflater inflater, ViewGroup parent, BannerListCallback callback) {
-            ItemListMainBinding itemListMainBinding = ItemListMainBinding.inflate(inflater, parent, false);
-            return new BannerViewHolder(itemListMainBinding, callback);
-        }
-
 
         public BannerViewHolder(ItemListMainBinding binding, BannerListCallback callback) {
             super(binding.getRoot());

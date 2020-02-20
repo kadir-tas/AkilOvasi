@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:transitionName="@string/shared_image"
-            bind:url="@{banner.bannerImageId}"/>
+            bind:imageUrl="@{banner.imageUrl}" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,9 +1,16 @@
 package com.company.akilovasi.data.local.entities;
 
+import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.company.akilovasi.R;
+import com.company.akilovasi.data.remote.ApiConstants;
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 @Entity(tableName = "banners")
 public class Banner {
@@ -26,6 +33,16 @@ public class Banner {
 
     @SerializedName("bannerActive")
     private String bannerActive;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private String imageUrl;
 
     public Long getBannerId() {
         return bannerId;
@@ -73,5 +90,17 @@ public class Banner {
 
     public void setBannerActive(String bannerActive) {
         this.bannerActive = bannerActive;
+    }
+
+    @BindingAdapter({"imageUrl"})
+    public static void loadImageUrl(ImageView view, String imageUrl) {
+        if (imageUrl != null && !imageUrl.equals("")) {
+            Picasso.get()
+                    .load(ApiConstants.IMAGE_ENDPOINT_PREFIX)
+                    .placeholder(R.drawable.placeholder)
+                    .into(view);
+            Log.d("CCC",imageUrl);
+        }
+        Log.d("CCC",imageUrl);
     }
 }
