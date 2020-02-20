@@ -21,7 +21,7 @@ public class PlantCategoryViewModel extends ViewModel {
     }
 
 
-    public LiveData<Resource<List<PlantType>>> getAllBanners() {
+    public LiveData<Resource<List<PlantType>>> getAllPlantTypes() {
         return plantTypeRepository.getAllPlantTypes();
     }
 
