@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.company.akilovasi.di.ViewModelKey;
 import com.company.akilovasi.ui.login.LoginViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;
+import com.company.akilovasi.ui.plant.PlantCategoryActivity;
+import com.company.akilovasi.ui.plant.PlantCategoryViewModel;
 import com.company.akilovasi.viewmodel.ViewModelFactory;
 
 import dagger.Binds;
@@ -24,6 +26,12 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel.class)
     abstract ViewModel bindsMainViewModel(MainViewModel mainViewModel);
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlantCategoryViewModel.class)
+    abstract ViewModel bindsPlantCategoryViewModel(PlantCategoryViewModel plantCategoryViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);
