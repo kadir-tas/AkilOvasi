@@ -1,5 +1,7 @@
 package com.company.akilovasi.data.remote;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
@@ -17,11 +19,12 @@ public class RequestInterceptor implements Interceptor {
         HttpUrl originalHttpUrl = originalRequest.url();
 
         HttpUrl url = originalHttpUrl.newBuilder()
-                .addQueryParameter("api_key", ApiConstants.API_KEY)
+//                .addQueryParameter("api_key", ApiConstants.API_KEY)
                 .build();
 
         Request.Builder builder = chain.request().newBuilder();
         builder.addHeader("Content-Type", "application/json").url(url);
+        Log.v("AAA", url.toString());
         return chain.proceed(builder.build());
     }
 }

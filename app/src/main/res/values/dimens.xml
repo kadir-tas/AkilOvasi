@@ -4,5 +4,6 @@
     <dimen name="textSizeMedium">16sp</dimen>
     <dimen name="textSizeLarge">18sp</dimen>
     <dimen name="textSizeExtraLarge">20sp</dimen>
+    <dimen name="header_text_size">24sp</dimen>
 
 </resources>

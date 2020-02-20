@@ -42,8 +42,10 @@ public class NetworkModule {
     OkHttpClient provideOkHttpClient(Application application) {
         final int cacheSize = 10 * 1024 * 1024;
         Cache cache = new Cache(application.getCacheDir(), cacheSize);
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         return new OkHttpClient.Builder()
                 .readTimeout(ApiConstants.TIMEOUT_IN_SEC, TimeUnit.SECONDS)
                 .connectTimeout(ApiConstants.TIMEOUT_IN_SEC, TimeUnit.SECONDS)

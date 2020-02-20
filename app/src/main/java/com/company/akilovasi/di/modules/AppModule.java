@@ -118,13 +118,13 @@ public abstract class AppModule {
 //
 //    @Provides
 //    @Singleton
-//    UserDatabase provideMovieDatabase(Application application) {
-//        return Room.databaseBuilder(application, UserDatabase.class, "aa.db").build();
+//    AppDatabase provideMovieDatabase(Application application) {
+//        return Room.databaseBuilder(application, AppDatabase.class, "aa.db").build();
 //    }
 //
 //    @Provides
 //    @Singleton
-//    UserDao provideMovieDao(UserDatabase userDatabase) {
+//    UserDao provideMovieDao(AppDatabase userDatabase) {
 //        return userDatabase.userDao();
 //    }
 //}
@@ -144,8 +144,8 @@ public abstract class AppModule {
 //
 //    @Provides
 //    @Singleton
-//    UserDatabase provideUserDatabase(Application application) {
-//        return Room.databaseBuilder(application, UserDatabase.class, "aa.db").build();
+//    AppDatabase provideUserDatabase(Application application) {
+//        return Room.databaseBuilder(application, AppDatabase.class, "aa.db").build();
 //    }
 //
 //
@@ -164,7 +164,7 @@ public abstract class AppModule {
 
 //    @Provides
 //    @Singleton
-//    UserDao provideUserDao(UserDatabase userDatabase) {
+//    UserDao provideUserDao(AppDatabase userDatabase) {
 //        return userDatabase.userDao();
 //    }
 //

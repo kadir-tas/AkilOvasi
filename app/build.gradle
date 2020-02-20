@@ -22,10 +22,10 @@ android {
         flavorDimensions "version"
 
         beta {
-            buildConfigField "String", "BASE_URL", '""'
+            buildConfigField "String", "BASE_URL", '"http://192.168.122.1:8080/"'
         }
         full {
-            buildConfigField "String", "BASE_URL", '""'
+            buildConfigField "String", "BASE_URL", '"http://192.168.122.1:8080/"'
         }
     }
 

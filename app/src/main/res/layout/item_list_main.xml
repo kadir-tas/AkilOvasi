@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="banner"
+            type="com.company.akilovasi.data.local.entities.Banner" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewCover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:transitionName="@string/shared_image"
+            bind:url="@{banner.bannerImageId}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bannerHeader"
+            android:text="@{banner.bannerText}"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/colorMainDark"
+            android:textSize="@dimen/header_text_size"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</layout>
