@@ -58,9 +58,9 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     @Override
     public void onBindViewHolder(BannerViewHolder viewHolder, int i) {
 
-        Banner currentBanner = banners.get(i);
-        viewHolder.itemListMainBinding.setBanner(currentBanner);
-        viewHolder.itemListMainBinding.executePendingBindings();
+//        Banner currentBanner = banners.get(i);
+//        viewHolder.itemListMainBinding.setBanner(currentBanner);
+//        viewHolder.itemListMainBinding.executePendingBindings();
         viewHolder.onBind(banners.get(i));
 
 //        viewHolder.onBind(banners.get(i));
@@ -102,7 +102,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         public void onBind(Banner banner) {
 
             itemListMainBinding.setBanner(banner);
-            Banner.loadImage(itemListMainBinding.imageViewCover,banner.getImageUrl());
+//            Banner.loadImage(itemListMainBinding.imageViewCover,banner.getImageUrl());
             itemListMainBinding.executePendingBindings();
         }
     }

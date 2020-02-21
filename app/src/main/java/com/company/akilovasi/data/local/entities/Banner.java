@@ -46,7 +46,7 @@ public class Banner {
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.imageUrl = String.valueOf(this.getBannerId());
     }
 
     public Long getBannerId() {

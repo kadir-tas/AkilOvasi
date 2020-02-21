@@ -6,6 +6,10 @@ import android.view.View;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
@@ -39,6 +43,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
 //        ActivityMainBinding activityMainBinding =
 //                DataBindingUtil.setContentView(this, R.layout.activity_main);
+//        initGlide();
         initRecyclerView();
 
 //        recyclerView = activityMainBinding.recyclerView;
@@ -110,7 +115,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         mBannerAdapter = new BannerAdapter(/*this, initGlide(), viewPreloader*/);
         mRecyclerView.setAdapter(mBannerAdapter);
     }
-/*
+
     private RequestManager initGlide() {
 
         RequestOptions options = new RequestOptions()
@@ -120,7 +125,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         return Glide.with(this)
                 .setDefaultRequestOptions(options);
     }
-*/
+
 
     @Override
     public void onBannerClicked(Banner banner, View sharedView) {
