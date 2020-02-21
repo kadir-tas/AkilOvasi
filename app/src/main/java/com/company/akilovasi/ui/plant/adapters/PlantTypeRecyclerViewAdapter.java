@@ -2,20 +2,16 @@ package com.company.akilovasi.ui.plant.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.databinding.ItemListMainBinding;
 import com.company.akilovasi.databinding.ListItemPlantTypeBinding;
 import com.company.akilovasi.ui.BaseAdapter;
 import com.company.akilovasi.ui.plant.callbacks.PlantTypeRecyclerViewCallback;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 

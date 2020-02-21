@@ -1,7 +1,8 @@
 package com.company.akilovasi.data.remote.models.responses;
 
-import com.company.akilovasi.data.local.entities.Banner;
+import androidx.room.Entity;
 
+import com.company.akilovasi.data.local.entities.Banner;
 import java.util.List;
 
 public class BannerResponse {

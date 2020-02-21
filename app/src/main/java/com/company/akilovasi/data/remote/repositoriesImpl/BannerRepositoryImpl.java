@@ -36,11 +36,11 @@ public class BannerRepositoryImpl implements BannerRepository {
     }
 
     public LiveData<Resource<List<Banner>>> getAllBanners() {
-        return new NetworkBoundResource<List<Banner>, BannerResponse>() {
+        return new NetworkBoundResource<List<Banner>, List<Banner>>() {
 
             @Override
-            protected void saveCallResult(@NonNull BannerResponse item) {
-                bannerDao.saveBanners(item.getResults());
+            protected void saveCallResult(@NonNull List<Banner> item) {
+                bannerDao.saveBanners(item);
             }
 
             @NonNull
@@ -54,7 +54,7 @@ public class BannerRepositoryImpl implements BannerRepository {
 
             @NonNull
             @Override
-            protected Call<BannerResponse> createCall() {
+            protected Call<List<Banner>> createCall() {
                 return bannerService.loadBanners();
             }
         }.getAsLiveData();

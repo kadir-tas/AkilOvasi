@@ -38,11 +38,16 @@ public class PlantCategoryActivity extends BaseActivity< PlantCategoryViewModel,
         super.onCreate(savedInstanceState);
         //viewModel.getAllPlantTypes().observe(this, listResource -> Log.d("AAA" , listResource.status + " " + listResource.message));
 
-        dataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dataBinding.recyclerView.setAdapter(new PlantTypeRecyclerViewAdapter(this));
+        //dataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //dataBinding.recyclerView.setAdapter(new PlantTypeRecyclerViewAdapter(this));
 
         viewModel.getAllPlantTypes()
-                .observe(this, listResource -> dataBinding.setResource(listResource));
+                .observe(this, new Observer<Resource<List<PlantType>>>() {
+                    @Override
+                    public void onChanged(Resource<List<PlantType>> listResource) {
+                        Log.d("AAA",listResource.message);
+                    }
+                });
     }
 
     @Override

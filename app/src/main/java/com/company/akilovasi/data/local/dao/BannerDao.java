@@ -15,10 +15,10 @@ import java.util.List;
 public interface BannerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveBanners(BannerResponse banners);
+    void saveBanners(List<Banner> banners);
 
     @Query("SELECT * FROM banners")
-    LiveData<BannerResponse> loadBanners();
+    LiveData<List<Banner>> loadBanners();
 
     @Query("SELECT * FROM banners WHERE bannerId=:bannerId")
     LiveData<Banner> getBanner(Long bannerId);

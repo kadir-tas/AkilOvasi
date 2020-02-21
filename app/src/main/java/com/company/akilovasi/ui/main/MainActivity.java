@@ -3,19 +3,9 @@ package com.company.akilovasi.ui.main;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.util.ViewPreloadSizeProvider;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
@@ -23,11 +13,7 @@ import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.ui.BaseActivity;
 import com.company.akilovasi.ui.main.adapters.BannerAdapter;
 import com.company.akilovasi.ui.main.callbacks.BannerListCallback;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import dagger.android.AndroidInjection;
 
 public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements BannerListCallback {
 
@@ -124,7 +110,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         mBannerAdapter = new BannerAdapter(/*this, initGlide(), viewPreloader*/);
         mRecyclerView.setAdapter(mBannerAdapter);
     }
-
+/*
     private RequestManager initGlide() {
 
         RequestOptions options = new RequestOptions()
@@ -134,7 +120,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         return Glide.with(this)
                 .setDefaultRequestOptions(options);
     }
-
+*/
 
     @Override
     public void onBannerClicked(Banner banner, View sharedView) {

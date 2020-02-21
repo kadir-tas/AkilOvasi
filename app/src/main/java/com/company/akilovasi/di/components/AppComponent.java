@@ -20,16 +20,17 @@ import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 
+
 @Singleton
 @Component(modules = {
         AppModule.class,
-        PlantTypeModule.class,
         AndroidSupportInjectionModule.class,
         ActivityBuilderModule.class,
         NetworkModule.class,
         UserModule.class,
         LoginModule.class,
         BannerModule.class,
+        PlantTypeModule.class,
         ViewModelModule.class,
         LocalModule.class})
 public interface AppComponent {
