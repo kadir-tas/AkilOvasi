@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.company.akilovasi.data.local.AppDatabase;
 import com.company.akilovasi.data.local.dao.BannerDao;
+import com.company.akilovasi.data.local.dao.PlantTypeDao;
 
 import javax.inject.Singleton;
 
@@ -19,6 +20,12 @@ public class LocalModule {
     @Singleton
     AppDatabase provideDatabase(Application application) {
         return Room.databaseBuilder(application, AppDatabase.class, "aa.db").build();
+    }
+
+    @Provides
+    @Singleton
+    PlantTypeDao providePlantTypeDao(AppDatabase appDatabase){
+        return appDatabase.plantTypeDao();
     }
 
     @Provides

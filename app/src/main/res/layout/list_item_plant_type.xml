@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="plantType"
+            type="com.company.akilovasi.data.local.entities.PlantType" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewCover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:transitionName="@string/shared_image"
+            bind:imageUrl="@{plantType.plantImageId}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bannerHeader"
+            android:text="@{plantType.plantName}"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/colorMainDark"
+            android:textSize="@dimen/header_text_size"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</layout>

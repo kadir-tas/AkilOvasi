@@ -9,6 +9,7 @@ import com.company.akilovasi.di.modules.LocalModule;
 import com.company.akilovasi.di.modules.NetworkModule;
 import com.company.akilovasi.di.modules.ViewModelModule;
 import com.company.akilovasi.di.modules.banner.BannerModule;
+import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
 import com.company.akilovasi.di.modules.user.LoginModule;
 import com.company.akilovasi.di.modules.user.UserModule;
 
@@ -22,6 +23,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AppModule.class,
+        PlantTypeModule.class,
         AndroidSupportInjectionModule.class,
         ActivityBuilderModule.class,
         NetworkModule.class,
