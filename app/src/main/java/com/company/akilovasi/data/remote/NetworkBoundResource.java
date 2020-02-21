@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 
 import com.company.akilovasi.data.Resource;
 
@@ -22,12 +23,20 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     public NetworkBoundResource() {
         result.setValue(Resource.loading(null));
         LiveData<ResultType> dbSource = loadFromDb();
-        result.addSource(dbSource, data -> {
-            result.removeSource(dbSource);
-            if (shouldFetch(data)) {
-                fetchFromNetwork(dbSource);
-            } else {
-                result.addSource(dbSource, newData -> result.setValue(Resource.success(newData)));
+        result.addSource(dbSource, new Observer<ResultType>() {
+            @Override
+            public void onChanged(ResultType data) {
+                result.removeSource(dbSource);
+                if (NetworkBoundResource.this.shouldFetch(data)) {
+                    NetworkBoundResource.this.fetchFromNetwork(dbSource);
+                } else {
+                    result.addSource(dbSource, new Observer<ResultType>() {
+                        @Override
+                        public void onChanged(ResultType newData) {
+                            result.setValue(Resource.success(newData));
+                        }
+                    });
+                }
             }
         });
     }

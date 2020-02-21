@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.company.akilovasi.data.local.entities.Banner;
+import com.company.akilovasi.data.remote.models.responses.BannerResponse;
 
 import java.util.List;
 
@@ -14,10 +15,10 @@ import java.util.List;
 public interface BannerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveBanners(List<Banner> banners);
+    void saveBanners(BannerResponse banners);
 
     @Query("SELECT * FROM banners")
-    LiveData<List<Banner>> loadBanners();
+    LiveData<BannerResponse> loadBanners();
 
     @Query("SELECT * FROM banners WHERE bannerId=:bannerId")
     LiveData<Banner> getBanner(Long bannerId);

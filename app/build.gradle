@@ -73,14 +73,36 @@ dependencies {
 
     implementation appDependencies.cardView
 
+    // lifecycle
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    //noinspection LifecycleAnnotationProcessorWithJava8
     implementation 'androidx.room:room-runtime:2.2.3'
     annotationProcessor 'androidx.room:room-compiler:2.2.3'
 
     implementation 'com.google.android.material:material:1.1.0'
-    implementation'androidx.lifecycle:lifecycle-runtime:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
 
-    implementation  "com.squareup.picasso:picasso:2.71828"
+    implementation "com.squareup.picasso:picasso:2.71828"
 
+    // glide for image
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
+
+    implementation("com.github.bumptech.glide:recyclerview-integration:4.9.0") {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+
+
+        implementation("com.github.bumptech.glide:glide:4.9.0") {
+            exclude group: "com.android.support"
+        }
+        annotationProcessor 'androidx.annotation:annotation:1.0.0'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+        implementation("com.github.bumptech.glide:glide:4.9.0@aar") {
+            transitive = true
+        }
+    }
 }

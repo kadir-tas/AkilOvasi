@@ -1,5 +1,7 @@
 package com.company.akilovasi.data.remote.repositoriesImpl;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -44,7 +46,10 @@ public class BannerRepositoryImpl implements BannerRepository {
             @NonNull
             @Override
             protected LiveData<List<Banner>> loadFromDb() {
-                return bannerDao.loadBanners();
+                LiveData<List<Banner>> banners = bannerDao.loadBanners();
+                Log.d("KKK", ""+banners);
+                Log.d("KKK", ""+banners.getValue());
+                return banners;
             }
 
             @NonNull

@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="resource"
-            type="com.company.akilovasi.data.Resource" />
-    </data>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="resource"-->
+<!--            type="com.company.akilovasi.data.Resource" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MainActivity">
+        tools:context=".ui.main.MainActivity"
+        tools:showIn="@layout/activity_main">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:resource="@{resource}" />
+            android:layout_height="match_parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
