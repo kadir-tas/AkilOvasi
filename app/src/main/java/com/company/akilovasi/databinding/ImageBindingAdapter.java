@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.company.akilovasi.BuildConfig;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.squareup.picasso.Picasso;
@@ -18,10 +19,10 @@ public final class ImageBindingAdapter {
 
         if (imageUrl != null && !imageUrl.equals("")) {
             Picasso.get()
-                    .load(ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl)
+                    .load(BuildConfig.BASE_URL + ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl)
                     .placeholder(R.drawable.placeholder)
                     .into(imageView);
-            Log.d("CCC",imageUrl);
+            Log.d("CCC",ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl);
         }
     }
 //        Log.d("CCC",imageUrl);
