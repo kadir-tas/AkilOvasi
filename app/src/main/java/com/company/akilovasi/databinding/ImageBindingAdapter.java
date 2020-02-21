@@ -22,7 +22,7 @@ public final class ImageBindingAdapter {
                     .load(BuildConfig.BASE_URL + ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl)
                     .placeholder(R.drawable.placeholder)
                     .into(imageView);
-            Log.d("CCC",ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl);
+            Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl);
         }
     }
 //        Log.d("CCC",imageUrl);
