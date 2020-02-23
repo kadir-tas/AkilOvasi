@@ -9,4 +9,10 @@ public interface PlantTypeRepository {
 
     public LiveData<Resource<List<PlantType>>> getAllPlantTypes();
 
+    public LiveData<List<PlantType>> getPlantByCategories(String plantCategory);
+
+    public LiveData<List<String>> getListOfPlantCategories();
+
+    public LiveData<PlantType> getPlantType(Long plantId);
+
 }

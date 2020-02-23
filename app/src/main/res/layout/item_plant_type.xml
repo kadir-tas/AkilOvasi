@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="plantType"
+            type="com.company.akilovasi.data.local.entities.PlantType" />
+
+        <variable
+            name="itemPlantTypeClick"
+            type="com.company.akilovasi.ui.plant.callbacks.ItemPlantTypeClick" />
+    </data>
+
+    <LinearLayout
+        android:onClick="@{() -> itemPlantTypeClick.onClick(plantType)}"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/imageViewCover"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:transitionName="@string/shared_image"
+                bind:imageUrl="@{plantType.plantId}" />
+        </FrameLayout>
+
+        <TextView
+            android:hint="@string/plant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bannerHeader"
+            android:text="@{plantType.plantName}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/header_text_size"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</layout>

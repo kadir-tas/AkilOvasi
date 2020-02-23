@@ -1,9 +1,9 @@
 package com.company.akilovasi.di.modules;
 
+import com.company.akilovasi.di.modules.plantType.PlantActivityScope;
 import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
-import com.company.akilovasi.ui.plant.PlantCategoryViewModel;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

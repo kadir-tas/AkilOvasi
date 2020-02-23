@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="plantType"
+            type="com.company.akilovasi.data.local.entities.PlantType"/>
+
+        <variable
+            name="loading"
+            type="boolean" />
+    </data>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/colorPrimary">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_width="130dp"
+                android:layout_height="140dp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                    <ProgressBar
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/imageViewCover"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:transitionName="@string/shared_image"
+                        bind:imageUrl="@{plantType.plantId}" />
+                </FrameLayout>
+
+                <TextView
+                    android:hint="@string/plant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bannerHeader"
+                    android:text="@{plantType.plantName}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/header_text_size"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:text="@string/placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/plant_size_text"
+            android:text="@string/plant_size"
+            android:layout_width="match_parent"
+            android:textSize="36sp"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"/>
+
+        <RadioGroup
+                android:id="@+id/plant_size"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_gravity="center"
+                    android:enabled="@{!loading}"
+                    android:text="@string/placeholder_small"
+                    android:textColor="@color/design_default_color_secondary"
+                    android:layout_margin="10dp"
+                    android:id="@+id/plant_small"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"/>
+
+                <RadioButton
+                    android:layout_gravity="center"
+                    android:enabled="@{!loading}"
+                    android:text="@string/placeholder_medium"
+                    android:textColor="@color/design_default_color_secondary"
+                    android:layout_margin="10dp"
+                    android:id="@+id/plant_medium"
+                    android:layout_weight="1"
+                    android:src="@drawable/placeholder_medium_plant"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"/>
+
+
+                <RadioButton
+                    android:enabled="@{!loading}"
+                    android:text="@string/placeholder_big"
+                    android:textColor="@color/design_default_color_secondary"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/plant_big"
+                    android:layout_weight="1"
+                    android:src="@drawable/placeholder_big_plant"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"/>
+
+
+                <RadioButton
+                    android:enabled="@{!loading}"
+                    android:text="@string/placeholder_huge"
+                    android:textColor="@color/design_default_color_secondary"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:id="@+id/plant_huge"
+                    android:layout_weight="1"
+                    android:src="@drawable/placeholder_huge_plant"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"/>
+
+            </RadioGroup>
+
+        <TextView
+            android:id="@+id/pot_size_text"
+            android:text="@string/pot_size"
+            android:layout_width="match_parent"
+            android:textSize="36sp"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"/>
+
+        <RadioGroup
+            android:id="@+id/pot_size"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_gravity="center"
+                android:enabled="@{!loading}"
+                android:text="@string/placeholder_small"
+                android:textColor="@color/design_default_color_secondary"
+                android:layout_margin="10dp"
+                android:id="@+id/pot_small"
+                android:layout_weight="1"
+                android:src="@drawable/placeholder_small_pot"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+
+            <RadioButton
+                android:layout_gravity="center"
+                android:enabled="@{!loading}"
+                android:text="@string/placeholder_medium"
+                android:textColor="@color/design_default_color_secondary"
+                android:layout_margin="10dp"
+                android:id="@+id/pot_medium"
+                android:layout_weight="1"
+                android:src="@drawable/placeholder_medium_pot"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+
+
+            <RadioButton
+                android:layout_gravity="center"
+                android:enabled="@{!loading}"
+                android:text="@string/placeholder_medium"
+                android:textColor="@color/design_default_color_secondary"
+                android:layout_margin="10dp"
+                android:id="@+id/pot_big"
+                android:layout_weight="1"
+                android:src="@drawable/placeholder_big_pot"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+
+
+            <RadioButton
+                android:layout_gravity="center"
+                android:enabled="@{!loading}"
+                android:text="@string/placeholder_huge"
+                android:textColor="@color/design_default_color_secondary"
+                android:layout_margin="10dp"
+                android:id="@+id/pot_huge"
+                android:layout_weight="1"
+                android:src="@drawable/placeholder_huge_pot"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+        </RadioGroup>
+
+        <EditText
+            android:enabled="@{!loading}"
+            android:inputType="text"
+            android:id="@+id/plant_name"
+            android:hint="@string/plant_name_field"
+            android:layout_width="match_parent"
+            android:textSize="25sp"
+            android:layout_margin="15dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/placeholder_small_pot"
+                android:id="@+id/plantImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <Button
+                android:enabled="@{!loading}"
+                android:id="@+id/takePictureButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:text="@string/take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:enabled="@{!loading}"
+                android:id="@+id/addNewPlantButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:textAllCaps="false"
+                android:text="@string/add_plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{loading? View.VISIBLE : View.GONE}"
+            android:layout_gravity="center"/>
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/camera_preview_view" />
+    </FrameLayout>
+
+</ScrollView>
+
+
+</layout>

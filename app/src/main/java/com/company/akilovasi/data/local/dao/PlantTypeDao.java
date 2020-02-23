@@ -18,7 +18,12 @@ public interface PlantTypeDao {
     @Query("SELECT * FROM plantType")
     LiveData<List<PlantType>> loadPlantTypes();
 
+    @Query("SELECT * FROM plantType WHERE plantCategory = :plantCategory")
+    LiveData<List<PlantType>> loadPlantByCategories( String plantCategory );
+
+    @Query("SELECT DISTINCT plantCategory FROM plantType")
+    LiveData<List<String>> loadListOfPlantCategories();
+
     @Query("SELECT * FROM plantType WHERE plantId=:plantId")
     LiveData<PlantType> getPlantType(Long plantId);
-
 }

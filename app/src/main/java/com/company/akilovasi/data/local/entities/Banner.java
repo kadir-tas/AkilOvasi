@@ -108,7 +108,7 @@ public class Banner {
 //            Log.d("CCC",imageUrl);
 //        }
 //    }
-
+/*
     @BindingAdapter({ "imageUrl" })
     public static void loadImage(ImageView imageView, String imageUrl) {
         if(imageUrl == null) Log.d("CCC","this wokrs but null");
@@ -120,5 +120,5 @@ public class Banner {
                     .placeholder(R.drawable.loading)
                     .into(imageView);
     }
-
+*/
 }

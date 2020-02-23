@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.company.akilovasi.di.ViewModelKey;
 import com.company.akilovasi.ui.login.LoginViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;
-import com.company.akilovasi.ui.plant.PlantCategoryActivity;
-import com.company.akilovasi.ui.plant.PlantCategoryViewModel;
+import com.company.akilovasi.ui.plant.PlantCategoryActivityViewModel;
+import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragmentViewModel;
+import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragmentViewModel;
 import com.company.akilovasi.viewmodel.ViewModelFactory;
 
 import dagger.Binds;
@@ -30,8 +31,19 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(PlantCategoryViewModel.class)
-    abstract ViewModel bindsPlantCategoryViewModel(PlantCategoryViewModel plantCategoryViewModel);
+    @ViewModelKey(PlantCategoryActivityViewModel.class)
+    abstract ViewModel bindsPlantCategoryViewModel(PlantCategoryActivityViewModel plantCategoryActivityViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlantCategoryFragmentViewModel.class)
+    abstract ViewModel bindPlantCategoryFragmentViewModel(PlantCategoryFragmentViewModel plantCategoryFragmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlantAddFragmentViewModel.class)
+    abstract ViewModel bindPlantAddFragmentViewModel(PlantAddFragmentViewModel plantAddFragmentViewModel);
+
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);

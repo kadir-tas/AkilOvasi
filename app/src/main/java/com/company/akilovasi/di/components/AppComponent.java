@@ -5,6 +5,7 @@ import android.app.Application;
 import com.company.akilovasi.AkilOvasiApp;
 import com.company.akilovasi.di.modules.ActivityBuilderModule;
 import com.company.akilovasi.di.modules.AppModule;
+import com.company.akilovasi.di.modules.FragmentBuilderModule;
 import com.company.akilovasi.di.modules.LocalModule;
 import com.company.akilovasi.di.modules.NetworkModule;
 import com.company.akilovasi.di.modules.ViewModelModule;
@@ -12,6 +13,7 @@ import com.company.akilovasi.di.modules.banner.BannerModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
 import com.company.akilovasi.di.modules.user.LoginModule;
 import com.company.akilovasi.di.modules.user.UserModule;
+import com.company.akilovasi.di.modules.userPlant.UserPlantModule;
 
 import javax.inject.Singleton;
 
@@ -26,12 +28,14 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AppModule.class,
         AndroidSupportInjectionModule.class,
         ActivityBuilderModule.class,
+        FragmentBuilderModule.class,
         NetworkModule.class,
         UserModule.class,
         LoginModule.class,
         BannerModule.class,
         PlantTypeModule.class,
         ViewModelModule.class,
+        UserPlantModule.class,
         LocalModule.class})
 public interface AppComponent {
 
