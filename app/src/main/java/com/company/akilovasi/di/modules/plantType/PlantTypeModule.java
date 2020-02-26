@@ -3,6 +3,7 @@ package com.company.akilovasi.di.modules.plantType;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
 import com.company.akilovasi.data.remote.repositoriesImpl.PlantTypeRepositoryImpl;
+import com.company.akilovasi.ui.plant.adapters.PlantCategoryAdapter;
 
 import javax.inject.Singleton;
 
@@ -17,5 +18,10 @@ public class PlantTypeModule {
     @Singleton
     PlantTypeRepository providePlantTypeRepository(Retrofit retrofit, PlantTypeDao plantTypeDao){
         return new PlantTypeRepositoryImpl(retrofit, plantTypeDao);
+    }
+
+    @Provides
+    PlantCategoryAdapter plantCategoryAdapter(){
+        return new PlantCategoryAdapter();
     }
 }

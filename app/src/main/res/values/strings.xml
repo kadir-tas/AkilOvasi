@@ -5,4 +5,21 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shared_image">sharedimage</string>
     <string name="history">Geçmiş Analizler</string>
+    <string name="plant_name">Plant Name</string>
+    <string name="plant_size">Bitkinizin Boyu</string>
+    <string name="pot_size">Saksınızın Boyu</string>
+    <string name="plant_name_field">Yeni Bitkinizin İsmini Giriniz</string>
+    <string name="my_plant">Benim Çiçeğim</string>
+    <string name="take_picture">Resim Çek</string>
+    <string name="add_plant">Yeni Bitkimi Ekle</string>
+    <string name="no_connection">Ağa Bağlanılamadı</string>
+    <string name="placeholder">Lorem ipsum simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500sunto make a type specimen book. It has survived  </string>
+    <string name="placeholder_small_pot">Küçük</string>
+    <string name="placeholder_small">Küçük</string>
+    <string name="placeholder_medium">Orta</string>
+    <string name="placeholder_big">Büyük</string>
+    <string name="placeholder_huge">Çok Büyük</string>
+    <string name="form_fill_alert">Lütfen Bitkinizi Eklemeden Önce Formu Doldurunuz</string>
+    <string name="plant_add">Bitkiniz Eklendi</string>
+
 </resources>

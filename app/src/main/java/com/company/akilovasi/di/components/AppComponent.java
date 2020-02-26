@@ -15,6 +15,7 @@ import com.company.akilovasi.di.modules.plant.PlantModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
 import com.company.akilovasi.di.modules.user.LoginModule;
 import com.company.akilovasi.di.modules.user.UserModule;
+import com.company.akilovasi.di.modules.userPlant.UserPlantModule;
 
 import javax.inject.Singleton;
 
@@ -39,6 +40,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         LocalModule.class,
         PlantModule.class,
         PlantHistoryModule.class})
+        UserPlantModule.class,})
 public interface AppComponent {
 
     @Component.Builder

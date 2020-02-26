@@ -82,29 +82,4 @@ public class Banner {
     public void setBannerActive(String bannerActive) {
         this.bannerActive = bannerActive;
     }
-
-//    @BindingAdapter({"imageUrl"})
-//    public static void loadImageUrl(ImageView view, String imageUrl) {
-//        Log.d("CCC",imageUrl);
-//        if (imageUrl != null && !imageUrl.equals("")) {
-//            Picasso.get()
-//                    .load(ApiConstants.IMAGE_ENDPOINT_PREFIX)
-//                    .placeholder(R.drawable.placeholder)
-//                    .into(view);
-//            Log.d("CCC",imageUrl);
-//        }
-//    }
-
-//    @BindingAdapter({ "imageUrl" })
-//    public static void loadImage(ImageView imageView, String imageUrl) {
-//        if(imageUrl == null) Log.d("CCC","this wokrs but null");
-//        else
-//            Glide.with(imageView.getContext())
-//                    .setDefaultRequestOptions(new RequestOptions()
-//                            .circleCrop())
-//                    .load(ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX + imageUrl)
-//                    .placeholder(R.drawable.loading)
-//                    .into(imageView);
-//    }
-
 }

@@ -9,5 +9,5 @@
     <color name="white_cardview_color">#ffffff</color>
     <color name="contentBackground">#FFF</color>
     <color name="layout_white">#ededed</color>
-
+    <color name="black">#000</color>
 </resources>

@@ -2,23 +2,44 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-  <!--  <data>
+    <data>
+        <import type="android.view.View" />
         <variable
-            name="resource"
-            type="com.company.akilovasi.data.Resource" />
+            name="plantCategoryPagerAdapter"
+            type="com.company.akilovasi.ui.plant.PlantCategoryPagerAdapter" />
     </data>
--->
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.plant.PlantCategoryActivity">
-<!--
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:resource="@{resource}" />
-   -->
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
+                app:setAdapter="@{plantCategoryPagerAdapter}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    app:tabMode="fixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </androidx.viewpager.widget.ViewPager>
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 </layout>

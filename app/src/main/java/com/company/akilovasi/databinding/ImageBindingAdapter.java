@@ -41,6 +41,19 @@ public final class ImageBindingAdapter {
             Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX+imageUrl);
         }
     }
+
+    @BindingAdapter({ "imageUrl" })
+    public static void loadImagePlantType(ImageView imageView, Long plantId) {
+
+        if (plantId != null) {
+            Picasso.get()
+                    .load(BuildConfig.BASE_URL + ApiConstants.PLANT_TYPE_IMAGE_ENDPOINT_PREFIX + plantId)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imageView);
+            Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.PLANT_TYPE_IMAGE_ENDPOINT_PREFIX + plantId);
+        }
+    }
+
 //        Log.d("CCC",imageUrl);
 //        Glide.with(imageView.getContext())
 //                .setDefaultRequestOptions(new RequestOptions()
