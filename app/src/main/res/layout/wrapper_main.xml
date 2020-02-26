@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable
+            name="addPlantClick"
+            type="com.company.akilovasi.ui.main.callbacks.AddPlantClick" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/layout_white"
+        android:fitsSystemWindows="true">
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutDescription="@xml/scene_header">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <include
+                android:id="@+id/plantRecyclerView"
+                layout="@layout/plant_rv_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+
+                app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
+
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:onClick="@{() -> addPlantClick.onAddPlantClick()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:fabSize="normal"
+            app:backgroundTint="@color/white_cardview_color"
+            app:elevation="6dp"
+            android:id="@+id/addPlantFab"
+            app:borderWidth="0dp"
+            android:src="@drawable/add_plant"
+            app:maxImageSize="35dp"
+            app:layout_behavior="com.company.akilovasi.util.FabBehavior"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

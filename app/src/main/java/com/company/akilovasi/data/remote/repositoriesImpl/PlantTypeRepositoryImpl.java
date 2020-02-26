@@ -1,6 +1,7 @@
 package com.company.akilovasi.data.remote.repositoriesImpl;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
@@ -38,6 +39,11 @@ public class PlantTypeRepositoryImpl implements PlantTypeRepository {
             @Override
             protected void saveCallResult(@NonNull PlantTypeResponse item) {
                 plantTypeDao.savePlantTypes(item.getResults());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<PlantType> data) {
+                return true;
             }
 
             @NonNull

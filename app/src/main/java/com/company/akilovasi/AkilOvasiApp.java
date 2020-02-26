@@ -2,7 +2,6 @@ package com.company.akilovasi;
 
 import android.app.Application;
 
-
 import com.company.akilovasi.di.components.DaggerAppComponent;
 
 import javax.inject.Inject;

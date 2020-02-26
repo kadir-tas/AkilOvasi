@@ -4,8 +4,8 @@ import android.view.View;
 
 import com.company.akilovasi.data.local.entities.Banner;
 
-public interface BannerListCallback {
+public interface ItemBannerClick {
 
-    void onBannerClicked(Banner banner, View sharedView);
+    void onBannerClicked(Banner banner);
 
 }

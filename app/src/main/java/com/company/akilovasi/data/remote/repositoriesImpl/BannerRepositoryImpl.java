@@ -3,6 +3,7 @@ package com.company.akilovasi.data.remote.repositoriesImpl;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
@@ -36,11 +37,16 @@ public class BannerRepositoryImpl implements BannerRepository {
     }
 
     public LiveData<Resource<List<Banner>>> getAllBanners() {
-        return new NetworkBoundResource<List<Banner>, List<Banner>>() {
+        return new NetworkBoundResource<List<Banner>, BannerResponse>() {
 
             @Override
-            protected void saveCallResult(@NonNull List<Banner> item) {
-                bannerDao.saveBanners(item);
+            protected void saveCallResult(@NonNull BannerResponse item) {
+                bannerDao.saveBanners(item.getResults());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<Banner> data) {
+                return true;
             }
 
             @NonNull
@@ -54,10 +60,9 @@ public class BannerRepositoryImpl implements BannerRepository {
 
             @NonNull
             @Override
-            protected Call<List<Banner>> createCall() {
+            protected Call<BannerResponse> createCall() {
                 return bannerService.loadBanners();
             }
         }.getAsLiveData();
     }
-
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="analysisCallback"
+            type="com.company.akilovasi.ui.main.callbacks.AnalysisCallback" />
+
+        <variable name="userPlantId" type="Long"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/layout_white"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorMainDark"
+                    android:text="@string/history"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/header_text_size" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/plantHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:onClick="@{() -> analysisCallback.onAnalysisClicked(userPlantId)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:fabSize="normal"
+            app:backgroundTint="@color/white_cardview_color"
+            app:elevation="6dp"
+            android:id="@+id/historyFab"
+            app:borderWidth="0dp"
+            android:src="@drawable/analysis"
+            app:maxImageSize="35dp"
+            app:layout_behavior="com.company.akilovasi.util.FabBehavior"/>
+
+    </FrameLayout>
+</layout>
+

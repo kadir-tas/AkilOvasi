@@ -1,7 +1,6 @@
 package com.company.akilovasi.data.remote.api;
 
 import com.company.akilovasi.data.local.entities.PlantType;
-import com.company.akilovasi.data.remote.models.responses.BannerResponse;
 import com.company.akilovasi.data.remote.models.responses.PlantTypeResponse;
 
 import java.util.List;

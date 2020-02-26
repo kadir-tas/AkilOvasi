@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -37,21 +38,37 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+//    sourceSets {
+//        main {
+//            res.srcDirs = [
+//                    'src/main/res/layouts/main',
+//                    'src/main/res/layouts/plant',
+//                    'src/main/res/layouts/add',
+//                    'src/main/res/layouts/plantregister',
+//                    'src/main/res/layouts/analysis',
+//                    'src/main/res/layouts/detail',
+//                    'src/main/res/layouts/unused',
+//                    'src/main/res/layouts/login',
+//                    'src/main/res']
+//        }
+//    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //MAIN & LAYOUTS
+    implementation appDependencies.filetree
     implementation appDependencies.appCompat
     implementation appDependencies.constraintlayout
+    implementation appDependencies.legacysupp
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation appDependencies.testunit
+    androidTestImplementation appDependencies.testextunit
+    androidTestImplementation appDependencies.espresso
+    implementation appDependencies.drawerlayout
+    implementation appDependencies.coordinatorlayout
 
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
+    //RETROFIT
     implementation appDependencies.retrofit
     implementation appDependencies.retrofitConverter
     implementation appDependencies.retrofitAdapter
@@ -59,50 +76,66 @@ dependencies {
     implementation appDependencies.okhttp3
     implementation appDependencies.retrofitrec
 
+    //RXJAVA
     implementation appDependencies.rxJava
     implementation appDependencies.rxAndroid
 
+    //DAGGER
     implementation appDependencies.dagger2
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.26'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.26'
-//    implementation appDependencies.dagger2Android
+    annotationProcessor appDependencies.daggercompiler
+    annotationProcessor appDependencies.daggerprocessor
     implementation appDependencies.dagger2AndroidSupport
 
+    // LIFECYCLE
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    annotationProcessor appDependencies.lifecyclecompiler
     implementation appDependencies.lifecycleViewModel
     implementation appDependencies.lifecycleExtension
+    implementation appDependencies.lifecycleextensions
+    implementation appDependencies.lifecycleruntime
 
+    //ROOM
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    implementation appDependencies.roomruntime
+    annotationProcessor appDependencies.roomcompiler
+
+    //VIEW
     implementation appDependencies.cardView
-
-    // lifecycle
-    //noinspection LifecycleAnnotationProcessorWithJava8
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-
-    //noinspection LifecycleAnnotationProcessorWithJava8
-    implementation 'androidx.room:room-runtime:2.2.3'
-    annotationProcessor 'androidx.room:room-compiler:2.2.3'
-
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
-
-    implementation "com.squareup.picasso:picasso:2.71828"
-
-    // glide for image
-    implementation "com.github.bumptech.glide:glide:4.9.0"
-    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
-
-    implementation("com.github.bumptech.glide:recyclerview-integration:4.9.0") {
-        // Excludes the support library because it's already included by Glide.
-        transitive = false
+    implementation appDependencies.material
+    implementation appDependencies.picasso
+    implementation appDependencies.roundedImageView
+    implementation appDependencies.hdodenhof
 
 
-        implementation("com.github.bumptech.glide:glide:4.9.0") {
-            exclude group: "com.android.support"
-        }
-        annotationProcessor 'androidx.annotation:annotation:1.0.0'
-        annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-        implementation("com.github.bumptech.glide:glide:4.9.0@aar") {
-            transitive = true
-        }
-    }
+//    // glide for image
+//    implementation "com.github.bumptech.glide:glide:4.9.0"
+//    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
+
+//    implementation("com.github.bumptech.glide:recyclerview-integration:4.9.0") {
+//        // Excludes the support library because it's already included by Glide.
+//        transitive = false
+//
+//
+//        implementation("com.github.bumptech.glide:glide:4.9.0") {
+//            exclude group: "com.android.support"
+//        }
+//        annotationProcessor 'androidx.annotation:annotation:1.0.0'
+//        annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+//        implementation("com.github.bumptech.glide:glide:4.9.0@aar") {
+//            transitive = true
+//        }
+//    }
+
+
+//    implementation 'androidx.core:core-ktx:1.2.0'
+
+//    implementation "androidx.core:core-ktx:1.2.0"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation 'com.google.dagger:dagger:2.26'
+//    kapt 'com.google.dagger:dagger-compiler:2.26'
+//    annotationProcessor 'com.google.dagger:dagger-android-processor:2.26'
+//    kapt 'com.google.dagger:dagger-android-processor:2.26'
+//    kapt 'com.android.databinding:compiler:3.1.4'
+
+
 }
