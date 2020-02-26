@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.UserPlant;
+import com.company.akilovasi.data.remote.models.other.Message;
+import com.company.akilovasi.data.remote.models.responses.Response;
 
 import java.util.List;
 
@@ -13,7 +15,8 @@ import retrofit2.Call;
 
 public interface UserPlantRepository {
 
-    LiveData<Resource<List<UserPlant>>> getAllUserPlants(Long userId);
-    Call<ResponseBody> addUserPlant(Long plantId, Long userId, String plantName , float plantSize, float potSize);
-    Call<ResponseBody> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId);
+    LiveData<Resource< List<UserPlant>> > getAllUserPlants(Long userId);
+    Call<Response<Message>> addUserPlant(Long plantId, Long userId, String plantName , float plantSize, float potSize);
+    Call<Response<Message>> addUserPlantWithImage(Long plantId, Long userId, String plantName , float plantSize, float potSize, String imageFilePath);
+    Call<Response<Message>> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId);
 }

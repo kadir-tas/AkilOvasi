@@ -20,5 +20,6 @@
     <string name="placeholder_huge">Çok Büyük</string>
     <string name="form_fill_alert">Lütfen Bitkinizi Eklemeden Önce Formu Doldurunuz</string>
     <string name="plant_add">Bitkiniz Eklendi</string>
+    <string name="plant_add_failed">Bitki Eklemesi Başarısız</string>
 
 </resources>

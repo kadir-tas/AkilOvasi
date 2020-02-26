@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.ui.BaseActivity;
 import com.company.akilovasi.ui.main.adapters.BannerAdapter;
 import com.company.akilovasi.ui.main.callbacks.BannerListCallback;
+import com.company.akilovasi.ui.plant.PlantCategoryActivity;
+
 import java.util.List;
 
 public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements BannerListCallback {
@@ -40,7 +43,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        startActivity(new Intent(MainActivity.this, PlantCategoryActivity.class));
+        finish();
 //        ActivityMainBinding activityMainBinding =
 //                DataBindingUtil.setContentView(this, R.layout.activity_main);
 //        initGlide();

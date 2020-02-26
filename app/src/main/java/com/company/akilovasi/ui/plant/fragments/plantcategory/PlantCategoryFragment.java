@@ -1,6 +1,8 @@
 package com.company.akilovasi.ui.plant.fragments.plantcategory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.databinding.PlantCategoryFragmentBinding;
 import com.company.akilovasi.ui.BaseFragment;
+import com.company.akilovasi.ui.camera.CameraActivity;
+import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.plant.adapters.PlantCategoryAdapter;
 import com.company.akilovasi.ui.plant.callbacks.ItemPlantTypeClick;
 
@@ -26,6 +31,7 @@ import javax.inject.Inject;
 
 public class PlantCategoryFragment extends BaseFragment<PlantCategoryFragmentViewModel, PlantCategoryFragmentBinding> {
     private static final String TAG = "PlantCategoryFragment";
+
 
     @Inject
     public PlantCategoryAdapter adapter;
@@ -47,6 +53,11 @@ public class PlantCategoryFragment extends BaseFragment<PlantCategoryFragmentVie
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel.setPlantCategory(plantCategory);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initObservers(){

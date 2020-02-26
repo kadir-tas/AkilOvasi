@@ -226,8 +226,8 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/capturedPlantImage"
                 android:src="@drawable/placeholder_small_pot"
-                android:id="@+id/plantImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>
 
@@ -264,9 +264,6 @@
             android:layout_height="wrap_content"
             android:visibility="@{loading? View.VISIBLE : View.GONE}"
             android:layout_gravity="center"/>
-
-        <androidx.camera.view.PreviewView
-            android:id="@+id/camera_preview_view" />
     </FrameLayout>
 
 </ScrollView>

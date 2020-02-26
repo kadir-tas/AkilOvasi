@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import com.company.akilovasi.data.local.entities.PlantType;
+import com.company.akilovasi.data.remote.models.responses.Response;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface PlantTypeDao {
     void savePlantTypes(List<PlantType> plantTypes);
 
     @Query("SELECT * FROM plantType")
-    LiveData<List<PlantType>> loadPlantTypes();
+    LiveData< List<PlantType>> loadPlantTypes();
 
     @Query("SELECT * FROM plantType WHERE plantCategory = :plantCategory")
     LiveData<List<PlantType>> loadPlantByCategories( String plantCategory );

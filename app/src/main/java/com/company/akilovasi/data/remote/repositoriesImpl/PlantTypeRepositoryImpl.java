@@ -10,12 +10,14 @@ import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.PlantTypeService;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
 
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+
 
 public class PlantTypeRepositoryImpl implements PlantTypeRepository {
     private static final String TAG = "PlantTypeRepositoryImpl";
@@ -34,24 +36,28 @@ public class PlantTypeRepositoryImpl implements PlantTypeRepository {
 
     @Override
     public LiveData<Resource<List<PlantType>>> getAllPlantTypes() {
-        return new NetworkBoundResource<List<PlantType>, List<PlantType>>() {
+        return new NetworkBoundResource<List<PlantType>, Response<List<PlantType>>>() {
 
             @Override
-            protected void saveCallResult(@NonNull List<PlantType> item) {
-                Log.d(TAG, "saveCallResult: of plant types of item " + item.size());
-                plantTypeDao.savePlantTypes(item);
+            protected void saveCallResult(@NonNull Response<List<PlantType>> item) {
+                if(item.getSuccess()){
+                    Log.d(TAG, "saveCallResult: of plant types of item " + item.getCount());
+                    plantTypeDao.savePlantTypes(item.getResults());
+                }else{
+                    Log.e(TAG, "saveCallResult: Something went wrong");
+                }
             }
 
             @NonNull
             @Override
-            protected LiveData<List<PlantType>> loadFromDb() {
+            protected LiveData< List<PlantType>>  loadFromDb() {
                 Log.d(TAG, "loadFromDb: of plant types");
                 return plantTypeDao.loadPlantTypes();
             }
 
             @NonNull
             @Override
-            protected Call<List<PlantType>> createCall() {
+            protected Call< Response<List<PlantType>> > createCall() {
                 Log.d(TAG, "createCall: of plant types");
                 return plantTypeService.loadAllPlantTypes();
             }

@@ -1,6 +1,7 @@
 package com.company.akilovasi.di.modules;
 
 import com.company.akilovasi.di.modules.plantType.PlantActivityScope;
+import com.company.akilovasi.ui.camera.CameraActivity;
 import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
@@ -19,5 +20,8 @@ public abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
     abstract PlantCategoryActivity plantCategoryActivity();
+
+    @ContributesAndroidInjector
+    abstract CameraActivity cameraActivity();
 }
 

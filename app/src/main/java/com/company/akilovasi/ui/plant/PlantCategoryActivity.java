@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.plant;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -8,13 +9,16 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.PlantType;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityPlantCategoryBinding;
 import com.company.akilovasi.ui.BaseActivity;
+import com.company.akilovasi.ui.camera.CameraActivity;
 import com.company.akilovasi.ui.plant.callbacks.ItemPlantTypeClick;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragment;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragment;
@@ -122,5 +126,10 @@ public class PlantCategoryActivity extends BaseActivity<PlantCategoryActivityVie
         {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

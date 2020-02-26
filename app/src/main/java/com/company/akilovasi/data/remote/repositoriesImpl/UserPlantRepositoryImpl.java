@@ -10,7 +10,9 @@ import com.company.akilovasi.data.local.dao.UserPlantDao;
 import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.UserPlantService;
+import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.PlantAddRequest;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 
 import java.io.File;
@@ -23,8 +25,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UserPlantRepositoryImpl implements UserPlantRepository {
@@ -46,24 +46,28 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
 
     @Override
     public LiveData<Resource<List<UserPlant>>> getAllUserPlants(Long userId) {
-        return new NetworkBoundResource<List<UserPlant>, List<UserPlant>>() {
+        return new NetworkBoundResource<List<UserPlant>, Response<List<UserPlant>>>() {
 
             @Override
-            protected void saveCallResult(@NonNull List<UserPlant> item) {
-                Log.d(TAG, "saveCallResult: of plant types of item " + item.size() + " bind to " + userId);
-                userPlantDao.saveUserPlant(item);
+            protected void saveCallResult(@NonNull Response<List<UserPlant>> item) {
+                if(item.getSuccess()){
+                    Log.d(TAG, "saveCallResult: of plant types of item " + item.getCount() + " bind to " + userId);
+                    userPlantDao.saveUserPlant(item.getResults());
+                }else {
+                    Log.e(TAG, "saveCallResult: Something went wrong");
+                }
             }
 
             @NonNull
             @Override
-            protected LiveData<List<UserPlant>> loadFromDb() {
+            protected LiveData< List<UserPlant>> loadFromDb() {
                 Log.d(TAG, "loadFromDb: of user plants bind to user id " + userId);
                 return userPlantDao.loadUserPlants();
             }
 
             @NonNull
             @Override
-            protected Call<List<UserPlant>> createCall() {
+            protected Call<Response<List<UserPlant>>> createCall() {
                 Log.d(TAG, "createCall: of plant types");
                 return userPlantService.getUserPlants(userId);
             }
@@ -71,13 +75,27 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
     }
 
     @Override
-    public Call<ResponseBody> addUserPlant(Long plantId, Long userId, String plantName, float plantSize, float potSize) {
+    public Call<Response<Message>> addUserPlant(Long plantId, Long userId, String plantName, float plantSize, float potSize) {
         return userPlantService.addUserPlant(new PlantAddRequest( plantId , userId , plantName, plantSize, potSize ));
     }
 
     @Override
-    public Call<ResponseBody> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId) {
-        File file = new File("/storage/emulated/0/Download/Corrections 6.jpg");
+    public Call<Response<Message>> addUserPlantWithImage(Long plantId, Long userId, String plantName, float plantSize, float potSize, String imageFilePath) {
+        File file = new File(imageFilePath);
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+// MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+        PlantAddRequest plantAddRequest = new PlantAddRequest( plantId , userId , plantName, plantSize, potSize );
+        return userPlantService.addUserPlantWithImage(plantAddRequest, body);
+    }
+
+    @Override
+    public Call<Response<Message>> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId) {
+        File file = new File(imageFilePath);
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
 

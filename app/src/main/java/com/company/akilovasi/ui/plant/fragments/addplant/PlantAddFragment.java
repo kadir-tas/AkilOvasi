@@ -1,35 +1,37 @@
 package com.company.akilovasi.ui.plant.fragments.addplant;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
-import android.util.Size;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.core.CameraX;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.UseCase;
-import androidx.lifecycle.LifecycleOwner;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import androidx.lifecycle.Observer;
-
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantType;
+import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.databinding.FragmentPlantAddBinding;
 import com.company.akilovasi.ui.BaseFragment;
+import com.company.akilovasi.ui.camera.CameraActivity;
 
-import java.util.Map;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, FragmentPlantAddBinding> implements View.OnClickListener {
 
     private static final String TAG = "PlantAddFragment";
+
+    private static final int REQUEST_CODE = 111;
 
     private Long plantTypeId;
     private String capturedImagePath = "";
@@ -64,10 +66,52 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 if(plantType != null){
                     dataBinding.setPlantType( plantType );
                     dataBinding.addNewPlantButton.setOnClickListener(PlantAddFragment.this);
+                    dataBinding.takePictureButton.setOnClickListener(PlantAddFragment.this);
                     dataBinding.setLoading(false);
                 }
             }
         });
+    }
+
+/*
+    private void dispatchTakePictureIntent(){
+        //startActivityForResult(new Intent(getActivity(), CameraActivity.class),REQUEST_CODE);
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, REQUEST_CODE);
+    }
+
+    private void dispatchFullSizeTakePicIntent(){
+
+        File file = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
+        Uri photoURI = FileProvider.getUriForFile(getContext(),
+                "com.example.android.fileprovider",
+                file);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+        startActivityForResult(takePictureIntent, REQUEST_CODE);
+    }
+*/
+
+    private void dispatchInAppImageTakeIntent(){
+        startActivityForResult(new Intent(getActivity(), CameraActivity.class), REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if( requestCode == REQUEST_CODE ) {
+           /* Bitmap photo = (Bitmap) data.getExtras().get("data");
+            dataBinding.capturedPlantImage.setImageBitmap(photo);*/
+            capturedImagePath = data.getStringExtra("path");
+            Toast.makeText(getContext(), "Saved at " + capturedImagePath, Toast.LENGTH_SHORT).show();
+            final int THUMBSIZE = 128;
+            Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
+                    BitmapFactory.decodeFile(capturedImagePath),
+                    THUMBSIZE,
+                    THUMBSIZE);
+            dataBinding.capturedPlantImage.setImageBitmap(thumbImage);
+            dataBinding.capturedPlantImage.setRotation(90);
+        }
     }
 
     @Override
@@ -135,28 +179,79 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 dataBinding.plantName.getText().toString(),
                 convetToPlantSize( dataBinding.plantSize.getCheckedRadioButtonId() ),
                 convetToPotSize( dataBinding.potSize.getCheckedRadioButtonId() )
-        ).enqueue(new Callback<ResponseBody>() {
+        ).enqueue(new Callback<Response<Message>>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "onResponse: " + response.message());
-                Toast.makeText(getContext(), R.string.plant_add, Toast.LENGTH_SHORT).show();
-                //TODO: TEMP CODE REMOVE ME
-                getActivity().onBackPressed();
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                Response<Message> message = response.body();
+                if(response.isSuccessful() && message != null){
+                    Log.d(TAG, "onResponse: " + message.getSuccess());
+
+                    //TODO: TEMP CODE REMOVE ME
+                    if(!capturedImagePath.equals("")){
+                        saveImage();
+                    }else{
+                        plantAdded();
+                    }
+                }else{
+                    loadingFailed();
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
-                dataBinding.setLoading(false);
+                loadingFailed();
             }
         });
     }
 
+
     private void saveImage(){
-        viewModel.saveUserPlantImage( capturedImagePath, plantTypeId , viewModel.getUserId());
+        viewModel.saveUserPlantWithImage(
+                plantTypeId,
+                viewModel.getUserId(),
+                dataBinding.plantName.getText().toString(),
+                convetToPlantSize( dataBinding.plantSize.getCheckedRadioButtonId() ),
+                convetToPotSize( dataBinding.potSize.getCheckedRadioButtonId() ),
+                capturedImagePath
+        ).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                Response<Message> message = response.body();
+                if(response.isSuccessful() && message != null){
+                    plantAdded();
+                    getActivity().onBackPressed();
+                }else{
+                   loadingFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                loadingFailed();
+            }
+        });
     }
 
-    private void foo(){
+    private void showLoading(){
+
+    }
+
+    private void loadingFailed(){
+        Toast.makeText(getActivity(), R.string.plant_add_failed, Toast.LENGTH_SHORT).show();
+        dataBinding.setLoading(false);
+    }
+
+    private void plantAdded(){
+        Toast.makeText(getActivity(), R.string.plant_add, Toast.LENGTH_SHORT).show();
+        dataBinding.setLoading(false);
+    }
+
+    private void loadingSuccsess(){
+
+    }
+
+    private void hideLoading(){
 
     }
 
@@ -171,6 +266,8 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 }
                 break;
             case R.id.takePictureButton:
+                dispatchInAppImageTakeIntent();
+                Log.d(TAG, "onClick: takePicutre");
                 break;
         }
     }

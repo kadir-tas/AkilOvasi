@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.local.entities.UserPlant;
+import com.company.akilovasi.data.remote.models.other.Message;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
 import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 
@@ -31,12 +33,17 @@ public class PlantAddFragmentViewModel extends ViewModel {
         return plantTypeRepository.getPlantType(plantId);
     }
 
-    public Call<ResponseBody> saveUserPlant(Long plantId, Long userId, String plantName, float plantSize , float potSize){
+    public Call<Response<Message>> saveUserPlant(Long plantId, Long userId, String plantName, float plantSize , float potSize){
         return userPlantRepository.addUserPlant( plantId, userId, plantName , plantSize, potSize);
     }
 
-    public Call<ResponseBody>  saveUserPlantImage(String imageFilePath,Long plantId, Long userId){
-        return userPlantRepository.updateUserPlantImage(imageFilePath , plantId, userId);
+    public Call<Response<Message>> saveUserPlantWithImage(Long plantId, Long userId, String plantName, float plantSize , float potSize, String imageFilePath){
+        return userPlantRepository.addUserPlantWithImage( plantId, userId, plantName , plantSize, potSize,imageFilePath);
+    }
+
+
+    public Call<Response<Message>>  saveUserPlantImage(String imageFilePath,Long plantId, Long userId){
+        return userPlantRepository.updateUserPlantImage(imageFilePath , userId, plantId);
     }
 
     //TODO: Get currently logged in users id
