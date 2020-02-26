@@ -1,5 +1,7 @@
 package com.company.akilovasi.di.modules;
 
+import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
+
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragment;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragment;
 
@@ -10,6 +12,9 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class FragmentBuilderModule {
     @ContributesAndroidInjector
     abstract PlantCategoryFragment plantCategoryFragment();
+
+    @ContributesAndroidInjector
+    abstract PlantHistoryFragment plantHistoryFragment();
 
     @ContributesAndroidInjector
     abstract PlantAddFragment plantAddFragment();

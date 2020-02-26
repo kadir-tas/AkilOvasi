@@ -4,6 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shared_image">sharedimage</string>
+    <string name="history">Geçmiş Analizler</string>
     <string name="plant_name">Plant Name</string>
     <string name="plant_size">Bitkinizin Boyu</string>
     <string name="pot_size">Saksınızın Boyu</string>

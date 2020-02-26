@@ -3,9 +3,11 @@ package com.company.akilovasi.di.modules;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.di.ViewModelKey;
 import com.company.akilovasi.ui.login.LoginViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;
+import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragmentViewModel;
 import com.company.akilovasi.ui.plant.PlantCategoryActivityViewModel;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragmentViewModel;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragmentViewModel;
@@ -28,7 +30,6 @@ public abstract class ViewModelModule {
     @ViewModelKey(MainViewModel.class)
     abstract ViewModel bindsMainViewModel(MainViewModel mainViewModel);
 
-
     @Binds
     @IntoMap
     @ViewModelKey(PlantCategoryActivityViewModel.class)
@@ -44,6 +45,11 @@ public abstract class ViewModelModule {
     @ViewModelKey(PlantAddFragmentViewModel.class)
     abstract ViewModel bindPlantAddFragmentViewModel(PlantAddFragmentViewModel plantAddFragmentViewModel);
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlantHistoryFragmentViewModel.class)
+    abstract ViewModel bindsPlantHistoryFragmentViewModel(PlantHistoryFragmentViewModel plantHistoryFragmentViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);

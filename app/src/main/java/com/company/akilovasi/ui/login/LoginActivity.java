@@ -13,56 +13,68 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.databinding.ActivityLoginBinding;
+import com.company.akilovasi.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
-public class LoginActivity extends AppCompatActivity implements LifecycleOwner {
+public class LoginActivity extends AppCompatActivity {
 
-    LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
-
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-
-    LoginViewModel loginViewModel;
-
-    ActivityLoginBinding binding;
-
-    public static Intent newIntent(Context context, int movieId) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        return intent;
-    }
+//    LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
+//
+//    @Inject
+//    ViewModelProvider.Factory viewModelFactory;
+//
+//    LoginViewModel loginViewModel;
+//
+//    ActivityLoginBinding binding;
+//
+//    public static Intent newIntent(Context context, int movieId) {
+//        Intent intent = new Intent(context, LoginActivity.class);
+//        return intent;
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
-        binding.setLogin(new LoginRequest("asdasd","dcsdfsdf"));
-//        loginViewModel.login()
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        setContentView(R.layout.activity_login);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                ActivityCompat.finishAfterTransition(this);
-                break;
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this ,MainActivity.class);
+            startActivity(intent);
         }
-        return super.onOptionsItemSelected(item);
+        );
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+//        loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
+//        binding.setLogin(new LoginRequest("asdasd","dcsdfsdf"));
+////        loginViewModel.login()
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-    @Override
-    public LifecycleRegistry getLifecycle() {
-        return lifecycleRegistry;
-    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                ActivityCompat.finishAfterTransition(this);
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public LifecycleRegistry getLifecycle() {
+//        return lifecycleRegistry;
+//    }
 
 }

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="plant"
+            type="com.company.akilovasi.data.local.entities.Plant" />
+
+        <variable
+            name="itemPlantClick"
+            type="com.company.akilovasi.ui.main.callbacks.ItemPlantClick" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:onClick="@{() -> itemPlantClick.onPlantClick(plant.userPlantId)}"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_margin="6dp"
+        app:cardBackgroundColor="@color/white_cardview_color"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/monterey"
+                        app:riv_corner_radius="95dp"
+                        app:riv_mutate_background="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="5dp">
+
+
+                    <TextView
+                        android:id="@+id/plantName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:ellipsize="end"
+                        android:maxEms="8"
+                        android:maxLines="1"
+                        android:text="@{plant.userPlantName}"
+                        android:textSize="@dimen/header_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/plantType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text="@{plant.plantType.plantCategory}"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:orientation="horizontal">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:stretchColumns="*">
+
+                    <TableRow>
+
+                        <ImageView
+                            android:id="@+id/imageVasdasdiew1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/plant" />
+
+                        <TextView
+                            android:id="@+id/pasdasdsadlant"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:textStyle="normal"
+                            android:text=": İyi"/>
+
+                        <ImageView
+                            android:id="@+id/imdagesView1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/water" />
+
+                        <TextView
+                            android:id="@+id/plsadnt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:textStyle="normal"
+                            android:text="@{String.valueOf(plant.lastSensHumidity)}" />
+
+                        <ImageView
+                            android:id="@+id/imagesView1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ph" />
+
+                        <TextView
+                            android:id="@+id/plsant"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:textStyle="normal"
+                            android:text="@{String.valueOf(plant.lastSensPh)}"/>
+
+                        <ImageView
+                            android:id="@+id/imageVsaiew1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/temp" />
+
+                        <TextView
+                            android:id="@+id/pasdlant"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:textStyle="normal"
+                            android:text="@{String.valueOf(plant.lastSensTemp)}"/>
+
+                        <ImageView
+                            android:id="@+id/imageViasdasew1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/sunny" />
+
+                        <TextView
+                            android:id="@+id/planasdasdt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:textStyle="normal"
+                            android:text="@{String.valueOf(plant.lastSensLight)}"/>
+
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

@@ -10,6 +10,8 @@ import com.company.akilovasi.di.modules.LocalModule;
 import com.company.akilovasi.di.modules.NetworkModule;
 import com.company.akilovasi.di.modules.ViewModelModule;
 import com.company.akilovasi.di.modules.banner.BannerModule;
+import com.company.akilovasi.di.modules.plant.PlantHistoryModule;
+import com.company.akilovasi.di.modules.plant.PlantModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
 import com.company.akilovasi.di.modules.user.LoginModule;
 import com.company.akilovasi.di.modules.user.UserModule;
@@ -35,8 +37,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
         BannerModule.class,
         PlantTypeModule.class,
         ViewModelModule.class,
-        UserPlantModule.class,
-        LocalModule.class})
+        LocalModule.class,
+        PlantModule.class,
+        PlantHistoryModule.class,
+        UserPlantModule.class})
 public interface AppComponent {
 
     @Component.Builder

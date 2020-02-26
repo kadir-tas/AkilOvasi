@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
+import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.remote.repositories.BannerRepository;
+import com.company.akilovasi.data.remote.repositories.PlantRepository;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import retrofit2.Call;
 
 public class MainViewModel extends ViewModel {
 
@@ -21,12 +21,15 @@ public class MainViewModel extends ViewModel {
 
     private final BannerRepository bannerRepository;
 
+    private final PlantRepository plantRepository;
+
     private MediatorLiveData<Resource<List<Banner>>> banners = new MediatorLiveData<>();
 
     @Inject
-    public MainViewModel(UserRepository userRepository, BannerRepository bannerRepository) {
+    public MainViewModel(UserRepository userRepository, BannerRepository bannerRepository, PlantRepository plantRepository) {
         this.userRepository = userRepository;
         this.bannerRepository = bannerRepository;
+        this.plantRepository = plantRepository;
 //        initBanner();
     }
 
@@ -38,4 +41,11 @@ public class MainViewModel extends ViewModel {
         banners = (MediatorLiveData<Resource<List<Banner>>>) bannerRepository.getAllBanners();
     }
 
+    public LiveData<Resource<List<Plant>>> getAllPlants() {
+        return plantRepository.getUserAllPlants(getAuthenticatedUserId());
+    }
+
+    public Long getAuthenticatedUserId(){
+        return 10L; //TODO: THIS ID IS FOR ONLY TEST . It will return authenticated userId
+    }
 }

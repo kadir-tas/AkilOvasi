@@ -8,8 +8,6 @@ import androidx.databinding.BindingAdapter;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.google.gson.annotations.SerializedName;
@@ -36,18 +34,6 @@ public class Banner {
 
     @SerializedName("bannerActive")
     private String bannerActive;
-
-    @Nullable
-    @SerializedName("imageUrl")
-    private String imageUrl;
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = String.valueOf(this.getBannerId());
-    }
 
     public Long getBannerId() {
         return bannerId;
@@ -96,29 +82,4 @@ public class Banner {
     public void setBannerActive(String bannerActive) {
         this.bannerActive = bannerActive;
     }
-
-//    @BindingAdapter({"imageUrl"})
-//    public static void loadImageUrl(ImageView view, String imageUrl) {
-//        Log.d("CCC",imageUrl);
-//        if (imageUrl != null && !imageUrl.equals("")) {
-//            Picasso.get()
-//                    .load(ApiConstants.IMAGE_ENDPOINT_PREFIX)
-//                    .placeholder(R.drawable.placeholder)
-//                    .into(view);
-//            Log.d("CCC",imageUrl);
-//        }
-//    }
-/*
-    @BindingAdapter({ "imageUrl" })
-    public static void loadImage(ImageView imageView, String imageUrl) {
-        if(imageUrl == null) Log.d("CCC","this wokrs but null");
-        else
-            Glide.with(imageView.getContext())
-                    .setDefaultRequestOptions(new RequestOptions()
-                            .circleCrop())
-                    .load(ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX + imageUrl)
-                    .placeholder(R.drawable.loading)
-                    .into(imageView);
-    }
-*/
 }

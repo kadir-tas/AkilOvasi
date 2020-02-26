@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <com.company.akilovasi.util.DrawerContent
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/layout_white"
+        app:layoutDescription="@xml/scene">
+
+        <include
+            android:id="@+id/wrapper"
+            layout="@layout/wrapper_main"/>
+
+    </com.company.akilovasi.util.DrawerContent>
+
+</layout>

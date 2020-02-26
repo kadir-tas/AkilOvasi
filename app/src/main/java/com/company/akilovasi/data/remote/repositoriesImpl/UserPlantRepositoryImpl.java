@@ -3,6 +3,7 @@ package com.company.akilovasi.data.remote.repositoriesImpl;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
@@ -56,6 +57,11 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
                 }else {
                     Log.e(TAG, "saveCallResult: Something went wrong");
                 }
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<UserPlant> data) {
+                return true;
             }
 
             @NonNull

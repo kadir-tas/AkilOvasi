@@ -8,11 +8,16 @@
         <variable
             name="banner"
             type="com.company.akilovasi.data.local.entities.Banner" />
+
+        <variable
+            name="itemBannerClick"
+            type="com.company.akilovasi.ui.main.callbacks.ItemBannerClick" />
     </data>
 
     <LinearLayout
+        android:onClick="@{() -> itemBannerClick.onBannerClicked(banner)}"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -24,7 +29,7 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:transitionName="@string/shared_image"
-            bind:imageUrl="@{banner.imageUrl}" />
+            bind:imageUrl="@{String.valueOf(banner.bannerId)}" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -3,6 +3,8 @@ package com.company.akilovasi.data.remote.api;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.remote.models.responses.Response;
 
+import com.company.akilovasi.data.remote.models.responses.PlantTypeResponse;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;

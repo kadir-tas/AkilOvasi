@@ -1,6 +1,7 @@
 package com.company.akilovasi.data.remote;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -42,17 +43,25 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
-        result.addSource(dbSource, newData -> result.setValue(Resource.loading(newData)));
+        result.addSource(dbSource, newData -> {
+            result.setValue(Resource.loading(newData));
+        });
         createCall().enqueue(new Callback<RequestType>() {
             @Override
             public void onResponse(Call<RequestType> call, Response<RequestType> response) {
                 result.removeSource(dbSource);
                 saveResultAndReInit(response.body());
+                if(response.raw().cacheResponse() != null){
+                    Log.v("NETWORKBOUND", "RESPONSE FROM CACHE");
+                }else{
+                    Log.v("NETWORKBOUND", "RESPONSE NOT FROM CACHE");
+                }
             }
 
             @Override
             public void onFailure(Call<RequestType> call, Throwable t) {
                 onFetchFailed();
+                Log.v("NETWORKBOUND", "FETCH FROM NETWORK FAILED");
                 result.removeSource(dbSource);
                 result.addSource(dbSource, newData -> result.setValue(Resource.error(t.getMessage(), newData)));
             }
@@ -80,9 +89,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     protected abstract void saveCallResult(@NonNull RequestType item);
 
     @MainThread
-    protected boolean shouldFetch(@Nullable ResultType data) {
-        return true;
-    }
+    protected abstract boolean shouldFetch(@Nullable ResultType data);
 
     @NonNull
     @MainThread

@@ -7,6 +7,8 @@ import androidx.room.Room;
 
 import com.company.akilovasi.data.local.AppDatabase;
 import com.company.akilovasi.data.local.dao.BannerDao;
+import com.company.akilovasi.data.local.dao.PlantDao;
+import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.dao.UserPlantDao;
 import com.company.akilovasi.ui.BaseActivity;
@@ -42,4 +44,14 @@ public class LocalModule {
     @Provides
     @Singleton
     UserPlantDao provideUserPlantDao(AppDatabase appDatabase){ return appDatabase.userPlantDao(); }
+
+    @Provides
+    @Singleton
+    PlantDao providePlantDao(AppDatabase appDatabase) { return appDatabase.plantDao();
+    }
+
+    @Provides
+    @Singleton
+    PlantHistoryDao providePlantHistoryDao(AppDatabase appDatabase) { return appDatabase.plantHistoryDao();
+    }
 }

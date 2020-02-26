@@ -18,7 +18,6 @@
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
@@ -34,7 +33,6 @@
                 android:id="@+id/imageViewCover"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:transitionName="@string/shared_image"
                 bind:imageUrl="@{plantType.plantId}" />
         </FrameLayout>
 

@@ -14,8 +14,8 @@ import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 
 import javax.inject.Inject;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
+
 
 public class PlantAddFragmentViewModel extends ViewModel {
     private static final String TAG = "PlantAddFragmentViewMod";

@@ -1,6 +1,7 @@
 package com.company.akilovasi.data.local.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -20,6 +21,9 @@ public class PlantType {
 
     @SerializedName("plantName")
     private String plantName;
+
+    public PlantType() {
+    }
 
     public Long getPlantId() {
         return plantId;

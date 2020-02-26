@@ -22,6 +22,7 @@ import com.company.akilovasi.di.modules.FragmentBuilderModule;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 
@@ -45,7 +46,7 @@ public abstract class BaseFragment<VM extends ViewModel, DB extends ViewDataBind
     public void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidSupportInjection.inject(this);
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(getViewModel());
     }
 
     @Nullable
