@@ -1,9 +1,11 @@
 package com.company.akilovasi.ui.plant;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -48,6 +50,8 @@ public class PlantCategoryActivity extends BaseActivity<PlantCategoryActivityVie
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: Created");
         initObservers();
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},  1);
     }
 
     private void initObservers(){

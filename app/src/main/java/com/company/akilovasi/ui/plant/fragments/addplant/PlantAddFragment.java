@@ -1,6 +1,11 @@
 package com.company.akilovasi.ui.plant.fragments.addplant;
 
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -15,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.company.akilovasi.data.remote.models.responses.Response;
+
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantType;
@@ -22,6 +29,12 @@ import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.databinding.FragmentPlantAddBinding;
 import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.camera.CameraActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +44,7 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
 
     private static final String TAG = "PlantAddFragment";
 
-    private static final int REQUEST_CODE = 111;
+    private static final int REQUEST_CODE = 1;
 
     private Long plantTypeId;
     private String capturedImagePath = "";
@@ -93,25 +106,88 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
 */
 
     private void dispatchInAppImageTakeIntent(){
-        startActivityForResult(new Intent(getActivity(), CameraActivity.class), REQUEST_CODE);
+        startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if( requestCode == REQUEST_CODE ) {
+        Log.d(TAG, "onActivityResult: " + REQUEST_CODE + " , " + resultCode);
+        if( requestCode == REQUEST_CODE) {
            /* Bitmap photo = (Bitmap) data.getExtras().get("data");
             dataBinding.capturedPlantImage.setImageBitmap(photo);*/
-            capturedImagePath = data.getStringExtra("path");
+          /* capturedImagePath = data.getStringExtra("path");
             Toast.makeText(getContext(), "Saved at " + capturedImagePath, Toast.LENGTH_SHORT).show();
             final int THUMBSIZE = 128;
-            Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
-                    BitmapFactory.decodeFile(capturedImagePath),
-                    THUMBSIZE,
-                    THUMBSIZE);
+            Bitmap bitmap =
+
             dataBinding.capturedPlantImage.setImageBitmap(thumbImage);
-            dataBinding.capturedPlantImage.setRotation(90);
+            dataBinding.capturedPlantImage.setRotation(90);*/
+
+       /*   if(data != null){
+              Log.d(TAG, "onActivityResult: Data not null");
+              Bundle extras = data.getExtras();
+              if(extras != null){
+                  Log.d(TAG, "onActivityResult: extra not null");
+                  Bitmap imageBitmap = (Bitmap) extras.get("data");
+                  if(imageBitmap != null) {
+                      Log.d(TAG, "onActivityResult: bitmap not null");
+                      dataBinding.capturedPlantImage.setImageBitmap(imageBitmap);
+                      //Uri tempUri = getImageUri(getContext(), imageBitmap);
+                      //capturedImagePath = getRealPathFromURI(tempUri);
+                      Log.d(TAG, "onActivityResult: "  + capturedImagePath);
+                  }
+              }
+          }else {
+              Log.d(TAG, "onActivityResult: Data is null");
+          }
+          */
+
+            Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(capturedImagePath),
+                    64, 64);
+            dataBinding.capturedPlantImage.setImageBitmap(bitmap);
+
+        }else{
+            dataBinding.capturedPlantImage.setImageBitmap(null);
+            capturedImagePath = "";
         }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity( getContext().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        "com.akilovasi.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_CODE);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        capturedImagePath = image.getAbsolutePath();
+        return image;
     }
 
     @Override
@@ -185,13 +261,8 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 Response<Message> message = response.body();
                 if(response.isSuccessful() && message != null){
                     Log.d(TAG, "onResponse: " + message.getSuccess());
-
-                    //TODO: TEMP CODE REMOVE ME
-                    if(!capturedImagePath.equals("")){
-                        saveImage();
-                    }else{
-                        plantAdded();
-                    }
+                    plantAdded();
+                    getActivity().onBackPressed();
                 }else{
                     loadingFailed();
                 }
@@ -207,6 +278,7 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
 
 
     private void saveImage(){
+        dataBinding.setLoading(true);
         viewModel.saveUserPlantWithImage(
                 plantTypeId,
                 viewModel.getUserId(),
@@ -222,12 +294,14 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                     plantAdded();
                     getActivity().onBackPressed();
                 }else{
+                    Log.d(TAG, "onResponse: HERE");
                    loadingFailed();
                 }
             }
 
             @Override
             public void onFailure(Call<Response<Message>> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
                 loadingFailed();
             }
         });
@@ -260,13 +334,18 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
         switch (v.getId()){
             case R.id.addNewPlantButton:
                 if(validateForm()){
-                    saveForm();
+                    if(capturedImagePath.equals("")){
+                        saveForm();
+                    }else{
+                        saveImage();
+                    }
                 }else {
                     Toast.makeText(getContext(), R.string.form_fill_alert, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.takePictureButton:
-                dispatchInAppImageTakeIntent();
+                //dispatchInAppImageTakeIntent();
+                dispatchTakePictureIntent();
                 Log.d(TAG, "onClick: takePicutre");
                 break;
         }

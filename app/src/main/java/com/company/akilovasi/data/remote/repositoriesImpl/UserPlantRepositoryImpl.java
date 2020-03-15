@@ -90,7 +90,10 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
         File file = new File(imageFilePath);
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
+        if(file.exists())
+            Log.d(TAG, "addUserPlantWithImage: File exist");
+        else
+            Log.d(TAG, "addUserPlantWithImage: File does not ecist");
 // MultipartBody.Part is used to send also the actual file name
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("image", file.getName(), requestFile);
