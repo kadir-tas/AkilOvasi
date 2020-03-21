@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.PlantType;
-import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
 import java.util.List;
 import javax.inject.Inject;
 
 public class PlantCategoryActivityViewModel extends ViewModel {
-    ;
+
     private final PlantTypeRepository plantTypeRepository;
 
     @Inject

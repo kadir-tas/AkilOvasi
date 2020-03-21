@@ -1,55 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.login.LoginActivity">
 
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="login"-->
-<!--            type="com.company.akilovasi.data.remote.models.requests.LoginRequest" />-->
-<!--    </data>-->
+    <data>
+        <variable
+            name="loginClick"
+            type="com.company.akilovasi.ui.login.callbacks.LoginButtonClick" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <variable
+            name="loginButtonEnable"
+            type="boolean" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foregroundGravity="center"
-        tools:context=".ui.login.LoginActivity">
+        android:background="@color/layout_white"
+        android:fillViewport="true"
+        android:isScrollContainer="true"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="go"
-                android:id="@+id/button"/>
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="20dp"-->
-<!--                android:elevation="35dp"-->
-<!--                android:hint="Email"-->
-<!--                android:inputType="textEmailSubject"-->
-<!--                android:text="@{login.email}"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20dp"-->
-<!--                tools:ignore="MissingConstraints" />-->
+                android:orientation="vertical"
+                android:weightSum="1">
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="20dp"-->
-<!--                android:elevation="35dp"-->
-<!--                android:hint="Password"-->
-<!--                android:inputType="textEmailSubject"-->
-<!--                android:text="@{login.email}"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20dp"-->
-<!--                tools:ignore="MissingConstraints" />-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.35"
+                    android:background="@drawable/layerlist"
+                    android:orientation="vertical">
 
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/lblTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:lineSpacingExtra="8sp"
+                        android:text="Akıl Ovası"
+                        android:textAlignment="center"
+                        android:textColor="@color/layout_white"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/login"
+                        android:textColor="@color/layout_white"
+                        android:textSize="@dimen/header_text_size"
+                        android:textStyle="italic" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.65"
+                    android:background="@color/layout_white"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="32dp"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person_outline_black_24dp"
+                            android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+                            android:drawablePadding="5dp"
+                            android:ems="10"
+                            android:hint="@string/usernameOrEmail"
+                            android:inputType="textEmailAddress" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                            android:drawablePadding="5dp"
+                            android:ems="10"
+                            android:hint="@string/password"
+                            android:inputType="textPassword" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:background="@drawable/rounded_login_button"
+                        android:enabled="@{loginButtonEnable}"
+                        android:onClick="@{() -> loginClick.onLoginButtonClicked(txtEmailAddress.getEditText().getText().toString(), txtPassword.getEditText().getText().toString())}"
+                        android:text="@string/login"
+                        android:textColor="@drawable/button_text_color"
+                        android:fitsSystemWindows="true"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+    </ScrollView>
+
 </layout>

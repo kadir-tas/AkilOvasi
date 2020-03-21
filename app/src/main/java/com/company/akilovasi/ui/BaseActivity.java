@@ -3,6 +3,7 @@ package com.company.akilovasi.ui;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
@@ -42,11 +43,12 @@ public abstract class BaseActivity<VM extends ViewModel, DB extends ViewDataBind
     @LayoutRes
     public abstract int getLayoutRes();
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(this, getLayoutRes());
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(getViewModel());
     }
 }

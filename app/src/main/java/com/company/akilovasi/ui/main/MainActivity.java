@@ -1,9 +1,13 @@
 package com.company.akilovasi.ui.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -13,17 +17,27 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.databinding.ActivityMainBinding;
+import com.company.akilovasi.databinding.components.BindingComponent;
+import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
+import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.adapters.BannerAdapter;
 import com.company.akilovasi.ui.main.adapters.PlantAdapter;
 import com.company.akilovasi.ui.main.callbacks.AddPlantClick;
 import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
+import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
+import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
+
+import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
+import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
 
 
-public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick {
+public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick {
 
     private BannerAdapter mBannerAdapter;
     private PlantAdapter mPlantAdapter;
@@ -31,6 +45,12 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private RecyclerView mBannerRecyclerView;
     private RecyclerView mPlantsRecyclerView;
 
+    @Inject
+    @SecretPrefs
+    SharedPreferences secretPreferences;
+
+    @Inject
+    Picasso picasso;
 
     @Override
     public Class<MainViewModel> getViewModel() {
@@ -46,6 +66,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding.content.wrapper.setAddPlantClick(this);
+        dataBinding.leftMenu.setLogoutClick(this);
         initBannerRecyclerView();
         initPlantRecyclerView();
         subscribeObservers();
@@ -59,15 +80,18 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     Log.v("MSGG", listResource.data + "");
                     Log.v("MSGG", listResource.status + "");
                     mBannerAdapter.setData(listResource.data);
+                    viewModel.getAllBanners().removeObservers(MainActivity.this);
                 });
 
-        viewModel.getAllPlants().observe(this, listResource -> {
-            mPlantAdapter.setData(listResource.data);
-        });
+        viewModel.getAllPlants()
+                .observe(this, listResource -> {
+                    mPlantAdapter.setData(listResource.data);
+                    viewModel.getAllPlants().removeObservers(MainActivity.this);
+                });
     }
 
 
-    private void initBannerRecyclerView(){
+    private void initBannerRecyclerView() {
 
         mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
         mBannerRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -75,17 +99,17 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         snapHelper.attachToRecyclerView(mBannerRecyclerView);
         mBannerRecyclerView.setHasFixedSize(true);
 
-        mBannerAdapter = new BannerAdapter(this);
+        mBannerAdapter = new BannerAdapter(this, picasso);
         mBannerRecyclerView.setAdapter(mBannerAdapter);
     }
 
-    private void initPlantRecyclerView(){
+    private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
         mPlantsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mPlantsRecyclerView.setHasFixedSize(true);
 
-        mPlantAdapter = new PlantAdapter(this );
+        mPlantAdapter = new PlantAdapter(this, picasso);
         mPlantsRecyclerView.setAdapter(mPlantAdapter);
     }
 
@@ -99,9 +123,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onPlantClick(Long userPlantId) {
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
-        if(f == null){
+        if (f == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
-        }else{
+        } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
         }
     }
@@ -109,10 +133,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onBackPressed() {
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
-        if(f != null){
+        if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
-        }else
-        {
+        } else {
             super.onBackPressed();
         }
     }
@@ -120,6 +143,15 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onAddPlantClick() {
         startActivity(new Intent(MainActivity.this, PlantCategoryActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onLogoutButtonClicked() {
+        secretPreferences.edit().remove(ACCESS_TOKEN).apply();
+        secretPreferences.edit().remove(REFRESH_TOKEN).apply();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 }
