@@ -40,7 +40,7 @@ public class PlantRepositoryImpl implements PlantRepository {
         return new NetworkBoundResource<List<Plant>, PlantResponse>() {
             @Override
             protected void saveCallResult(@NonNull PlantResponse item) {
-//                if(item.equals(null))
+//                if(item != null)
                     plantDao.savePlants(item.getResults());
             }
 

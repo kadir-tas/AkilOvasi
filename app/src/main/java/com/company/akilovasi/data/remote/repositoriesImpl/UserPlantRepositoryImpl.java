@@ -89,7 +89,7 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
     public Call<Response<Message>> addUserPlantWithImage(Long plantId, Long userId, String plantName, float plantSize, float potSize, String imageFilePath) {
         File file = new File(imageFilePath);
         RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                RequestBody.create(file, MediaType.parse("multipart/form-data"));
         if(file.exists())
             Log.d(TAG, "addUserPlantWithImage: File exist");
         else

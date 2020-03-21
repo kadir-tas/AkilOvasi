@@ -66,7 +66,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             Response response = userService.refreshJwtToken(refreshToken).execute();
             if(response.isSuccessful()) {
-                String updatedToken = BEARER + SPACE + reverse(response.headers().get(AUTHORIZATION));
+                String updatedToken = BEARER + SPACE + /*reverse(*/response.headers().get(AUTHORIZATION)/*)*/;
                 if (updatedToken.length() > 7) {
                     return updatedToken;
                 }
@@ -77,19 +77,19 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
-    private static String reverse(final String input) {
-        if(input == null || input.isEmpty()){
-            return null;
-        }
-        final StringBuilder builder = new StringBuilder(input);
-        int length = builder.length();
-        for (int i = 0; i < length / 2; i++) {
-            final char current = builder.charAt(i);
-            final int otherEnd = length - i - 1;
-            builder.setCharAt(i, builder.charAt(otherEnd));
-            builder.setCharAt(otherEnd, current);
-        }
-        return builder.toString();
-    }
+//    private static String reverse(final String input) {
+//        if(input == null || input.isEmpty()){
+//            return null;
+//        }
+//        final StringBuilder builder = new StringBuilder(input);
+//        int length = builder.length();
+//        for (int i = 0; i < length / 2; i++) {
+//            final char current = builder.charAt(i);
+//            final int otherEnd = length - i - 1;
+//            builder.setCharAt(i, builder.charAt(otherEnd));
+//            builder.setCharAt(otherEnd, current);
+//        }
+//        return builder.toString();
+//    }
 
 }
