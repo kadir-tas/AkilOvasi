@@ -21,6 +21,7 @@ import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityPlantCategoryBinding;
 import com.company.akilovasi.ui.BaseActivity;
 import com.company.akilovasi.ui.camera.CameraActivity;
+import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.plant.callbacks.ItemPlantTypeClick;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragment;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragment;
@@ -128,7 +129,8 @@ public class PlantCategoryActivity extends BaseActivity<PlantCategoryActivityVie
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         }else
         {
-            super.onBackPressed();
+            startActivity(new Intent( PlantCategoryActivity.this,MainActivity.class));
+            finish();
         }
     }
 
