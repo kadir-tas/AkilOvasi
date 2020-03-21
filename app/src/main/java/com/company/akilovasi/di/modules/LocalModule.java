@@ -2,7 +2,6 @@ package com.company.akilovasi.di.modules;
 
 import android.app.Application;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.room.Room;
 
 import com.company.akilovasi.data.local.AppDatabase;
@@ -10,10 +9,8 @@ import com.company.akilovasi.data.local.dao.BannerDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
+import com.company.akilovasi.data.local.dao.UserDao;
 import com.company.akilovasi.data.local.dao.UserPlantDao;
-import com.company.akilovasi.ui.BaseActivity;
-import com.company.akilovasi.ui.plant.PlantCategoryActivity;
-import com.company.akilovasi.ui.plant.PlantCategoryPagerAdapter;
 
 import javax.inject.Singleton;
 
@@ -31,7 +28,7 @@ public class LocalModule {
 
     @Provides
     @Singleton
-    PlantTypeDao providePlantTypeDao(AppDatabase appDatabase){
+    PlantTypeDao providePlantTypeDao(AppDatabase appDatabase) {
         return appDatabase.plantTypeDao();
     }
 
@@ -43,15 +40,25 @@ public class LocalModule {
 
     @Provides
     @Singleton
-    UserPlantDao provideUserPlantDao(AppDatabase appDatabase){ return appDatabase.userPlantDao(); }
-
-    @Provides
-    @Singleton
-    PlantDao providePlantDao(AppDatabase appDatabase) { return appDatabase.plantDao();
+    UserPlantDao provideUserPlantDao(AppDatabase appDatabase) {
+        return appDatabase.userPlantDao();
     }
 
     @Provides
     @Singleton
-    PlantHistoryDao providePlantHistoryDao(AppDatabase appDatabase) { return appDatabase.plantHistoryDao();
+    PlantDao providePlantDao(AppDatabase appDatabase) {
+        return appDatabase.plantDao();
+    }
+
+    @Provides
+    @Singleton
+    PlantHistoryDao providePlantHistoryDao(AppDatabase appDatabase) {
+        return appDatabase.plantHistoryDao();
+    }
+
+    @Provides
+    @Singleton
+    UserDao provideUserDao(AppDatabase appDatabase) {
+        return appDatabase.userDao();
     }
 }

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+        <variable
+            name="logoutClick"
+            type="com.company.akilovasi.ui.main.callbacks.LogoutButtonClick" />
+
+    </data>
+
+
     <com.company.akilovasi.util.DrawerContent
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:layoutDescription="@xml/scene_main_menu"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorMainDarkDark">
 
         <TextView
             android:id="@+id/textView"
@@ -21,7 +29,7 @@
             android:textStyle="italic"
             android:typeface="serif"
             android:textColor="#FFF"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintBottom_toTopOf="@+id/logout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,15 +89,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/logout" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="test text"
+            android:text="@string/logout"
             android:textColor="#FFF"
             app:fontFamily="cursive"
+            android:onClick="@{() -> logoutClick.onLogoutButtonClicked()}"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

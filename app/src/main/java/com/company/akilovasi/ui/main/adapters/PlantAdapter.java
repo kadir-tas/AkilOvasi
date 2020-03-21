@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.databinding.ItemRvPlantMainBinding;
+import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.ui.BaseAdapter;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,12 @@ public class PlantAdapter extends BaseAdapter<PlantAdapter.PlantViewHolder, Plan
 
     private ItemPlantClick itemPlantClick;
 
-    public PlantAdapter(ItemPlantClick itemPlantClick) {
+    private Picasso picasso;
+
+    public PlantAdapter(ItemPlantClick itemPlantClick, Picasso picasso) {
         plants = new ArrayList<>();
         this.itemPlantClick = itemPlantClick;
+        this.picasso = picasso;
     }
 
 
@@ -39,7 +44,7 @@ public class PlantAdapter extends BaseAdapter<PlantAdapter.PlantViewHolder, Plan
     @Override
     public PlantAdapter.PlantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         ItemRvPlantMainBinding itemRvPlantMainBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
-                        R.layout.item_rv_plant_main, viewGroup, false);
+                        R.layout.item_rv_plant_main, viewGroup, false, new BindingComponent(picasso));
         return new PlantAdapter.PlantViewHolder(itemRvPlantMainBinding.getRoot(), itemRvPlantMainBinding);
     }
 

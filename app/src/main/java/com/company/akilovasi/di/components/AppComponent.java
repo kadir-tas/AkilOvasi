@@ -1,10 +1,13 @@
 package com.company.akilovasi.di.components;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.company.akilovasi.AkilOvasiApp;
 import com.company.akilovasi.di.modules.ActivityBuilderModule;
 import com.company.akilovasi.di.modules.AppModule;
+import com.company.akilovasi.di.modules.AppPreference;
 import com.company.akilovasi.di.modules.FragmentBuilderModule;
 import com.company.akilovasi.di.modules.LocalModule;
 import com.company.akilovasi.di.modules.NetworkModule;
@@ -24,10 +27,10 @@ import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 
-
 @Singleton
 @Component(modules = {
         AppModule.class,
+        AppPreference.class,
         AndroidSupportInjectionModule.class,
         ActivityBuilderModule.class,
         FragmentBuilderModule.class,

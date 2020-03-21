@@ -11,6 +11,7 @@ import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.dao.UserDao;
 import com.company.akilovasi.data.local.dao.UserPlantDao;
 import com.company.akilovasi.data.local.entities.Banner;
+import com.company.akilovasi.data.local.entities.Login;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.data.local.entities.PlantType;
@@ -23,7 +24,8 @@ import com.company.akilovasi.util.Converters;
         UserPlant.class,
         Banner.class,
         Plant.class,
-        PlantHistory.class},
+        PlantHistory.class,
+        Login.class},
         version = 2, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {

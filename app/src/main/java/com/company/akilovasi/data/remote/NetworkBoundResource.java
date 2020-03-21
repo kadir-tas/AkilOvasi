@@ -51,9 +51,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             public void onResponse(Call<RequestType> call, Response<RequestType> response) {
                 result.removeSource(dbSource);
                 saveResultAndReInit(response.body());
-                if(response.raw().cacheResponse() != null){
+                if (response.raw().cacheResponse() != null) {
                     Log.v("NETWORKBOUND", "RESPONSE FROM CACHE");
-                }else{
+                } else {
                     Log.v("NETWORKBOUND", "RESPONSE NOT FROM CACHE");
                 }
             }

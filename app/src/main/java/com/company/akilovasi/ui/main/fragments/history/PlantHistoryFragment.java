@@ -26,8 +26,11 @@ import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.main.adapters.PlantHistoryAdapter;
 import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysis;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback {
 
@@ -38,6 +41,8 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     private FragmentActivity mActivity;
     private long userPlantId;
 
+    @Inject
+    Picasso picasso;
 
     public static PlantHistoryFragment newInstance(Long userPlantId) {
         Bundle args = new Bundle();
@@ -112,7 +117,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mHistoryRecyclerView.setHasFixedSize(true);
 
-        mPlantHistoryAdapter = new PlantHistoryAdapter();
+        mPlantHistoryAdapter = new PlantHistoryAdapter(picasso);
         mHistoryRecyclerView.setAdapter(mPlantHistoryAdapter);
     }
 

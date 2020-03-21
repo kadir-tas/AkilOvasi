@@ -22,5 +22,9 @@
     <string name="form_fill_alert">Lütfen Bitkinizi Eklemeden Önce Formu Doldurunuz</string>
     <string name="plant_add">Bitkiniz Eklendi</string>
     <string name="plant_add_failed">Bitki Eklemesi Başarısız</string>
+    <string name="password">Şifre</string>
+    <string name="usernameOrEmail">E-posta veya Kullanıcı adı</string>
+    <string name="login">Giriş</string>
+    <string name="logout">Çıkış</string>
 
 </resources>

@@ -6,7 +6,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.company.akilovasi.data.local.entities.Login;
 import com.company.akilovasi.data.local.entities.User;
+import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 
 import java.util.List;
 
@@ -14,8 +16,8 @@ import java.util.List;
 public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveLogin(List<User> users);
+    void saveLogin(Login login);
 
-    @Query("SELECT * FROM users")
-    LiveData<List<User>> loadLogin();
+    @Query("SELECT * FROM login")
+    LiveData<LoginResponse> loadLogin();
 }

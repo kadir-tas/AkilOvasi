@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.databinding.ItemListMainBinding;
+import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.ui.BaseAdapter;
 import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,12 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
 
     private final ItemBannerClick itemBannerClick;
 
-    public BannerAdapter(@NonNull ItemBannerClick itemBannerClick) {
+    private Picasso picasso;
+
+    public BannerAdapter(@NonNull ItemBannerClick itemBannerClick, Picasso picasso) {
         banners = new ArrayList<>();
         this.itemBannerClick = itemBannerClick;
+        this.picasso = picasso;
     }
 
     @Override
@@ -40,9 +45,9 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
 
         ItemListMainBinding itemListMainBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
-                        R.layout.item_list_main, viewGroup, false);
-        BannerViewHolder holder = new BannerViewHolder(itemListMainBinding.getRoot(), itemListMainBinding);
-        return holder;
+                        R.layout.item_list_main, viewGroup, false, new BindingComponent(picasso));
+
+        return new BannerViewHolder(itemListMainBinding.getRoot(), itemListMainBinding);
     }
 
     @Override

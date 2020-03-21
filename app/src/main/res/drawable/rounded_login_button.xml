@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="95dip" />
+            <stroke android:width="0dp" android:color="@color/colorMainDarkDark" />
+            <solid android:color="@color/colorMainDarkDark" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="95dip" />
+            <stroke android:width="0dp" android:color="@color/colorMainDarkDark" />
+            <solid android:color="@color/colorMainDarkDark" />
+        </shape>
+    </item>
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="95dip" />
+            <stroke android:width="0dip" android:color="#FF1F262D" />
+            <gradient android:angle="-90" android:endColor="#FF101315" android:startColor="#FF1F262D" />
+        </shape>
+    </item>
+
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="95dip" />
+            <stroke android:width="0dip" android:color="#1a1a1a" />
+            <gradient android:angle="-90"
+                android:endColor="@color/colorMainDarkDark"
+                android:centerColor="@color/neon_green"
+                android:startColor="@color/colorMainDarkDark"
+                android:type="sweep"
+                android:centerY="0"
+                android:centerX="0"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="95dip" />
+            <stroke android:width="0dip" android:color="#1a1a1a" />
+            <gradient android:angle="-90"
+                android:endColor="@color/neon_green"
+                android:centerColor="@color/colorMainDarkDark"
+                android:startColor="@color/colorMainDarkDark"
+                android:type="sweep"
+                android:centerX="0"
+                android:centerY="0"/>
+        </shape>
+    </item>
+</selector>

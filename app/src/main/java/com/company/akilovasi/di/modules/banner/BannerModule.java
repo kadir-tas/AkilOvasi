@@ -1,7 +1,6 @@
 package com.company.akilovasi.di.modules.banner;
 
 import com.company.akilovasi.data.local.dao.BannerDao;
-import com.company.akilovasi.data.remote.api.BannerService;
 import com.company.akilovasi.data.remote.repositories.BannerRepository;
 import com.company.akilovasi.data.remote.repositoriesImpl.BannerRepositoryImpl;
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <data>
@@ -25,7 +24,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,26 +36,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-
                 app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
 
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:layout_behavior="com.company.akilovasi.util.FabBehavior"
             android:onClick="@{() -> addPlantClick.onAddPlantClick()}"
-            android:layout_width="wrap_content"
+            app:backgroundTint="@color/white_cardview_color"
+            android:layout_margin="@dimen/fab_margin"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:fabSize="normal"
-            app:backgroundTint="@color/white_cardview_color"
-            app:elevation="6dp"
-            android:id="@+id/addPlantFab"
-            app:borderWidth="0dp"
+            android:layout_width="wrap_content"
             android:src="@drawable/add_plant"
+            android:id="@+id/addPlantFab"
             app:maxImageSize="35dp"
-            app:layout_behavior="com.company.akilovasi.util.FabBehavior"/>
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            app:elevation="6dp"/>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

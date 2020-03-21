@@ -3,7 +3,6 @@ package com.company.akilovasi.di.modules;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.di.ViewModelKey;
 import com.company.akilovasi.ui.login.LoginViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;

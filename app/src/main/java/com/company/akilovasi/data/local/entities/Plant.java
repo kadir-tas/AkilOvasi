@@ -3,11 +3,13 @@ package com.company.akilovasi.data.local.entities;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "plants")
+@Entity(tableName = "plants",indices = {@Index(value = {"userId", "userPlantId"},
+        unique = true)})
 public class Plant {
 
     @PrimaryKey
@@ -23,7 +25,7 @@ public class Plant {
     @SerializedName("userPlantName")
     private String userPlantName;
 
-    @Embedded
+    @Embedded(prefix = "plant_plantType_")
     @SerializedName("plantType")
     private PlantType plantType;
 

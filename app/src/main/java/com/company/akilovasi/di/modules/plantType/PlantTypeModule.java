@@ -4,6 +4,7 @@ import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
 import com.company.akilovasi.data.remote.repositoriesImpl.PlantTypeRepositoryImpl;
 import com.company.akilovasi.ui.plant.adapters.PlantCategoryAdapter;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Singleton;
 
@@ -21,7 +22,7 @@ public class PlantTypeModule {
     }
 
     @Provides
-    PlantCategoryAdapter plantCategoryAdapter(){
-        return new PlantCategoryAdapter();
+    PlantCategoryAdapter plantCategoryAdapter(Picasso picasso){
+        return new PlantCategoryAdapter(picasso);
     }
 }
