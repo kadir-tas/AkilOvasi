@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
@@ -62,6 +63,11 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     @Override
     public int getLayoutRes() {
         return R.layout.fragment_plant_history;
+    }
+
+    @Override
+    public DataBindingComponent getBindigComponent() {
+        return null;
     }
 
 

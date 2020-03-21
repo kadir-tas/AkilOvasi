@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingComponent;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -101,6 +102,11 @@ public class PlantCategoryFragment extends BaseFragment<PlantCategoryFragmentVie
     @Override
     public int getLayoutRes() {
         return R.layout.plant_category_fragment;
+    }
+
+    @Override
+    public DataBindingComponent getBindigComponent() {
+        return null;
     }
 
     @Override

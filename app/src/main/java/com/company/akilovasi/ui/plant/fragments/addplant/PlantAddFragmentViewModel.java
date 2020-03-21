@@ -50,6 +50,6 @@ public class PlantAddFragmentViewModel extends ViewModel {
     //TODO: DONT FORGET HERE
     public Long getUserId(){
         Log.e(TAG, "getUserId: DON'T FORGET TO UPDATE HERE THIS IS PLACE HOLDER" );
-        return 1L;
+        return 10L;
     }
 }

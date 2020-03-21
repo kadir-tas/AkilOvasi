@@ -22,19 +22,24 @@ import androidx.annotation.Nullable;
 import com.company.akilovasi.data.remote.models.responses.Response;
 
 import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingComponent;
 import androidx.lifecycle.Observer;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.databinding.FragmentPlantAddBinding;
+import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.camera.CameraActivity;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +53,9 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
 
     private Long plantTypeId;
     private String capturedImagePath = "";
+
+    @Inject
+    Picasso picasso;
 
     public static PlantAddFragment newInstance(Long plantTypeId){
         return new PlantAddFragment(plantTypeId);
@@ -198,6 +206,11 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
     @Override
     public int getLayoutRes() {
         return R.layout.fragment_plant_add;
+    }
+
+    @Override
+    public DataBindingComponent getBindigComponent() {
+        return new BindingComponent(picasso);
     }
 
     @Override

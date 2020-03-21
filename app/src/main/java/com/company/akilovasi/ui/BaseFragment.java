@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,8 @@ public abstract class BaseFragment<VM extends ViewModel, DB extends ViewDataBind
     @LayoutRes
     public abstract int getLayoutRes();
 
+    public  abstract DataBindingComponent getBindigComponent();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidSupportInjection.inject(this);
@@ -52,7 +55,7 @@ public abstract class BaseFragment<VM extends ViewModel, DB extends ViewDataBind
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        dataBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false);
+        dataBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false, getBindigComponent());
         return dataBinding.getRoot();
     }
 
