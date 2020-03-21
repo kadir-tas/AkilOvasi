@@ -36,7 +36,7 @@ public class BannerRepositoryImpl implements BannerRepository {
         this.bannerService = retrofit.create(BannerService.class);
     }
 
-    public LiveData<Resource<List<Banner>>> getAllBanners() {
+    public LiveData<Resource<List<Banner>>> getAllActiveBanners() {
         return new NetworkBoundResource<List<Banner>, BannerResponse>() {
 
             @Override
@@ -61,7 +61,7 @@ public class BannerRepositoryImpl implements BannerRepository {
             @NonNull
             @Override
             protected Call<BannerResponse> createCall() {
-                return bannerService.loadBanners();
+                return bannerService.loadActiveBanners();
             }
         }.getAsLiveData();
     }

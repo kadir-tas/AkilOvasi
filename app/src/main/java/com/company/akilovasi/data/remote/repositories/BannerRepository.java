@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface BannerRepository {
 
-    public LiveData<Resource<List<Banner>>> getAllBanners();
+    public LiveData<Resource<List<Banner>>> getAllActiveBanners();
 
 }

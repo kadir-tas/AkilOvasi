@@ -33,12 +33,12 @@ public class MainViewModel extends ViewModel {
 //        initBanner();
     }
 
-    public LiveData<Resource<List<Banner>>> getAllBanners() {
-        return bannerRepository.getAllBanners();
+    public LiveData<Resource<List<Banner>>> getAllActiveBanners() {
+        return bannerRepository.getAllActiveBanners();
     }
 
     public void initBanner(){
-        banners = (MediatorLiveData<Resource<List<Banner>>>) bannerRepository.getAllBanners();
+        banners = (MediatorLiveData<Resource<List<Banner>>>) bannerRepository.getAllActiveBanners();
     }
 
     public LiveData<Resource<List<Plant>>> getAllPlants() {

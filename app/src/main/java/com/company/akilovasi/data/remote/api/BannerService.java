@@ -9,7 +9,7 @@ import retrofit2.http.Headers;
 public interface BannerService {
 
     @Headers("Cache-Control: public, max-stale=604800")
-    @GET("banner/get/all")
-    Call<BannerResponse> loadBanners();
+    @GET("banner/get/active")
+    Call<BannerResponse> loadActiveBanners();
 
 }

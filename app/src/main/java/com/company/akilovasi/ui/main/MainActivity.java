@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -17,7 +14,6 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.databinding.ActivityMainBinding;
-import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
 import com.company.akilovasi.ui.login.LoginActivity;
@@ -74,13 +70,13 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     }
 
     private void subscribeObservers() {
-        viewModel.getAllBanners()
+        viewModel.getAllActiveBanners()
                 .observe(this, listResource -> {
                     Log.v("MSGG", listResource.message + "");
                     Log.v("MSGG", listResource.data + "");
                     Log.v("MSGG", listResource.status + "");
                     mBannerAdapter.setData(listResource.data);
-                    viewModel.getAllBanners().removeObservers(MainActivity.this);
+                    viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
                 });
 
         viewModel.getAllPlants()
