@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 if (responseResource != null) {
                     switch (responseResource.status) {
                         case SUCCESS:
-                            if (responseResource.data != null && !responseResource.data.getSuccess()) {
+                            if (responseResource.data != null && responseResource.data.getSuccess()) {
                                 secretPreferences.edit().remove(ACCESS_TOKEN).apply();
                                 secretPreferences.edit().remove(REFRESH_TOKEN).apply();
                                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);

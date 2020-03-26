@@ -55,6 +55,6 @@ public class MainViewModel extends ViewModel {
     }
 
     public Long getAuthenticatedUserId(){
-        return 10L; //TODO: THIS ID IS FOR ONLY TEST . It will return authenticated userId
+        return 23L; //TODO: THIS ID IS FOR ONLY TEST . It will return authenticated userId
     }
 }
