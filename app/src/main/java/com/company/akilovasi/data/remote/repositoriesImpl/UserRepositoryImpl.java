@@ -6,7 +6,9 @@ import androidx.lifecycle.MediatorLiveData;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.dao.UserDao;
 import com.company.akilovasi.data.remote.api.UserService;
+import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
+import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
 import com.google.gson.Gson;
@@ -55,6 +57,28 @@ public class UserRepositoryImpl implements UserRepository {
             }
             @Override
             public void onFailure(Call<com.company.akilovasi.data.remote.models.responses.Response<LoginResponse>> call, Throwable t) {
+                result.setValue(Resource.error(t.getMessage(),null));
+            }
+        });
+        return result;
+    }
+
+    @Override
+    public LiveData<Resource<com.company.akilovasi.data.remote.models.responses.Response<Message>>> logout(LogoutRequest logoutRequest) {
+        final MediatorLiveData<Resource<com.company.akilovasi.data.remote.models.responses.Response<Message>>> result = new MediatorLiveData<>();
+        result.setValue(Resource.loading(null));
+        userService.logout(logoutRequest).enqueue(new Callback<com.company.akilovasi.data.remote.models.responses.Response<Message>>() {
+            @Override
+            public void onResponse(Call<com.company.akilovasi.data.remote.models.responses.Response<Message>> call, Response<com.company.akilovasi.data.remote.models.responses.Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    result.setValue(Resource.success(response.body()));
+                }else{
+                    result.setValue(Resource.error(response.message(),null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.company.akilovasi.data.remote.models.responses.Response<Message>> call, Throwable t) {
                 result.setValue(Resource.error(t.getMessage(),null));
             }
         });

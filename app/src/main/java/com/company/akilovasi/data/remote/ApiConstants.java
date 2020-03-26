@@ -6,6 +6,7 @@ public class ApiConstants {
     public static final String PLANT_TYPE_IMAGE_ENDPOINT_PREFIX = "plant/img?plantId=";
     public static final String USER_PLANTS_IMAGE_ENDPOINT_PREFIX = "garden/img?userPlantId=";
     public static final String REFRESH_JWT_TOKEN_URL = "api/auth/token";
+    public static final String LOGOUT_URL = "api/auth/logout";
     public static final String LOGIN_URL = "api/auth/login";
     public static final String SIGNUP_URL = "/sign-up";
     public static final String METHOD_TYPE_POST = "POST";

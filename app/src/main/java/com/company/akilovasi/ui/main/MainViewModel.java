@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Plant;
+import com.company.akilovasi.data.remote.models.other.Message;
+import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.BannerRepository;
 import com.company.akilovasi.data.remote.repositories.PlantRepository;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
@@ -14,6 +17,8 @@ import com.company.akilovasi.data.remote.repositories.UserRepository;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
 
 public class MainViewModel extends ViewModel {
 
@@ -43,6 +48,10 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Resource<List<Plant>>> getAllPlants() {
         return plantRepository.getUserAllPlants(getAuthenticatedUserId());
+    }
+
+    public LiveData<Resource<Response<Message>>> logout(){
+        return userRepository.logout(new LogoutRequest(getAuthenticatedUserId()));
     }
 
     public Long getAuthenticatedUserId(){

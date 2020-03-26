@@ -1,8 +1,6 @@
 package com.company.akilovasi.di.components;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.company.akilovasi.AkilOvasiApp;
 import com.company.akilovasi.di.modules.ActivityBuilderModule;
@@ -16,7 +14,6 @@ import com.company.akilovasi.di.modules.banner.BannerModule;
 import com.company.akilovasi.di.modules.plant.PlantHistoryModule;
 import com.company.akilovasi.di.modules.plant.PlantModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
-import com.company.akilovasi.di.modules.user.LoginModule;
 import com.company.akilovasi.di.modules.user.UserModule;
 import com.company.akilovasi.di.modules.userPlant.UserPlantModule;
 
@@ -36,7 +33,6 @@ import dagger.android.support.AndroidSupportInjectionModule;
         FragmentBuilderModule.class,
         NetworkModule.class,
         UserModule.class,
-        LoginModule.class,
         BannerModule.class,
         PlantTypeModule.class,
         ViewModelModule.class,
