@@ -1,35 +1,26 @@
 package com.company.akilovasi.ui.main.fragments.history;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingComponent;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.company.akilovasi.R;
-import com.company.akilovasi.data.Resource;
-import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
 import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.main.adapters.PlantHistoryAdapter;
 import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
-import com.company.akilovasi.ui.plantanalysis.PlantAnalysis;
+import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -133,7 +124,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
         Log.d(TAG, "AnalysisClicked");
 
-        Intent intent = new Intent(mActivity, PlantAnalysis.class);
+        Intent intent = new Intent(mActivity, PlantAnalysisActivity.class);
         intent.putExtra("userPlantId", userPlantId);
         mActivity.startActivity(intent);
         mActivity.finish();
