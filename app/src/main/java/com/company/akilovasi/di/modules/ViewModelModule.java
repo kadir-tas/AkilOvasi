@@ -10,6 +10,8 @@ import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragmentViewM
 import com.company.akilovasi.ui.plant.PlantCategoryActivityViewModel;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragmentViewModel;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragmentViewModel;
+import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
+import com.company.akilovasi.ui.plantanalysis.PlantAnalysisViewModel;
 import com.company.akilovasi.viewmodel.ViewModelFactory;
 
 import dagger.Binds;
@@ -49,6 +51,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PlantHistoryFragmentViewModel.class)
     abstract ViewModel bindsPlantHistoryFragmentViewModel(PlantHistoryFragmentViewModel plantHistoryFragmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlantAnalysisViewModel.class)
+    abstract ViewModel bindsPlantAnalysisViewModel(PlantAnalysisViewModel plantAnalysisViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);
