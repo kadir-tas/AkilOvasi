@@ -26,5 +26,14 @@
     <string name="usernameOrEmail">E-posta veya Kullanıcı adı</string>
     <string name="login">Giriş</string>
     <string name="logout">Çıkış</string>
+    <string name="sens_ph">Sensör PH</string>
+    <string name="sens_temp">Sensör Sıcaklık</string>
+    <string name="sens_humidity">Sensör  Nemi</string>
+    <string name="sens_light">Sensör Işık</string>
+    <string name="water_icon">Su İkonu</string>
+    <string name="temp_icon">Sıcaklık İkonu</string>
+    <string name="ph_icon">PH İkonu</string>
+    <string name="sunny_icon">Güneş İkonu</string>
+    <string name="update_sensor">Senör Değerlerini Kaydet</string>
 
 </resources>

@@ -13,6 +13,7 @@ import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.UserPlantService;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.PlantAddRequest;
+import com.company.akilovasi.data.remote.models.requests.PlantValueUpdateRequest;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 
@@ -120,5 +121,27 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
                 RequestBody.create(MediaType.parse("multipart/form-data"), userId + "" );
 
         return userPlantService.uploadImage(userIdResponseBody, userPlantIdResponseBody, body);
+    }
+
+    @Override
+    public Call<Response<Message>> updateSensorValue(PlantValueUpdateRequest plantValueUpdateRequest) {
+        File imageFile = new File(plantValueUpdateRequest.getImagePath());
+        MultipartBody.Part body = null;
+        if(imageFile.exists()){
+            RequestBody requestFile = RequestBody.create(imageFile, MediaType.parse("multipart/form-data"));
+            body = MultipartBody.Part.createFormData("image" ,imageFile.getName(), requestFile);
+        }else{
+            body = MultipartBody.Part.createFormData("image", "");
+        }
+        RequestBody userPlantId = RequestBody.create( plantValueUpdateRequest.getUserPlantId() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody userId = RequestBody.create( plantValueUpdateRequest.getUserId() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody sensHumidity = RequestBody.create( plantValueUpdateRequest.getSensHumidity() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody sensLight = RequestBody.create( plantValueUpdateRequest.getSensLight() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody sensPh = RequestBody.create( plantValueUpdateRequest.getSensPh() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody sensTemp = RequestBody.create( plantValueUpdateRequest.getSensTemp() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody pantPotSize = RequestBody.create( plantValueUpdateRequest.getPlantPotSize() + "" , MediaType.parse("multipart/form-data"));
+        RequestBody plantSize = RequestBody.create( plantValueUpdateRequest.getPlantSize() + "" , MediaType.parse("multipart/form-data"));
+
+        return userPlantService.updatePlantSensorValue(userId,userPlantId,body,sensPh,sensTemp, sensHumidity,sensLight,plantSize,pantPotSize);
     }
 }

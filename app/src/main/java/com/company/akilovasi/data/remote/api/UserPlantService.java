@@ -36,4 +36,17 @@ public interface UserPlantService {
     @GET("/garden/get?userId={userId}")
     Call<Response<List<UserPlant>>> getUserPlants(@Path("userId") Long userId);
 
+    @POST("/garden/sensor/update")
+    Call<Response<Message>> updatePlantSensorValue(
+            @Part("userId") RequestBody userId,
+            @Part("userPlantId") RequestBody userPlantId,
+            @Part("image") MultipartBody.Part image,
+            @Part("sensPh") RequestBody sensPh,
+            @Part("sensTemp") RequestBody sensTemp,
+            @Part("sensHumidity") RequestBody sensHumidity,
+            @Part("sensLight") RequestBody sensLight,
+            @Part("plantSize") RequestBody plantSize,
+            @Part("plantPotSize") RequestBody plantPotSize
+    );
+
 }
