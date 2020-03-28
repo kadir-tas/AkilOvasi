@@ -1,5 +1,6 @@
 package com.company.akilovasi.di.modules.userPlant;
 
+import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.UserPlantDao;
 import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 import com.company.akilovasi.data.remote.repositoriesImpl.UserPlantRepositoryImpl;
@@ -15,7 +16,7 @@ public class UserPlantModule {
 
     @Provides
     @Singleton
-    UserPlantRepository provideUserPlantRepository(Retrofit retrofit, UserPlantDao userPlantDao){
-        return new UserPlantRepositoryImpl(retrofit, userPlantDao);
+    UserPlantRepository provideUserPlantRepository(Retrofit retrofit, UserPlantDao userPlantDao, PlantDao plantDao){
+        return new UserPlantRepositoryImpl(retrofit, userPlantDao, plantDao);
     }
 }

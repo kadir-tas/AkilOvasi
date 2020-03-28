@@ -7,7 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
+import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.UserPlantDao;
+import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.UserPlantService;
@@ -38,10 +40,13 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
 
     UserPlantService userPlantService;
 
+    PlantDao plantDao;
+
     @Inject
-    public UserPlantRepositoryImpl(Retrofit retrofit, UserPlantDao userPlantDao){
+    public UserPlantRepositoryImpl(Retrofit retrofit, UserPlantDao userPlantDao , PlantDao plantDao){
         this.retrofit = retrofit;
         this.userPlantDao = userPlantDao;
+        this.plantDao = plantDao;
         userPlantService = this.retrofit.create(UserPlantService.class);
         Log.d(TAG, "UserPlantRepositoryImpl: is constructed");
     }
@@ -143,5 +148,10 @@ public class UserPlantRepositoryImpl implements UserPlantRepository {
         RequestBody plantSize = RequestBody.create( plantValueUpdateRequest.getPlantSize() + "" , MediaType.parse("multipart/form-data"));
 
         return userPlantService.updatePlantSensorValue(userId,userPlantId,body,sensPh,sensTemp, sensHumidity,sensLight,plantSize,pantPotSize);
+    }
+
+    @Override
+    public LiveData<Plant> getUserPlantLocal(Long userPlantId) {
+        return plantDao.loadUserPlant(userPlantId);
     }
 }

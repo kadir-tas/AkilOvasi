@@ -6,8 +6,11 @@ import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
+import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.models.responses.Response;
+
+import retrofit2.Call;
 
 public interface UserRepository {
 
@@ -16,5 +19,7 @@ public interface UserRepository {
     public LiveData<Resource<Response<Message>>> logout(LogoutRequest logoutRequest);
 
     public String refreshToken(String refreshToken);
+
+    public Call<Response<Message>> registerUser(RegisterUserRequest registerUserRequest);
 
 }

@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.plant.fragments.addplant;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -7,10 +8,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.local.entities.UserPlant;
+import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
 import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
+import com.company.akilovasi.di.SecretPrefs;
 
 import javax.inject.Inject;
 
@@ -22,6 +25,10 @@ public class PlantAddFragmentViewModel extends ViewModel {
     private PlantTypeRepository plantTypeRepository;
 
     private UserPlantRepository userPlantRepository;
+
+    @Inject
+    @SecretPrefs
+    SharedPreferences secretPreferences;
 
     @Inject
     public PlantAddFragmentViewModel (PlantTypeRepository plantTypeRepository, UserPlantRepository userPlantRepository){
@@ -46,10 +53,8 @@ public class PlantAddFragmentViewModel extends ViewModel {
         return userPlantRepository.updateUserPlantImage(imageFilePath , userId, plantId);
     }
 
-    //TODO: Get currently logged in users id
-    //TODO: DONT FORGET HERE
+
     public Long getUserId(){
-        Log.e(TAG, "getUserId: DON'T FORGET TO UPDATE HERE THIS IS PLACE HOLDER" );
-        return 23L;
+        return secretPreferences.getLong(ApiConstants.USER_ID,-1);
     }
 }

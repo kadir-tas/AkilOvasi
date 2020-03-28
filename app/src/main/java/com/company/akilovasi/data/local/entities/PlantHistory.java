@@ -18,22 +18,25 @@ public class PlantHistory {
     @SerializedName("id")
     private Long id;
 
-    @Embedded(prefix = "plant_history_plantType_")
-    @SerializedName("plant_type")
-    private PlantType plantType;
+    @SerializedName("plantTypeId")
+    private Long plantTypeId;
 
-    @Embedded(prefix = "plant_history_plant_")
-    @SerializedName("plant")
-    private Plant plant;
+    @SerializedName("userPlantId")
+    private Long userPlantId;
 
-    @Embedded(prefix = "plant_history_user_")
-    @SerializedName("user")
-    private User user;
+    @SerializedName("userPlantName")
+    private String userPlantName;
 
-    @SerializedName("darte_submitted")
+    @SerializedName("plantCategory")
+    private String plantCategory;
+
+    @SerializedName("userId")
+    private Long userId;
+
+    @SerializedName("dateSubmited")
     private Date dateSubmited;
 
-    @SerializedName("plant_image_id")
+    @SerializedName("plantImageId")
     private String plantImageId;
 
     @SerializedName("ph")
@@ -48,7 +51,7 @@ public class PlantHistory {
     @NotNull
     private Long light;
 
-    @SerializedName("humidity")
+    @SerializedName("humiditiy")
     @NotNull
     private Long humiditiy;
 
@@ -60,28 +63,28 @@ public class PlantHistory {
         this.id = id;
     }
 
-    public PlantType getPlantType() {
-        return plantType;
+    public Long getPlantTypeId() {
+        return plantTypeId;
     }
 
-    public void setPlantType(PlantType plantType) {
-        this.plantType = plantType;
+    public void setPlantTypeId(Long plantTypeId) {
+        this.plantTypeId = plantTypeId;
     }
 
-    public Plant getPlant() {
-        return plant;
+    public Long getUserPlantId() {
+        return userPlantId;
     }
 
-    public void setPlant(Plant plant) {
-        this.plant = plant;
+    public void setUserPlantId(Long userPlantId) {
+        this.userPlantId = userPlantId;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getDateSubmited() {
@@ -134,5 +137,21 @@ public class PlantHistory {
 
     public void setHumiditiy(@NotNull Long humiditiy) {
         this.humiditiy = humiditiy;
+    }
+
+    public String getUserPlantName() {
+        return userPlantName;
+    }
+
+    public void setUserPlantName(String userPlantName) {
+        this.userPlantName = userPlantName;
+    }
+
+    public String getPlantCategory() {
+        return plantCategory;
+    }
+
+    public void setPlantCategory(String plantCategory) {
+        this.plantCategory = plantCategory;
     }
 }

@@ -6,12 +6,8 @@
         <import type="android.view.View"/>
         <variable
             name="plant"
-            type="com.company.akilovasi.data.local.entities.UserPlant" />
-        
-        <variable
-            name="plantTypeName"
-            type="String" />
-        
+            type="com.company.akilovasi.data.local.entities.Plant" />
+
         <variable
             name="loading"
             type="boolean" />
@@ -30,6 +26,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:layout_margin="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -45,13 +42,14 @@
                         app:riv_mutate_background="true" />
 
                     <LinearLayout
+                        android:layout_marginStart="30dp"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_marginTop="10dp"
-                            android:text="@{plant.plantName}"
+                            android:text="@{plant.userPlantName}"
                             android:textSize="24sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
@@ -59,7 +57,7 @@
                         <TextView
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="5dp"
-                            android:text="@{plantTypeName}"
+                            android:text="@{plant.plantType.plantCategory}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -93,7 +91,8 @@
                                 android:contentDescription="@string/ph_icon" />
 
                             <EditText
-                                android:inputType="number"
+                                android:enabled="@{!loading}"
+                                android:inputType="numberDecimal"
                                 android:id="@+id/sens_ph"
                                 android:hint="@string/sens_ph"
                                 android:layout_width="match_parent"
@@ -114,7 +113,8 @@
                                 android:contentDescription="@string/temp_icon" />
 
                             <EditText
-                                android:inputType="number"
+                                android:enabled="@{!loading}"
+                                android:inputType="numberDecimal"
                                 android:id="@+id/sens_temp"
                                 android:hint="@string/sens_temp"
                                 android:layout_width="match_parent"
@@ -147,7 +147,8 @@
                                 android:contentDescription="@string/water_icon" />
 
                             <EditText
-                                android:inputType="number"
+                                android:enabled="@{!loading}"
+                                android:inputType="numberDecimal"
                                 android:id="@+id/sens_humidity"
                                 android:hint="@string/sens_humidity"
                                 android:layout_width="match_parent"
@@ -169,7 +170,8 @@
                                 android:contentDescription="@string/sunny_icon" />
 
                             <EditText
-                                android:inputType="number"
+                                android:enabled="@{!loading}"
+                                android:inputType="numberDecimal"
                                 android:id="@+id/sens_light"
                                 android:hint="@string/sens_light"
                                 android:layout_width="match_parent"
@@ -339,7 +341,7 @@
 
                     <Button
                         android:enabled="@{!loading}"
-                        android:id="@+id/addNewPlantButton"
+                        android:id="@+id/updateSensValueButton"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_gravity="center"
                         android:layout_margin="15dp"

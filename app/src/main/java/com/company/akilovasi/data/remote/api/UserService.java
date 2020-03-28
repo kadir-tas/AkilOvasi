@@ -1,9 +1,11 @@
 package com.company.akilovasi.data.remote.api;
 
 import com.company.akilovasi.data.local.entities.User;
+import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
+import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.models.responses.Response;
 
@@ -33,5 +35,8 @@ public interface UserService {
 
     @POST(LOGOUT_URL)
     Call<Response<Message>> logout(@Body LogoutRequest logoutRequest);
+
+    @POST(ApiConstants.REGISTER_URL)
+    Call<Response<Message>> register(@Body RegisterUserRequest registerUserRequest);
 
 }

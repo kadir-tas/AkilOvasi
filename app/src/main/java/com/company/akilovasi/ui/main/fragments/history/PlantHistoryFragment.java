@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.company.akilovasi.R;
+import com.company.akilovasi.data.Status;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
 import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.main.adapters.PlantHistoryAdapter;
@@ -95,13 +96,10 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
     private void initObservers() {
         viewModel.getPlantHistory(userPlantId).observe(getViewLifecycleOwner(), listResource -> {
-            Log.d(TAG, "" + listResource.message);
-            Log.d(TAG, "" + listResource.data);
-            Log.d(TAG, "" + listResource.status);
-            Log.d(TAG, "ID" + userPlantId);
-            Log.d(TAG, "DATA NULLL");
+            if(listResource.status == Status.SUCCESS){
+                mPlantHistoryAdapter.setData(listResource.data);
+            }
 
-            mPlantHistoryAdapter.setData(listResource.data);
         });
         Log.d(TAG, "FINISH OBSERVE");
     }
@@ -125,7 +123,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         Log.d(TAG, "AnalysisClicked");
 
         Intent intent = new Intent(mActivity, PlantAnalysisActivity.class);
-        intent.putExtra("userPlantId", userPlantId);
+        intent.putExtra(PlantAnalysisActivity.PARAM_USER_PLANT, userPlantId);
         mActivity.startActivity(intent);
         mActivity.finish();
     }

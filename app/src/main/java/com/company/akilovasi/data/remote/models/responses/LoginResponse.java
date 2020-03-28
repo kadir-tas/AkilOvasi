@@ -6,6 +6,8 @@ public class LoginResponse {
 
     private String refreshToken;
 
+    private Long userId;
+
     public String getAccessToken() {
         return accessToken;
     }
@@ -20,5 +22,13 @@ public class LoginResponse {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

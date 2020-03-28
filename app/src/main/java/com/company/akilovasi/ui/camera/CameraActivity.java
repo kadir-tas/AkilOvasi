@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingComponent;
 import androidx.lifecycle.ViewModel;
 import com.company.akilovasi.R;
 import com.company.akilovasi.databinding.ActivityCameraBinding;
@@ -103,6 +104,11 @@ public class CameraActivity extends BaseActivity<ViewModel, ActivityCameraBindin
                 takePicture();
             }
         });
+    }
+
+    @Override
+    protected DataBindingComponent getDataBindingComponent() {
+        return null;
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {

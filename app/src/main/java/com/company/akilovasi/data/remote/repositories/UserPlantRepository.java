@@ -3,6 +3,7 @@ package com.company.akilovasi.data.remote.repositories;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
+import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.PlantValueUpdateRequest;
@@ -21,4 +22,5 @@ public interface UserPlantRepository {
     Call<Response<Message>> addUserPlantWithImage(Long plantId, Long userId, String plantName , float plantSize, float potSize, String imageFilePath);
     Call<Response<Message>> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId);
     Call<Response<Message>> updateSensorValue(PlantValueUpdateRequest plantValueUpdateRequest);
+    LiveData<Plant> getUserPlantLocal(Long userPlantId);
 }

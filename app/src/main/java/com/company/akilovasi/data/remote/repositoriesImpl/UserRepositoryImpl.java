@@ -9,6 +9,7 @@ import com.company.akilovasi.data.remote.api.UserService;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
+import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
 import com.google.gson.Gson;
@@ -99,6 +100,11 @@ public class UserRepositoryImpl implements UserRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Call<com.company.akilovasi.data.remote.models.responses.Response<Message>> registerUser(RegisterUserRequest registerUserRequest) {
+        return userService.register(registerUserRequest);
     }
 
 //    private static String reverse(final String input) {

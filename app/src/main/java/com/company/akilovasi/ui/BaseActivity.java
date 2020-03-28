@@ -43,12 +43,14 @@ public abstract class BaseActivity<VM extends ViewModel, DB extends ViewDataBind
     @LayoutRes
     public abstract int getLayoutRes();
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        dataBinding = DataBindingUtil.setContentView(this, getLayoutRes());
+        dataBinding = DataBindingUtil.setContentView(this, getLayoutRes(), getDataBindingComponent());
         viewModel = new ViewModelProvider(this, viewModelFactory).get(getViewModel());
     }
+
+    protected abstract DataBindingComponent getDataBindingComponent();
+
 }

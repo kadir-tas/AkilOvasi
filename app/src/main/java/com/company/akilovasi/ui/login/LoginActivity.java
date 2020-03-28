@@ -29,11 +29,13 @@ import android.widget.Toast;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
+import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.databinding.ActivityLoginBinding;
 import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
 import com.company.akilovasi.ui.login.callbacks.LoginButtonClick;
+import com.company.akilovasi.ui.login.fragments.RegisterFragment;
 import com.company.akilovasi.ui.main.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -45,13 +47,16 @@ import dagger.android.AndroidInjection;
 
 import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
 import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
+import static com.company.akilovasi.data.remote.ApiConstants.USER_ID;
 
-public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBinding> implements LoginButtonClick {
+public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBinding> implements LoginButtonClick , View.OnClickListener, RegisterFragment.OnRegisteredListener {
 
     private static final String TAG = "LoginActivity";
 
     private EditText usernameOrEmailEditText;
     private EditText passwordEditText;
+
+    private RegisterFragment registerFragment;
 
     @Inject
     @SecretPrefs
@@ -78,6 +83,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
         dataBinding.txtPassword.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
         dataBinding.txtPassword.setEndIconVisible(true);
 
+        dataBinding.registerButton.setOnClickListener(this);
 
         String token = secretPreferences.getString(ACCESS_TOKEN,null);
         String refreshToken = secretPreferences.getString(REFRESH_TOKEN,null);
@@ -114,6 +120,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
     }
 
     @Override
+    protected DataBindingComponent getDataBindingComponent() {
+        return null;
+    }
+
+    @Override
     public void onLoginButtonClicked(String usernameOrEmail, String password) {
 
         dataBinding.setLoginButtonEnable(false);
@@ -129,6 +140,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
                             if (loginResponseResource.data != null && !loginResponseResource.data.getAccessToken().isEmpty() && !loginResponseResource.data.getRefreshToken().isEmpty()) {
                                 secretPreferences.edit().putString(ACCESS_TOKEN, loginResponseResource.data.getAccessToken()).apply();
                                 secretPreferences.edit().putString(REFRESH_TOKEN, loginResponseResource.data.getRefreshToken()).apply();
+                                secretPreferences.edit().putLong(USER_ID, loginResponseResource.data.getUserId()).apply();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -194,4 +206,43 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        if(registerFragment == null){
+            Log.d(TAG, "onBackPressed: Null");
+            finish();
+        }else if(!registerFragment.dataBinding.getLoading()){
+            Log.d(TAG, "onBackPressed: Ending");
+            getSupportFragmentManager().beginTransaction().remove(registerFragment).commit();
+            registerFragment = null;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.register_button){
+            if(registerFragment == null){
+                Log.d(TAG, "onClick: Here");
+                registerFragment = new RegisterFragment();
+                //NOTE: TAG IS NOT USED HERE SINCE I KEEP THE REFERENCE
+                getSupportFragmentManager().beginTransaction().replace(R.id.register_fragment_container,registerFragment).commit();
+            }
+        }
+    }
+
+    @Override
+    public void registeredSuccessfully(RegisterUserRequest registerUserRequest) {
+        if(registerFragment != null && !registerFragment.dataBinding.getLoading()){
+            getSupportFragmentManager().beginTransaction().remove(registerFragment).commit();
+            registerFragment = null;
+            dataBinding.txtEmailAddress.getEditText().setText( registerUserRequest.getUsername() );
+            dataBinding.txtPassword.getEditText().setText(registerUserRequest.getUserPassword());
+            dataBinding.btnLogin.performClick();
+        }
+    }
+
+    @Override
+    public void registerFailed() {
+        //DO SOMETHING IF NEEDED
+    }
 }

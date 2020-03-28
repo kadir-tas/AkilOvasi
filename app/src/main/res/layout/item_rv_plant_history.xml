@@ -85,7 +85,7 @@
                         android:layout_height="75dp"
                         android:layout_gravity="center"
                         android:scaleType="fitXY"
-                        bind:plantImageUrl="@{String.valueOf(plantHistory.plant.userPlantId)}"
+                        bind:historicalImage="@{String.valueOf(plantHistory.id)}"
                         app:riv_corner_radius="95dp"
                         app:riv_mutate_background="true" />
 
@@ -112,7 +112,7 @@
                         android:ellipsize="end"
                         android:maxEms="8"
                         android:maxLines="1"
-                        android:text="@{plantHistory.plant.userPlantName}"
+                        android:text="@{plantHistory.userPlantName}"
                         android:textSize="@dimen/header_text_size"
                         android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                         android:ellipsize="end"
                         android:maxEms="7"
                         android:maxLines="1"
-                        android:text="@{plantHistory.plantType.plantCategory}"
+                        android:text="@{plantHistory.plantCategory}"
                         android:textStyle="normal" />
                 </LinearLayout>
             </LinearLayout>
@@ -177,7 +177,7 @@
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
-                            android:text="@{String.valueOf(plantHistory.humiditiy)}"
+                            android:text="@{String.valueOf((float)plantHistory.humiditiy / 100f)}"
                             android:textStyle="normal" />
 
                         <ImageView
@@ -194,7 +194,7 @@
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
-                            android:text="@{String.valueOf(plantHistory.ph)}"
+                            android:text="@{String.valueOf((float)plantHistory.ph / 100f)}"
                             android:textStyle="normal" />
 
                         <ImageView
@@ -211,7 +211,7 @@
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
-                            android:text="@{String.valueOf(plantHistory.temp)}"
+                            android:text="@{String.valueOf((float)plantHistory.temp / 100f)}"
                             android:textStyle="normal" />
 
                         <ImageView
@@ -228,7 +228,7 @@
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
-                            android:text="@{String.valueOf(plantHistory.light)}"
+                            android:text="@{String.valueOf((float)plantHistory.light / 100f)}"
                             android:textStyle="normal" />
 
 

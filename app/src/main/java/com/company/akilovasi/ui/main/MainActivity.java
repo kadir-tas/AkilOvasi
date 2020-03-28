@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
+import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityMainBinding;
@@ -72,6 +74,11 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         initPlantRecyclerView();
         subscribeObservers();
 
+    }
+
+    @Override
+    protected DataBindingComponent getDataBindingComponent() {
+        return null;
     }
 
     private void subscribeObservers() {
@@ -159,6 +166,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                             if (responseResource.data != null && responseResource.data.getSuccess()) {
                                 secretPreferences.edit().remove(ACCESS_TOKEN).apply();
                                 secretPreferences.edit().remove(REFRESH_TOKEN).apply();
+                                secretPreferences.edit().remove(ApiConstants.USER_ID).apply();
                                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -166,15 +174,21 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                             break;
                         case ERROR:
                             Log.e(TAG, "onChanged: Error" + responseResource.message);
+                            //TODO: I ADDED THIS TO TEST REMOVE THIS WHEN ITS DONE
+                            secretPreferences.edit().remove(ACCESS_TOKEN).apply();
+                            secretPreferences.edit().remove(REFRESH_TOKEN).apply();
+                            secretPreferences.edit().remove(ApiConstants.USER_ID).apply();
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
                             break;
                         case LOADING:
                             Log.d(TAG, "onChanged: Loading...");
                             break;
                     }
-                }            }
+                }
+            }
         });
-
-
     }
 }
 
