@@ -21,6 +21,9 @@ public class PlantType {
     @SerializedName("plantName")
     private String plantName;
 
+    @SerializedName("description")
+    private String description;
+
     public PlantType() {
     }
 
@@ -54,5 +57,13 @@ public class PlantType {
 
     public void setPlantName(String plantName) {
         this.plantName = plantName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

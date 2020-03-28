@@ -37,7 +37,7 @@
                         android:layout_height="75dp"
                         android:layout_gravity="center"
                         android:scaleType="fitXY"
-                        bind:plantImageUrl="@{String.valueOf(plant.userPlantId)}"
+                        bind:plantImageThumbnailUrl="@{String.valueOf(plant.userPlantId)}"
                         app:riv_corner_radius="95dp"
                         app:riv_mutate_background="true" />
 
@@ -57,7 +57,7 @@
                         <TextView
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="5dp"
-                            android:text="@{plant.plantType.plantCategory}"
+                            android:text="@{plant.plantType.plantName}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 

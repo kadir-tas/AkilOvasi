@@ -86,6 +86,9 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
             public void onChanged(PlantType plantType) {
                 if(plantType != null){
                     dataBinding.setPlantType( plantType );
+                    Log.d(TAG, "onChanged: " + plantType.getPlantName());
+                    Log.d(TAG, "onChanged: " + plantType.getPlantCategory());
+                    Log.d(TAG, "onChanged: " + plantType.getDescription());
                     dataBinding.addNewPlantButton.setOnClickListener(PlantAddFragment.this);
                     dataBinding.takePictureButton.setOnClickListener(PlantAddFragment.this);
                     dataBinding.setLoading(false);

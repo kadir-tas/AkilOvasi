@@ -5,7 +5,9 @@ public class ApiConstants {
     public static final String BANNER_IMAGE_ENDPOINT_PREFIX = "banner/img?imageId=";
     public static final String PLANT_TYPE_IMAGE_ENDPOINT_PREFIX = "plant/img?plantId=";
     public static final String USER_PLANTS_IMAGE_ENDPOINT_PREFIX = "garden/img?userPlantId=";
+    public static final String USER_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX = "garden/img/thumbnail?userPlantId=";
     public static final String HISTORIC_PLANTS_IMAGE_ENDPOINT_PREFIX = "historical/userPlant/img?historicalId=";
+    public static final String HISTORIC_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX = "historical/userPlant/img/thumbnail?historicalId=";
     public static final String REFRESH_JWT_TOKEN_URL = "api/auth/token";
     public static final String LOGOUT_URL = "api/auth/logout";
     public static final String REGISTER_URL = "user/register";

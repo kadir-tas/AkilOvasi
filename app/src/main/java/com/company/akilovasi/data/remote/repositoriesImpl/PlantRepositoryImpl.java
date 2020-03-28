@@ -122,9 +122,8 @@ public class PlantRepositoryImpl implements PlantRepository {
         if(imageFile.exists()){
             RequestBody requestFile = RequestBody.create(imageFile, MediaType.parse("multipart/form-data"));
             body = MultipartBody.Part.createFormData("image" ,imageFile.getName(), requestFile);
-        }else{
-            body = MultipartBody.Part.createFormData("image", "");
         }
+
         RequestBody userPlantId = RequestBody.create( plantValueUpdateRequest.getUserPlantId() + "" , MediaType.parse("multipart/form-data"));
         RequestBody userId = RequestBody.create( plantValueUpdateRequest.getUserId() + "" , MediaType.parse("multipart/form-data"));
         RequestBody sensHumidity = RequestBody.create( plantValueUpdateRequest.getSensHumidity() + "" , MediaType.parse("multipart/form-data"));

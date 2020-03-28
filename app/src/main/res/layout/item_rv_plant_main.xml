@@ -53,12 +53,13 @@
                     android:orientation="horizontal">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:onClick="@{() -> itemPlantClick.onPlantImageClick(plant.userPlantId)}"
                         android:id="@+id/image"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_gravity="center"
                         android:scaleType="fitXY"
-                        bind:plantImageUrl="@{String.valueOf(plant.userPlantId)}"
+                        bind:plantImageThumbnailUrl="@{String.valueOf(plant.userPlantId)}"
                         app:riv_corner_radius="95dp"
                         app:riv_mutate_background="true" />
 

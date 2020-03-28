@@ -22,6 +22,7 @@ import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
+import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
 import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.adapters.BannerAdapter;
 import com.company.akilovasi.ui.main.adapters.PlantAdapter;
@@ -29,6 +30,7 @@ import com.company.akilovasi.ui.main.callbacks.AddPlantClick;
 import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
 import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
+import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
 import com.squareup.picasso.Picasso;
@@ -39,7 +41,7 @@ import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
 import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
 
 
-public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick {
+public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick  {
 
     private static final String TAG = "MainActivity";
     private BannerAdapter mBannerAdapter;
@@ -132,20 +134,31 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     public void onPlantClick(Long userPlantId) {
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         if (f == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).addToBackStack(null).commit();
+        }
+        /* Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+        if (f == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
-        }
+        }*/
+    }
+
+    @Override
+    public void onPlantImageClick(Long userPlantId) {
+        PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT,userPlantId);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 
     @Override
     public void onBackPressed() {
-        Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+        super.onBackPressed();
+       /* Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         } else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @Override

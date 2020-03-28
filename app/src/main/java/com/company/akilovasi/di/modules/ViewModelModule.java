@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.company.akilovasi.di.ViewModelKey;
+import com.company.akilovasi.ui.common.fullscreen.PlantFullImageViewModel;
 import com.company.akilovasi.ui.login.LoginViewModel;
 import com.company.akilovasi.ui.login.fragments.RegisterViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;
@@ -64,6 +65,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RegisterViewModel.class)
     abstract ViewModel bindRegisterViewModel(RegisterViewModel registerViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlantFullImageViewModel.class)
+    abstract ViewModel bindPlantFullImageViewModel(PlantFullImageViewModel plantFullImageViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);

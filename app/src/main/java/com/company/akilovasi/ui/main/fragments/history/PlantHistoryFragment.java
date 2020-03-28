@@ -18,14 +18,17 @@ import com.company.akilovasi.R;
 import com.company.akilovasi.data.Status;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
 import com.company.akilovasi.ui.BaseFragment;
+import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
+import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.main.adapters.PlantHistoryAdapter;
 import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
+import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback {
+public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback , PlantHistoryClick {
 
     public static final String TAG = "PlantHistoryFragment";
 
@@ -112,7 +115,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mHistoryRecyclerView.setHasFixedSize(true);
 
-        mPlantHistoryAdapter = new PlantHistoryAdapter(picasso);
+        mPlantHistoryAdapter = new PlantHistoryAdapter(picasso, this);
         mHistoryRecyclerView.setAdapter(mPlantHistoryAdapter);
     }
 
@@ -126,5 +129,12 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         intent.putExtra(PlantAnalysisActivity.PARAM_USER_PLANT, userPlantId);
         mActivity.startActivity(intent);
         mActivity.finish();
+    }
+
+    @Override
+    public void onPlantHistoryImageClick(Long plantHistoryId) {
+        Log.d(TAG, "onPlantHistoryImageClick: " + plantHistoryId);
+        PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT_HISTORY,plantHistoryId);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 }
