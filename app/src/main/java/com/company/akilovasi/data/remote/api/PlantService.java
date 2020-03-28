@@ -1,6 +1,4 @@
 package com.company.akilovasi.data.remote.api;
-
-import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.PlantAddRequest;
 import com.company.akilovasi.data.remote.models.responses.PlantResponse;

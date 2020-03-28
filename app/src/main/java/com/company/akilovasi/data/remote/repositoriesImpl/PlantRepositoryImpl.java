@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.entities.Plant;
-import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.PlantService;
 import com.company.akilovasi.data.remote.models.other.Message;

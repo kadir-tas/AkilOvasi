@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantHistory;
-import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.PlantValueUpdateRequest;
 import com.company.akilovasi.data.remote.models.responses.Response;

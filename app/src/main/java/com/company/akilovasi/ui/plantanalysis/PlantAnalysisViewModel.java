@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantType;
-import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.PlantValueUpdateRequest;

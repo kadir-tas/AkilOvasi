@@ -15,12 +15,10 @@ import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.local.entities.User;
-import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.util.Converters;
 
 @Database(entities = {User.class,
         PlantType.class,
-        UserPlant.class,
         Banner.class,
         Plant.class,
         PlantHistory.class,

@@ -7,8 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.company.akilovasi.data.local.entities.Plant;
-import com.company.akilovasi.data.local.entities.PlantHistory;
-import com.company.akilovasi.data.local.entities.UserPlant;
 
 import java.util.List;
 
