@@ -9,7 +9,6 @@ import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.dao.UserDao;
-import com.company.akilovasi.data.local.dao.UserPlantDao;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Login;
 import com.company.akilovasi.data.local.entities.Plant;
@@ -35,8 +34,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract BannerDao bannerDao();
-
-    public abstract UserPlantDao userPlantDao();
 
     public abstract PlantDao plantDao();
 

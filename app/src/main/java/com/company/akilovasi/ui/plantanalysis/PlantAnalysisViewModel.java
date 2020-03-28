@@ -14,7 +14,6 @@ import com.company.akilovasi.data.remote.models.requests.PlantValueUpdateRequest
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.PlantRepository;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
-import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 import com.company.akilovasi.di.SecretPrefs;
 
 import javax.inject.Inject;
@@ -25,14 +24,14 @@ import retrofit2.Call;
 public class PlantAnalysisViewModel extends ViewModel {
 
     private PlantTypeRepository plantRepository;
-    private UserPlantRepository userPlantRepository;
+    private PlantRepository userPlantRepository;
 
     @Inject
     @SecretPrefs
     SharedPreferences secretPreferences;
 
     @Inject
-    PlantAnalysisViewModel(PlantTypeRepository plantRepository, UserPlantRepository userPlantRepository) {
+    PlantAnalysisViewModel(PlantTypeRepository plantRepository, PlantRepository userPlantRepository) {
         this.plantRepository = plantRepository;
         this.userPlantRepository = userPlantRepository;
     }

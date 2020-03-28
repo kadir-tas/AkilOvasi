@@ -10,10 +10,7 @@ import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.dao.UserDao;
-import com.company.akilovasi.data.local.dao.UserPlantDao;
-
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -36,12 +33,6 @@ public class LocalModule {
     @Singleton
     BannerDao provideBannerDao(AppDatabase appDatabase) {
         return appDatabase.bannerDao();
-    }
-
-    @Provides
-    @Singleton
-    UserPlantDao provideUserPlantDao(AppDatabase appDatabase) {
-        return appDatabase.userPlantDao();
     }
 
     @Provides

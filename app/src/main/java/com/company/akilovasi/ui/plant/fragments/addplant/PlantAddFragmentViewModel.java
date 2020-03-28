@@ -11,8 +11,8 @@ import com.company.akilovasi.data.local.entities.UserPlant;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.responses.Response;
+import com.company.akilovasi.data.remote.repositories.PlantRepository;
 import com.company.akilovasi.data.remote.repositories.PlantTypeRepository;
-import com.company.akilovasi.data.remote.repositories.UserPlantRepository;
 import com.company.akilovasi.di.SecretPrefs;
 
 import javax.inject.Inject;
@@ -24,14 +24,14 @@ public class PlantAddFragmentViewModel extends ViewModel {
     private static final String TAG = "PlantAddFragmentViewMod";
     private PlantTypeRepository plantTypeRepository;
 
-    private UserPlantRepository userPlantRepository;
+    private PlantRepository userPlantRepository;
 
     @Inject
     @SecretPrefs
     SharedPreferences secretPreferences;
 
     @Inject
-    public PlantAddFragmentViewModel (PlantTypeRepository plantTypeRepository, UserPlantRepository userPlantRepository){
+    public PlantAddFragmentViewModel (PlantTypeRepository plantTypeRepository, PlantRepository userPlantRepository){
         this.plantTypeRepository = plantTypeRepository;
         this.userPlantRepository = userPlantRepository;
     }
