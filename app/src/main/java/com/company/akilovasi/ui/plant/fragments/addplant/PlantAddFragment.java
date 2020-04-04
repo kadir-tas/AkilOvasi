@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.company.akilovasi.data.remote.models.responses.Response;
 
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingComponent;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.lifecycle.Observer;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantType;
@@ -33,8 +35,10 @@ import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.camera.CameraActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,6 +57,7 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
 
     private Long plantTypeId;
     private String capturedImagePath = "";
+    File photoFile = null;
 
     @Inject
     Picasso picasso;
@@ -125,38 +130,40 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: " + REQUEST_CODE + " , " + resultCode);
         if( requestCode == REQUEST_CODE) {
-           /* Bitmap photo = (Bitmap) data.getExtras().get("data");
-            dataBinding.capturedPlantImage.setImageBitmap(photo);*/
-          /* capturedImagePath = data.getStringExtra("path");
-            Toast.makeText(getContext(), "Saved at " + capturedImagePath, Toast.LENGTH_SHORT).show();
-            final int THUMBSIZE = 128;
-            Bitmap bitmap =
 
-            dataBinding.capturedPlantImage.setImageBitmap(thumbImage);
-            dataBinding.capturedPlantImage.setRotation(90);*/
+            ExifInterface ei = null;
+            try {
+                ei = new ExifInterface(capturedImagePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int rotationDegrees = 0;
+            Log.d(TAG, "onActivityResult: Orientation " + orientation);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotationDegrees = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotationDegrees = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotationDegrees = 270;
+                    break;
+            }
 
-       /*   if(data != null){
-              Log.d(TAG, "onActivityResult: Data not null");
-              Bundle extras = data.getExtras();
-              if(extras != null){
-                  Log.d(TAG, "onActivityResult: extra not null");
-                  Bitmap imageBitmap = (Bitmap) extras.get("data");
-                  if(imageBitmap != null) {
-                      Log.d(TAG, "onActivityResult: bitmap not null");
-                      dataBinding.capturedPlantImage.setImageBitmap(imageBitmap);
-                      //Uri tempUri = getImageUri(getContext(), imageBitmap);
-                      //capturedImagePath = getRealPathFromURI(tempUri);
-                      Log.d(TAG, "onActivityResult: "  + capturedImagePath);
-                  }
-              }
-          }else {
-              Log.d(TAG, "onActivityResult: Data is null");
-          }
-          */
+            Bitmap src=BitmapFactory.decodeFile(capturedImagePath);
+            Bitmap result = rotateImage(src,rotationDegrees);
+            try {
+                FileOutputStream out = new FileOutputStream(capturedImagePath);
+                result.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(capturedImagePath),
-                    64, 64);
-            dataBinding.capturedPlantImage.setImageBitmap(bitmap);
+            dataBinding.capturedPlantImage.setImageBitmap(result);
 
         }else{
             dataBinding.capturedPlantImage.setImageBitmap(null);
@@ -164,12 +171,18 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
         }
     }
 
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        return rotatedImg;
+    }
+
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity( getContext().getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {

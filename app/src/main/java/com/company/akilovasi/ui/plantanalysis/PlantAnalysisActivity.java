@@ -5,12 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingComponent;
+import androidx.exifinterface.media.ExifInterface;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ import com.company.akilovasi.ui.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -224,9 +227,41 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: " + REQUEST_CODE + " , " + resultCode);
         if( requestCode == REQUEST_CODE) {
-            Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(capturedImagePath),
-                    64, 64);
-            dataBinding.capturedPlantImage.setImageBitmap(bitmap);
+
+
+            ExifInterface ei = null;
+            try {
+                ei = new ExifInterface(capturedImagePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int rotationDegrees = 0;
+            Log.d(TAG, "onActivityResult: Orientation " + orientation);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotationDegrees = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotationDegrees = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotationDegrees = 270;
+                    break;
+            }
+
+            Bitmap src=BitmapFactory.decodeFile(capturedImagePath);
+            Bitmap result = rotateImage(src,rotationDegrees);
+            try {
+                FileOutputStream out = new FileOutputStream(capturedImagePath);
+                result.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            dataBinding.capturedPlantImage.setImageBitmap(result);
 
         }else{
             dataBinding.capturedPlantImage.setImageBitmap(null);
@@ -234,6 +269,14 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
         }
     }
 
+
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        return rotatedImg;
+    }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
