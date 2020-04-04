@@ -2,6 +2,7 @@ package com.company.akilovasi.ui.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -126,7 +127,12 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     //TODO:Still on development phase
     @Override
     public void onBannerClicked(Banner banner) {
-        Log.d("CLICK", "BANNER CLICKED");
+        if(banner.getBannerLinkType().equals("link")){
+            String url = banner.getBannerLink();
+            if (!url.startsWith("http://") && !url.startsWith("https://")) url = "http://" + url;
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        }
     }
 
 
