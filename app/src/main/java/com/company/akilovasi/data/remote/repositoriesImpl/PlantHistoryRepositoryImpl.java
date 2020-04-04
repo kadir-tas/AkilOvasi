@@ -1,5 +1,7 @@
 package com.company.akilovasi.data.remote.repositoriesImpl;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -24,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 
 public class PlantHistoryRepositoryImpl implements PlantHistoryRepository {
+    private static final String TAG = "PlantHistoryRepositoryI";
     Retrofit retrofit;
 
     PlantHistoryService plantHistoryService;
@@ -42,12 +45,12 @@ public class PlantHistoryRepositoryImpl implements PlantHistoryRepository {
         return new NetworkBoundResource<List<PlantHistory>, PlantHistoryResponse>() {
             @Override
             protected void saveCallResult(@NonNull PlantHistoryResponse item) {
-
+                plantHistoryDao.savePlantHistory(item.getResults());
             }
 
             @Override
             protected boolean shouldFetch(@Nullable List<PlantHistory> data) {
-                return false;
+                return true;
             }
 
             @NonNull

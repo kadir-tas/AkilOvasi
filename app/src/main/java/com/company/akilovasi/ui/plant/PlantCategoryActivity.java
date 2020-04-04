@@ -2,6 +2,7 @@ package com.company.akilovasi.ui.plant;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -53,6 +54,11 @@ public class PlantCategoryActivity extends BaseActivity<PlantCategoryActivityVie
         initObservers();
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},  1);
+    }
+
+    @Override
+    protected DataBindingComponent getDataBindingComponent() {
+        return null;
     }
 
     private void initObservers(){

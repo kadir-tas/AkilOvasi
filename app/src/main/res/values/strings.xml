@@ -26,5 +26,29 @@
     <string name="usernameOrEmail">E-posta veya Kullanıcı adı</string>
     <string name="login">Giriş</string>
     <string name="logout">Çıkış</string>
+    <string name="sens_ph">Sensör PH</string>
+    <string name="sens_temp">Sensör Sıcaklık</string>
+    <string name="sens_humidity">Sensör  Nemi</string>
+    <string name="sens_light">Sensör Işık</string>
+    <string name="water_icon">Su İkonu</string>
+    <string name="temp_icon">Sıcaklık İkonu</string>
+    <string name="ph_icon">PH İkonu</string>
+    <string name="sunny_icon">Güneş İkonu</string>
+    <string name="update_sensor">Senör Değerlerini Kaydet</string>
+    <string name="error_perm">Bu Araç Kamera Ve Dosya İzni Gerektiriyor</string>
+    <string name="common_err">Ooops Bir şeyler yanlış gitti :(</string>
+    <string name="update_form_alert">Lütfen Formu Doldurun</string>
+    <string name="plant_value_update">Sensör Değerli Güncellenmiştir</string>
+    <string name="register">Kayıt Ol</string>
+    <string name="username">Kullancı Adı</string>
+    <string name="first_name">Adınız</string>
+    <string name="lastname">Soyadınız</string>
+    <string name="email">Email</string>
+    <string name="address">Adres</string>
+    <string name="phone">Telefon</string>
+    <string name="register_now"><u> Şimdi Kayıt Ol! </u></string>
+    <string name="register_form_alert">Lütfen Formu Düzgün Doldurunuz</string>
+    <string name="register_form_failed">Email veya Kullancı Adı Mevcut Lütfen Farklı Deneyiniz</string>
+    <string name="register_succsessfull">Kayıt Başarılı</string>
 
 </resources>

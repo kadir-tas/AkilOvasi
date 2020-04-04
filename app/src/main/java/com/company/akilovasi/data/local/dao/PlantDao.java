@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.company.akilovasi.data.local.entities.Plant;
-import com.company.akilovasi.data.local.entities.PlantHistory;
 
 import java.util.List;
 
@@ -22,4 +21,7 @@ public interface PlantDao {
 
     @Query("SELECT * FROM plants WHERE userId=:userId")
     LiveData<List<Plant>> getUserPlants(Long userId);
+
+    @Query("SELECT * FROM plants WHERE userPlantId =:userPlantId")
+    LiveData<Plant> loadUserPlant(Long userPlantId);
 }

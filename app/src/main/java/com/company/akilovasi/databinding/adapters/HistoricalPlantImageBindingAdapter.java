@@ -12,21 +12,19 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import static com.company.akilovasi.data.remote.ApiConstants.EMPTY_STRING;
-
-public class UserPlantsImageBindingAdapter {
+public class HistoricalPlantImageBindingAdapter {
 
     Picasso picasso;
 
-    public UserPlantsImageBindingAdapter(Picasso picasso) {
+    public HistoricalPlantImageBindingAdapter(Picasso picasso) {
         this.picasso = picasso;
     }
 
-    @BindingAdapter({"plantImageUrl"})
+    @BindingAdapter({"historicalImage"})
     public void loadImage(ImageView imageView, String imageUrl) {
 
-        if (imageUrl != null && !imageUrl.equals(EMPTY_STRING)) {
-            picasso.load(BuildConfig.BASE_URL + ApiConstants.USER_PLANTS_IMAGE_ENDPOINT_PREFIX +imageUrl).error(R.drawable.ic_photo_black_24dp).resize(500, 500)
+        if (imageUrl != null && !imageUrl.equals(ApiConstants.EMPTY_STRING)) {
+            picasso.load(BuildConfig.BASE_URL + ApiConstants.HISTORIC_PLANTS_IMAGE_ENDPOINT_PREFIX +imageUrl).error(R.drawable.ic_photo_black_24dp).resize(500, 500)
                     .networkPolicy(NetworkPolicy.OFFLINE).into(imageView, new Callback() {
                 @Override
                 public void onSuccess() {
@@ -35,7 +33,7 @@ public class UserPlantsImageBindingAdapter {
 
                 @Override
                 public void onError(Exception e) {
-                    picasso.load(BuildConfig.BASE_URL + ApiConstants.USER_PLANTS_IMAGE_ENDPOINT_PREFIX +imageUrl)
+                    picasso.load(BuildConfig.BASE_URL + ApiConstants.HISTORIC_PLANTS_IMAGE_ENDPOINT_PREFIX +imageUrl)
                             .placeholder(R.drawable.ic_photo_black_24dp)
                             .into(imageView);
                     Log.d("CACHEEE","IMAGE IS NOT FROM CACHE");
@@ -43,16 +41,15 @@ public class UserPlantsImageBindingAdapter {
 
                 }
             });
-            Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.USER_PLANTS_IMAGE_ENDPOINT_PREFIX+imageUrl);
+            Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.HISTORIC_PLANTS_IMAGE_ENDPOINT_PREFIX+imageUrl);
         }
     }
 
-
-    @BindingAdapter({"plantImageThumbnailUrl"})
+    @BindingAdapter({"historicalImageThumbnail"})
     public void loadImageThumbnail(ImageView imageView, String imageUrl) {
 
-        if (imageUrl != null && !imageUrl.equals(EMPTY_STRING)) {
-            picasso.load(BuildConfig.BASE_URL + ApiConstants.USER_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX +imageUrl).error(R.drawable.ic_photo_black_24dp).resize(500, 500)
+        if (imageUrl != null && !imageUrl.equals(ApiConstants.EMPTY_STRING)) {
+            picasso.load(BuildConfig.BASE_URL + ApiConstants.HISTORIC_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX +imageUrl).error(R.drawable.ic_photo_black_24dp).resize(500, 500)
                     .networkPolicy(NetworkPolicy.OFFLINE).into(imageView, new Callback() {
                 @Override
                 public void onSuccess() {
@@ -61,7 +58,7 @@ public class UserPlantsImageBindingAdapter {
 
                 @Override
                 public void onError(Exception e) {
-                    picasso.load(BuildConfig.BASE_URL + ApiConstants.USER_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX +imageUrl)
+                    picasso.load(BuildConfig.BASE_URL + ApiConstants.HISTORIC_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX +imageUrl)
                             .placeholder(R.drawable.ic_photo_black_24dp)
                             .into(imageView);
                     Log.d("CACHEEE","IMAGE IS NOT FROM CACHE");
@@ -69,7 +66,9 @@ public class UserPlantsImageBindingAdapter {
 
                 }
             });
-            Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.USER_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX+imageUrl);
+            Log.d("CCC",BuildConfig.BASE_URL + ApiConstants.HISTORIC_PLANTS_IMAGE_THUMB_ENDPOINT_PREFIX+imageUrl);
         }
     }
+
+
 }

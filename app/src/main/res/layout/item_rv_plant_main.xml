@@ -53,12 +53,13 @@
                     android:orientation="horizontal">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:onClick="@{() -> itemPlantClick.onPlantImageClick(plant.userPlantId)}"
                         android:id="@+id/image"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_gravity="center"
                         android:scaleType="fitXY"
-                        bind:plantImageUrl="@{String.valueOf(plant.userPlantId)}"
+                        bind:plantImageThumbnailUrl="@{String.valueOf(plant.userPlantId)}"
                         app:riv_corner_radius="95dp"
                         app:riv_mutate_background="true" />
 
@@ -150,7 +151,7 @@
                             android:maxEms="7"
                             android:maxLines="1"
                             android:textStyle="normal"
-                            android:text="@{String.valueOf(plant.lastSensHumidity)}" />
+                            android:text="@{String.valueOf((float)plant.lastSensHumidity / 100f)}" />
 
                         <ImageView
                             android:id="@+id/imagesView1"
@@ -167,7 +168,7 @@
                             android:maxEms="7"
                             android:maxLines="1"
                             android:textStyle="normal"
-                            android:text="@{String.valueOf(plant.lastSensPh)}"/>
+                            android:text="@{String.valueOf((float)plant.lastSensPh / 100f)}"/>
 
                         <ImageView
                             android:id="@+id/imageVsaiew1"
@@ -184,7 +185,7 @@
                             android:maxEms="7"
                             android:maxLines="1"
                             android:textStyle="normal"
-                            android:text="@{String.valueOf(plant.lastSensTemp)}"/>
+                            android:text="@{String.valueOf((float)plant.lastSensTemp / 100f)}"/>
 
                         <ImageView
                             android:id="@+id/imageViasdasew1"
@@ -201,7 +202,7 @@
                             android:maxEms="7"
                             android:maxLines="1"
                             android:textStyle="normal"
-                            android:text="@{String.valueOf(plant.lastSensLight)}"/>
+                            android:text="@{String.valueOf((float)plant.lastSensLight / 100f)}"/>
 
 
                     </TableRow>

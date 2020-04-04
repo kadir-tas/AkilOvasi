@@ -1,39 +1,34 @@
 package com.company.akilovasi.ui.main.fragments.history;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingComponent;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.company.akilovasi.R;
-import com.company.akilovasi.data.Resource;
-import com.company.akilovasi.data.local.entities.PlantHistory;
+import com.company.akilovasi.data.Status;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
 import com.company.akilovasi.ui.BaseFragment;
+import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
+import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.main.adapters.PlantHistoryAdapter;
 import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
-import com.company.akilovasi.ui.plantanalysis.PlantAnalysis;
+import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
+import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
-public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback {
+public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback , PlantHistoryClick {
 
     public static final String TAG = "PlantHistoryFragment";
 
@@ -104,13 +99,10 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
     private void initObservers() {
         viewModel.getPlantHistory(userPlantId).observe(getViewLifecycleOwner(), listResource -> {
-            Log.d(TAG, "" + listResource.message);
-            Log.d(TAG, "" + listResource.data);
-            Log.d(TAG, "" + listResource.status);
-            Log.d(TAG, "ID" + userPlantId);
-            Log.d(TAG, "DATA NULLL");
+            if(listResource.status == Status.SUCCESS){
+                mPlantHistoryAdapter.setData(listResource.data);
+            }
 
-            mPlantHistoryAdapter.setData(listResource.data);
         });
         Log.d(TAG, "FINISH OBSERVE");
     }
@@ -123,7 +115,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mHistoryRecyclerView.setHasFixedSize(true);
 
-        mPlantHistoryAdapter = new PlantHistoryAdapter(picasso);
+        mPlantHistoryAdapter = new PlantHistoryAdapter(picasso, this);
         mHistoryRecyclerView.setAdapter(mPlantHistoryAdapter);
     }
 
@@ -133,9 +125,16 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
         Log.d(TAG, "AnalysisClicked");
 
-        Intent intent = new Intent(mActivity, PlantAnalysis.class);
-        intent.putExtra("userPlantId", userPlantId);
+        Intent intent = new Intent(mActivity, PlantAnalysisActivity.class);
+        intent.putExtra(PlantAnalysisActivity.PARAM_USER_PLANT, userPlantId);
         mActivity.startActivity(intent);
         mActivity.finish();
+    }
+
+    @Override
+    public void onPlantHistoryImageClick(Long plantHistoryId) {
+        Log.d(TAG, "onPlantHistoryImageClick: " + plantHistoryId);
+        PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT_HISTORY,plantHistoryId);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 }

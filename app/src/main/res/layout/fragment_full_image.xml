@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="plant"
+            type="Long"/>
+        <variable
+            name="historicalPlant"
+            type="Long" />
+    </data>
+
+<FrameLayout
+    android:clickable="true"
+    android:background="@color/transparent_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:visibility="@{ plant == null ? View.GONE : View.VISIBLE}"
+        bind:plantImageUrl="@{ String.valueOf( plant )}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:layout_gravity="center"
+        android:visibility="@{ historicalPlant == null ? View.GONE : View.VISIBLE}"
+        bind:historicalImage="@{String.valueOf( historicalPlant )}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>
+
+</layout>

@@ -1,5 +1,7 @@
 package com.company.akilovasi.ui.main;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,12 +9,14 @@ import androidx.lifecycle.ViewModel;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Plant;
+import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.BannerRepository;
 import com.company.akilovasi.data.remote.repositories.PlantRepository;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
+import com.company.akilovasi.di.SecretPrefs;
 
 import java.util.List;
 
@@ -29,6 +33,10 @@ public class MainViewModel extends ViewModel {
     private final PlantRepository plantRepository;
 
     private MediatorLiveData<Resource<List<Banner>>> banners = new MediatorLiveData<>();
+
+    @Inject
+    @SecretPrefs
+    SharedPreferences secretPreferences;
 
     @Inject
     public MainViewModel(UserRepository userRepository, BannerRepository bannerRepository, PlantRepository plantRepository) {
@@ -55,6 +63,6 @@ public class MainViewModel extends ViewModel {
     }
 
     public Long getAuthenticatedUserId(){
-        return 23L; //TODO: THIS ID IS FOR ONLY TEST . It will return authenticated userId
+        return secretPreferences.getLong(ApiConstants.USER_ID,-1);
     }
 }

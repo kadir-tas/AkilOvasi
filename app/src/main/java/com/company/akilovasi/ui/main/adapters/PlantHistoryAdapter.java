@@ -14,6 +14,7 @@ import com.company.akilovasi.databinding.ItemRvPlantHistoryBinding;
 import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.ui.BaseAdapter;
 import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
+import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.squareup.picasso.Picasso;
 
@@ -26,9 +27,12 @@ public class PlantHistoryAdapter extends BaseAdapter<PlantHistoryAdapter.PlantHi
 
     private Picasso picasso;
 
-    public PlantHistoryAdapter(Picasso picasso) {
+    private PlantHistoryClick plantHistoryClick;
+
+    public PlantHistoryAdapter(Picasso picasso,PlantHistoryClick plantHistoryClick) {
         plantHistories = new ArrayList<>();
         this.picasso = picasso;
+        this.plantHistoryClick = plantHistoryClick;
     }
 
 
@@ -70,6 +74,7 @@ public class PlantHistoryAdapter extends BaseAdapter<PlantHistoryAdapter.PlantHi
         }
 
         public void onBind(PlantHistory plantHistory) {
+            itemRvPlantHistoryBinding.setPlantHistoryClick(plantHistoryClick);
             itemRvPlantHistoryBinding.setPlantHistory(plantHistory);
             itemRvPlantHistoryBinding.executePendingBindings();
         }
