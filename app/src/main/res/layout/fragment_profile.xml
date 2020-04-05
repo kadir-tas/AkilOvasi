@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="loading"
+            type="boolean" />
+
+        <variable
+            name="applyChangesClick"
+            type="com.company.akilovasi.ui.main.callbacks.ApplyChangesClick" />
+
+        <variable
+            name="user"
+            type="com.company.akilovasi.data.local.entities.User" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/layout_white"
+            android:clickable="true"
+            android:focusable="true"
+            android:isScrollContainer="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/profileHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:lineSpacingExtra="8sp"
+                    android:text="@string/profile_header"
+                    android:textAlignment="center"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_margin="25dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:drawableStart="@drawable/ic_person_outline_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:hint="@string/username"
+                        android:text="@={user.username}" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:enabled="@{!loading}"
+                        android:hint="@string/first_name"
+                        android:inputType="text"
+                        android:text="@={user.userFirstname}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:enabled="@{!loading}"
+                        android:hint="@string/lastname"
+                        android:inputType="text"
+                        android:text="@={user.userLastname}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:enabled="@{!loading}"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:text="@={user.userEmail}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/homeaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:enabled="@{!loading}"
+                        android:hint="@string/address"
+                        android:inputType="text"
+                        android:text="@={user.userHomeAddress}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:enabled="@{!loading}"
+                        android:hint="@string/phone"
+                        android:inputType="phone"
+                        android:text="@={user.userPhone}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/updateUserInfo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="32dp"
+                    android:background="@drawable/rounded_login_button"
+                    android:enabled="@{!loading}"
+                    android:fitsSystemWindows="true"
+                    android:onClick="@{() -> applyChangesClick.onApplyChangesClicked(user)}"
+                    android:text="@string/update_user_info"
+                    android:textColor="@drawable/button_text_color"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/updatePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="45dp"
+                    android:onClick="@{() -> applyChangesClick.onResetPasswordClicked()}"
+                    android:text="@string/reset_password"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <FrameLayout
+            android:id="@+id/waitScreenUserProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/layout_white"
+            android:visibility="@{loading? View.VISIBLE : View.GONE}">
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{loading? View.VISIBLE : View.GONE}" />
+
+        </FrameLayout>
+    </FrameLayout>
+
+</layout>

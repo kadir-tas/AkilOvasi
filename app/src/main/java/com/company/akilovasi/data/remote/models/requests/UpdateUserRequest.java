@@ -1,44 +1,22 @@
-package com.company.akilovasi.data.local.entities;
+package com.company.akilovasi.data.remote.models.requests;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.SerializedName;
+import com.company.akilovasi.data.local.entities.User;
 
 import java.util.Date;
 
-@Entity(tableName = "users",indices = {@Index(value = {"userId"},
-        unique = true)})
-public class User {
+public class UpdateUserRequest {
 
-    @PrimaryKey
-    @SerializedName("userId")
     private Long userId;
-
-    @SerializedName("username")
     private String username;
-
-    @SerializedName("userFirstname")
     private String userFirstname;
-
-    @SerializedName("userLastname")
     private String userLastname;
-
-    @SerializedName("userRegistrationDate")
     private Date userRegistrationDate;
-
-    @SerializedName("userHomeAddress")
     private String userHomeAddress;
-
-    @SerializedName("userEmail")
     private String userEmail;
-
-    @SerializedName("userPhone")
     private String userPhone;
 
-    public User(Long userId, String username, String userFirstname, String userLastname, Date userRegistrationDate, String userHomeAddress, String userEmail, String userPhone) {
+
+    public UpdateUserRequest(Long userId, String username, String userFirstname, String userLastname, Date userRegistrationDate, String userHomeAddress, String userEmail, String userPhone) {
         this.userId = userId;
         this.username = username;
         this.userFirstname = userFirstname;
@@ -49,12 +27,37 @@ public class User {
         this.userPhone = userPhone;
     }
 
+    public UpdateUserRequest(User user){
+        this.username = user.getUsername();
+        this.userFirstname = user.getUserFirstname();
+        this.userLastname = user.getUserLastname();
+        this.userHomeAddress = user.getUserHomeAddress();
+        this.userPhone = user.getUserPhone();
+        this.userEmail = user.getUserEmail();
+    }
+
     public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Date getUserRegistrationDate() {
+        return userRegistrationDate;
+    }
+
+    public void setUserRegistrationDate(Date userRegistrationDate) {
+        this.userRegistrationDate = userRegistrationDate;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUsername() {
@@ -81,28 +84,12 @@ public class User {
         this.userLastname = userLastname;
     }
 
-    public Date getUserRegistrationDate() {
-        return userRegistrationDate;
-    }
-
-    public void setUserRegistrationDate(Date userRegistrationDate) {
-        this.userRegistrationDate = userRegistrationDate;
-    }
-
     public String getUserHomeAddress() {
         return userHomeAddress;
     }
 
     public void setUserHomeAddress(String userHomeAddress) {
         this.userHomeAddress = userHomeAddress;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     public String getUserPhone() {
@@ -112,4 +99,5 @@ public class User {
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
+
 }

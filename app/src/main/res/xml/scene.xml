@@ -11,7 +11,7 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@id/wrapper"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintWidth_default="percent"
@@ -27,7 +27,6 @@
             android:scaleX="0.8"
             android:scaleY="0.8"
             motion:layout_constraintLeft_toLeftOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintWidth_default="percent"
             motion:layout_constraintWidth_percent="1" />
     </ConstraintSet>

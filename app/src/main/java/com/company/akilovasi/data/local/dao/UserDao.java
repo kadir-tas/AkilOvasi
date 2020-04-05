@@ -9,8 +9,7 @@ import androidx.room.Query;
 import com.company.akilovasi.data.local.entities.Login;
 import com.company.akilovasi.data.local.entities.User;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
-
-import java.util.List;
+import com.company.akilovasi.data.remote.models.responses.Response;
 
 @Dao
 public interface UserDao {
@@ -20,4 +19,11 @@ public interface UserDao {
 
     @Query("SELECT * FROM login")
     LiveData<LoginResponse> loadLogin();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void saveUser(User user);
+
+    @Query("SELECT * FROM users")
+    LiveData<User> loadUser();
+
 }

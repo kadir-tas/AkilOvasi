@@ -1,15 +1,20 @@
 package com.company.akilovasi.data.remote.repositoriesImpl;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.dao.UserDao;
+import com.company.akilovasi.data.local.entities.User;
+import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.UserService;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
 import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
+import com.company.akilovasi.data.remote.models.requests.UpdateUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
 import com.google.gson.Gson;
@@ -53,7 +58,11 @@ public class UserRepositoryImpl implements UserRepository {
                 if(response.isSuccessful() && response.body() != null) {
                     result.setValue(Resource.success(response.body().getResults()));
                 }else{
-                    result.setValue(Resource.error(response.message(),null));
+                    try {
+                        result.setValue(Resource.error(response.errorBody().string(),null));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             @Override
@@ -106,6 +115,62 @@ public class UserRepositoryImpl implements UserRepository {
     public Call<com.company.akilovasi.data.remote.models.responses.Response<Message>> registerUser(RegisterUserRequest registerUserRequest) {
         return userService.register(registerUserRequest);
     }
+
+    @Override
+    public LiveData<Resource<User>> getUserData() {
+        return new NetworkBoundResource<User, com.company.akilovasi.data.remote.models.responses.Response<User>>() {
+
+            @Override
+            protected void saveCallResult(@NonNull com.company.akilovasi.data.remote.models.responses.Response<User> item) {
+
+                userDao.saveUser(item.getResults());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable User data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<User> loadFromDb() {
+                return userDao.loadUser();
+            }
+
+            @NonNull
+            @Override
+            protected Call<com.company.akilovasi.data.remote.models.responses.Response<User>> createCall() {
+                return userService.getUserData();
+            }
+        }.getAsLiveData();
+    }
+
+    @Override
+    public LiveData<Resource<User>> updateUser(UpdateUserRequest updateUserRequest) {
+        return new NetworkBoundResource<User, com.company.akilovasi.data.remote.models.responses.Response<User>>() {
+
+            @Override
+            protected void saveCallResult(@NonNull com.company.akilovasi.data.remote.models.responses.Response<User> item) {
+                if(item != null && item.getResults() != null) userDao.saveUser(item.getResults());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable User data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<User> loadFromDb() {
+                return userDao.loadUser();
+            }
+
+            @NonNull
+            @Override
+            protected Call<com.company.akilovasi.data.remote.models.responses.Response<User>> createCall() {
+                return userService.updateUser(updateUserRequest);
+            }
+        }.getAsLiveData();    }
 
 //    private static String reverse(final String input) {
 //        if(input == null || input.isEmpty()){

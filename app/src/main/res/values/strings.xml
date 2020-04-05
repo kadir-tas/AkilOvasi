@@ -50,5 +50,16 @@
     <string name="register_form_alert">Lütfen Formu Düzgün Doldurunuz</string>
     <string name="register_form_failed">Email veya Kullancı Adı Mevcut Lütfen Farklı Deneyiniz</string>
     <string name="register_succsessfull">Kayıt Başarılı</string>
+    <string name="loginError">Kullanıcı adı veya şifre hatalı!</string>
+    <string name="noPlantInfo">Henüz bitkiniz bulunmamaktadır hemen eklemek için butona basınız!</string>
+    <string name="addFirstPlant">Bitki Ekle</string>
+    <string name="profile">Profil</string>
+    <string name="profile_header">Kişisel Bilgiler</string>
+    <string name="update_user_info">Değişiklikleri Kaydet</string>
+    <string name="reset_password">Parolayı Sıfırla</string>
+    <string name="reset_password_header">Parola Sıfırla</string>
+    <string name="new_password">Yeni Şifre</string>
+    <string name="old_password">Eski Şifre</string>
+    <string name="button_ok_text">Tamam</string>
 
 </resources>

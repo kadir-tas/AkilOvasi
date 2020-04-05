@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
@@ -31,7 +32,9 @@ import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
 import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
 import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
+import com.company.akilovasi.ui.main.callbacks.ProfileButtonClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
+import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +44,7 @@ import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
 import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
 
 
-public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick  {
+public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick {
 
     private static final String TAG = "MainActivity";
     private BannerAdapter mBannerAdapter;
@@ -56,6 +59,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Inject
     Picasso picasso;
+    private boolean plantsLoaded = false;
+    private boolean bannersLoaded = false;
 
     @Override
     public Class<MainViewModel> getViewModel() {
@@ -70,8 +75,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataBinding.waitScreen.setVisibility(View.VISIBLE);
         dataBinding.content.wrapper.setAddPlantClick(this);
         dataBinding.leftMenu.setLogoutClick(this);
+        dataBinding.leftMenu.setProfileClick(this);
         initBannerRecyclerView();
         initPlantRecyclerView();
         subscribeObservers();
@@ -91,12 +98,29 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     Log.v("MSGG", listResource.status + "");
                     mBannerAdapter.setData(listResource.data);
                     viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
+                    plantsLoaded = true;
+                    if(bannersLoaded){
+                        dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                    }
+
                 });
 
         viewModel.getAllPlants()
                 .observe(this, listResource -> {
-                    mPlantAdapter.setData(listResource.data);
-                    viewModel.getAllPlants().removeObservers(MainActivity.this);
+                    if (listResource.data != null && listResource.data.size() == 0) {
+                        dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.VISIBLE);
+                        dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.INVISIBLE);
+                        bannersLoaded = true;
+                        if(plantsLoaded){
+                            dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                        }
+                    }else if(listResource.data != null){
+                        dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.VISIBLE);
+                        dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.INVISIBLE);
+                        mPlantAdapter.setData(listResource.data);
+                        viewModel.getAllPlants().removeObservers(MainActivity.this);
+                        dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                    }
                 });
     }
 
@@ -152,13 +176,17 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-       /* Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+//        super.onBackPressed();
+       Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+       Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
-        } else {
+        }else if(f2 != null){
+            getSupportFragmentManager().beginTransaction().remove(f2).commit();
+        }
+        else {
             super.onBackPressed();
-        }*/
+        }
     }
 
     @Override
@@ -202,6 +230,16 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 }
             }
         });
+    }
+
+    @Override
+    public void onProfileButtonClicked() {
+        Fragment f = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
+        if (f == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
+        }
     }
 }
 
