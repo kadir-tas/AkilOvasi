@@ -20,4 +20,7 @@ public interface PlantHistoryDao {
     @Query("SELECT * FROM plant_history WHERE userPlantId=:userPlantId")
     LiveData<List<PlantHistory>> getUserPlantHistory(Long userPlantId);
 
+    @Query("DELETE FROM plant_history")
+    void clearPlantsHistory();
+
 }

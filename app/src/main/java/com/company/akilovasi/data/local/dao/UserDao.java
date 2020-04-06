@@ -26,4 +26,8 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     LiveData<User> loadUser();
 
+//    @Query("DELETE FROM users where userId NOT IN (SELECT userId from users ORDER BY userId DESC LIMIT 1)")
+    @Query("DELETE FROM users")
+    void clearUsers();
+
 }

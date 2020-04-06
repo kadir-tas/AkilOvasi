@@ -8,6 +8,7 @@ import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
 import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
+import com.company.akilovasi.data.remote.models.requests.ResetPasswordRequest;
 import com.company.akilovasi.data.remote.models.requests.UpdateUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.models.responses.Response;
@@ -27,5 +28,7 @@ public interface UserRepository {
     public LiveData<Resource<User>> getUserData();
 
     public LiveData<Resource<User>> updateUser(UpdateUserRequest updateUserRequest);
+
+    public LiveData<Resource<Response<Message>>> resetPassword(ResetPasswordRequest resetPasswordRequest);
 
 }

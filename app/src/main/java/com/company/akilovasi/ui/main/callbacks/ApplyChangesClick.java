@@ -9,5 +9,5 @@ public interface ApplyChangesClick {
 
     void onResetPasswordClicked();
 
-    void onConfirmResetPasswordClicked(ResetPasswordRequest resetPasswordRequest);
+    void onConfirmResetPasswordClicked(String oldPassword, String newPassword);
 }

@@ -12,7 +12,7 @@ public class UpdateUserRequest {
     private String userLastname;
     private Date userRegistrationDate;
     private String userHomeAddress;
-    private String userEmail;
+    private String email;
     private String userPhone;
 
 
@@ -23,7 +23,7 @@ public class UpdateUserRequest {
         this.userLastname = userLastname;
         this.userRegistrationDate = userRegistrationDate;
         this.userHomeAddress = userHomeAddress;
-        this.userEmail = userEmail;
+        this.email = userEmail;
         this.userPhone = userPhone;
     }
 
@@ -33,7 +33,7 @@ public class UpdateUserRequest {
         this.userLastname = user.getUserLastname();
         this.userHomeAddress = user.getUserHomeAddress();
         this.userPhone = user.getUserPhone();
-        this.userEmail = user.getUserEmail();
+        this.email = user.getUserEmail();
     }
 
     public Long getUserId() {
@@ -53,11 +53,11 @@ public class UpdateUserRequest {
     }
 
     public String getUserEmail() {
-        return userEmail;
+        return email;
     }
 
     public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+        this.email = userEmail;
     }
 
     public String getUsername() {

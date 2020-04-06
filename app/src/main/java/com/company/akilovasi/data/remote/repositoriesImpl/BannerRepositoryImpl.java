@@ -41,6 +41,9 @@ public class BannerRepositoryImpl implements BannerRepository {
 
             @Override
             protected void saveCallResult(@NonNull BannerResponse item) {
+                if(item.getResults() != null && !item.getResults().isEmpty()){
+                    bannerDao.clearBanners();
+                }
                 bannerDao.saveBanners(item.getResults());
             }
 

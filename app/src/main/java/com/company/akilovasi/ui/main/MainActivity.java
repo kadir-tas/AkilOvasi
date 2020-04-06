@@ -4,22 +4,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.company.akilovasi.R;
-import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.remote.ApiConstants;
-import com.company.akilovasi.data.remote.models.other.Message;
-import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
@@ -31,7 +29,6 @@ import com.company.akilovasi.ui.main.callbacks.AddPlantClick;
 import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
 import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
-import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
 import com.company.akilovasi.ui.main.callbacks.ProfileButtonClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
@@ -59,6 +56,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Inject
     Picasso picasso;
+
     private boolean plantsLoaded = false;
     private boolean bannersLoaded = false;
 
@@ -99,7 +97,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     mBannerAdapter.setData(listResource.data);
                     viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
                     plantsLoaded = true;
-                    if(bannersLoaded){
+                    if (bannersLoaded) {
                         dataBinding.waitScreen.setVisibility(View.INVISIBLE);
                     }
 
@@ -111,10 +109,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                         dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.VISIBLE);
                         dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.INVISIBLE);
                         bannersLoaded = true;
-                        if(plantsLoaded){
+                        if (plantsLoaded) {
                             dataBinding.waitScreen.setVisibility(View.INVISIBLE);
                         }
-                    }else if(listResource.data != null){
+                    } else if (listResource.data != null) {
                         dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.VISIBLE);
                         dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.INVISIBLE);
                         mPlantAdapter.setData(listResource.data);
@@ -170,27 +168,33 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Override
     public void onPlantImageClick(Long userPlantId) {
-        PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT,userPlantId);
+        PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT, userPlantId);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-       Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
-       Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
+        Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+        Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
-        }else if(f2 != null){
+        } else if (f2 != null) {
+            dataBinding.main.closeDrawer(Gravity.LEFT);
             getSupportFragmentManager().beginTransaction().remove(f2).commit();
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
 
     @Override
     public void onAddPlantClick() {
+//        dataBinding.main.openDrawer(Gravity.LEFT);
+//        dataBinding.leftMenu.menu.transitionToStart();
+//        dataBinding.leftMenu.menu.transitionToEnd();
+
+//        dataBinding.main.setState(R.id.end, ConstraintSet.WRAP_CONTENT, ConstraintSet.WRAP_CONTENT);
+
         startActivity(new Intent(MainActivity.this, PlantCategoryActivity.class));
         finish();
     }
@@ -198,35 +202,32 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onLogoutButtonClicked() {
 
-        viewModel.logout().observe(MainActivity.this, new Observer<Resource<Response<Message>>>() {
-            @Override
-            public void onChanged(Resource<Response<Message>> responseResource) {
-                if (responseResource != null) {
-                    switch (responseResource.status) {
-                        case SUCCESS:
-                            if (responseResource.data != null && responseResource.data.getSuccess()) {
-                                secretPreferences.edit().remove(ACCESS_TOKEN).apply();
-                                secretPreferences.edit().remove(REFRESH_TOKEN).apply();
-                                secretPreferences.edit().remove(ApiConstants.USER_ID).apply();
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            break;
-                        case ERROR:
-                            Log.e(TAG, "onChanged: Error" + responseResource.message);
-                            //TODO: I ADDED THIS TO TEST REMOVE THIS WHEN ITS DONE
+        viewModel.logout().observe(MainActivity.this, responseResource -> {
+            if (responseResource != null) {
+                switch (responseResource.status) {
+                    case SUCCESS:
+                        if (responseResource.data != null && responseResource.data.getSuccess()) {
                             secretPreferences.edit().remove(ACCESS_TOKEN).apply();
                             secretPreferences.edit().remove(REFRESH_TOKEN).apply();
                             secretPreferences.edit().remove(ApiConstants.USER_ID).apply();
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
-                            break;
-                        case LOADING:
-                            Log.d(TAG, "onChanged: Loading...");
-                            break;
-                    }
+                        }
+                        break;
+                    case ERROR:
+                        Log.e(TAG, "onChanged: Error" + responseResource.message);
+                        //TODO: I ADDED THIS TO TEST REMOVE THIS WHEN ITS DONE
+                        secretPreferences.edit().remove(ACCESS_TOKEN).apply();
+                        secretPreferences.edit().remove(REFRESH_TOKEN).apply();
+                        secretPreferences.edit().remove(ApiConstants.USER_ID).apply();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case LOADING:
+                        Log.d(TAG, "onChanged: Loading...");
+                        break;
                 }
             }
         });

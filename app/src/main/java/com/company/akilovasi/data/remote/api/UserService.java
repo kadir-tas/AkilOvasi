@@ -6,6 +6,7 @@ import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
 import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
+import com.company.akilovasi.data.remote.models.requests.ResetPasswordRequest;
 import com.company.akilovasi.data.remote.models.requests.UpdateUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.models.responses.Response;
@@ -42,5 +43,8 @@ public interface UserService {
 
     @POST("user/update/")
     Call<Response<User>> updateUser(@Body UpdateUserRequest updateUserRequest);
+
+    @POST("user/resetPassword/")
+    Call<Response<Message>> resetPassword(@Body ResetPasswordRequest resetPasswordRequest);
 
 }

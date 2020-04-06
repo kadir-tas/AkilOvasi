@@ -24,20 +24,12 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     public NetworkBoundResource() {
         result.setValue(Resource.loading(null));
         LiveData<ResultType> dbSource = loadFromDb();
-        result.addSource(dbSource, new Observer<ResultType>() {
-            @Override
-            public void onChanged(ResultType data) {
-                result.removeSource(dbSource);
-                if (NetworkBoundResource.this.shouldFetch(data)) {
-                    NetworkBoundResource.this.fetchFromNetwork(dbSource);
-                } else {
-                    result.addSource(dbSource, new Observer<ResultType>() {
-                        @Override
-                        public void onChanged(ResultType newData) {
-                            result.setValue(Resource.success(newData));
-                        }
-                    });
-                }
+        result.addSource(dbSource, data -> {
+            result.removeSource(dbSource);
+            if (NetworkBoundResource.this.shouldFetch(data)) {
+                NetworkBoundResource.this.fetchFromNetwork(dbSource);
+            } else {
+                result.addSource(dbSource, newData -> result.setValue(Resource.success(newData)));
             }
         });
     }

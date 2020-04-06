@@ -20,6 +20,7 @@ import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.FragmentRegisterBinding;
 import com.company.akilovasi.ui.BaseFragment;
+import com.company.akilovasi.util.Helper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,11 +71,10 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, FragmentRe
     }
 
     private boolean validateForm(){
-        boolean isValid = true;
-        isValid = isValid & !dataBinding.firstname.getEditText().getText().toString().isEmpty();
+        boolean isValid = !dataBinding.firstname.getEditText().getText().toString().isEmpty();
         isValid = isValid & !dataBinding.lastname.getEditText().getText().toString().isEmpty();
         isValid = isValid & (!dataBinding.password.getEditText().getText().toString().isEmpty() && dataBinding.password.getEditText().getText().toString().length() >= 6);
-        isValid = isValid & !dataBinding.email.getEditText().getText().toString().isEmpty();
+        isValid = isValid & (!dataBinding.email.getEditText().getText().toString().isEmpty() && Helper.isEmailValid(dataBinding.email.getEditText().getText().toString()));
         isValid = isValid & !dataBinding.homeaddress.getEditText().getText().toString().isEmpty();
         isValid = isValid & !dataBinding.username.getEditText().getText().toString().isEmpty();
         isValid = isValid & !dataBinding.phone.getEditText().getText().toString().isEmpty();

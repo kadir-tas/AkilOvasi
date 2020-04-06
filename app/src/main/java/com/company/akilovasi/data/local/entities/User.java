@@ -9,8 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-@Entity(tableName = "users",indices = {@Index(value = {"userId"},
-        unique = true)})
+@Entity(tableName = "users")
 public class User {
 
     @PrimaryKey

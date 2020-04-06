@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.User;
-import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
+import com.company.akilovasi.data.remote.models.requests.ResetPasswordRequest;
 import com.company.akilovasi.data.remote.models.requests.UpdateUserRequest;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.UserRepository;
@@ -32,6 +32,10 @@ public class ProfileFragmentViewModel extends ViewModel {
 
     LiveData<Resource<User>> updateUserProfile(User user){
         return userRepository.updateUser(new UpdateUserRequest(user));
+    }
+
+    public LiveData<Resource<Response<Message>>> resetPassword(ResetPasswordRequest resetPasswordRequest){
+        return userRepository.resetPassword(resetPasswordRequest);
     }
 
     LiveData<Resource<User>> getUserProfile() {
