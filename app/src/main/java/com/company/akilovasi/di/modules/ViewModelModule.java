@@ -9,6 +9,7 @@ import com.company.akilovasi.ui.login.LoginViewModel;
 import com.company.akilovasi.ui.login.fragments.RegisterViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragmentViewModel;
+import com.company.akilovasi.ui.main.fragments.profile.ProfileFragmentViewModel;
 import com.company.akilovasi.ui.plant.PlantCategoryActivityViewModel;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragmentViewModel;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragmentViewModel;
@@ -70,6 +71,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PlantFullImageViewModel.class)
     abstract ViewModel bindPlantFullImageViewModel(PlantFullImageViewModel plantFullImageViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileFragmentViewModel.class)
+    abstract ViewModel bindProfileFragmentViewModel(ProfileFragmentViewModel profileFragmentViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);

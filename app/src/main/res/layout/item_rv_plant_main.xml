@@ -24,7 +24,7 @@
         android:layout_margin="6dp"
         app:cardBackgroundColor="@color/white_cardview_color"
         app:cardCornerRadius="25dp"
-        app:cardElevation="5dp">
+        app:cardElevation="1dp">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

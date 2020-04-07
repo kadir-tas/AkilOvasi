@@ -1,6 +1,7 @@
 package com.company.akilovasi.ui.login;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingComponent;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -137,6 +139,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
                 if (loginResponseResource != null) {
                     switch (loginResponseResource.status) {
                         case SUCCESS:
+                            dataBinding.textErrorMessage.setVisibility(View.INVISIBLE);
                             if (loginResponseResource.data != null && !loginResponseResource.data.getAccessToken().isEmpty() && !loginResponseResource.data.getRefreshToken().isEmpty()) {
                                 secretPreferences.edit().putString(ACCESS_TOKEN, loginResponseResource.data.getAccessToken()).apply();
                                 secretPreferences.edit().putString(REFRESH_TOKEN, loginResponseResource.data.getRefreshToken()).apply();
@@ -148,12 +151,18 @@ public class LoginActivity extends BaseActivity<LoginViewModel, ActivityLoginBin
                             dataBinding.progressBar.hide();
                             break;
                         case ERROR:
-                            Log.e(TAG, "onChanged: Error" + loginResponseResource.message);
+                            String message = loginResponseResource.message;
+                            if (message != null && message.contains("Bad")) {
+                                dataBinding.textErrorMessage.setVisibility(View.VISIBLE);
+                                dataBinding.textErrorMessage.setText(R.string.loginError);
+                            }
                             dataBinding.progressBar.hide();
+                            Toast.makeText(getApplicationContext(), loginResponseResource.message, Toast.LENGTH_LONG).show();
                             dataBinding.setLoginButtonEnable(true);
                             break;
                         case LOADING:
                             Log.d(TAG, "onChanged: Loading...");
+                            dataBinding.textErrorMessage.setVisibility(View.INVISIBLE);
                             dataBinding.progressBar.show();
                             break;
                     }

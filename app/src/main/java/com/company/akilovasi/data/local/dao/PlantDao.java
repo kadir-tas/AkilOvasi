@@ -24,4 +24,7 @@ public interface PlantDao {
 
     @Query("SELECT * FROM plants WHERE userPlantId =:userPlantId")
     LiveData<Plant> loadUserPlant(Long userPlantId);
+
+    @Query("DELETE FROM plants")
+    void clearPlants();
 }

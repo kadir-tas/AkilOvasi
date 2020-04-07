@@ -6,6 +6,8 @@ import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LoginRequest;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
 import com.company.akilovasi.data.remote.models.requests.RegisterUserRequest;
+import com.company.akilovasi.data.remote.models.requests.ResetPasswordRequest;
+import com.company.akilovasi.data.remote.models.requests.UpdateUserRequest;
 import com.company.akilovasi.data.remote.models.responses.LoginResponse;
 import com.company.akilovasi.data.remote.models.responses.Response;
 
@@ -27,8 +29,8 @@ public interface UserService {
     @POST(LOGIN_URL)
     Call<Response<LoginResponse>> login(@Body LoginRequest loginRequest);
 
-    @GET("user/{id}")
-    Flowable<User> getUserData(@Header("Authorization") String token, @Path("id") int id);
+    @GET("user/get/")
+    Call<Response<User>> getUserData();
 
     @POST(REFRESH_JWT_TOKEN_URL)
     Call<Void> refreshJwtToken(@Header(AUTHORIZATION) String refreshToken);
@@ -38,5 +40,11 @@ public interface UserService {
 
     @POST(ApiConstants.REGISTER_URL)
     Call<Response<Message>> register(@Body RegisterUserRequest registerUserRequest);
+
+    @POST("user/update/")
+    Call<Response<User>> updateUser(@Body UpdateUserRequest updateUserRequest);
+
+    @POST("user/resetPassword/")
+    Call<Response<Message>> resetPassword(@Body ResetPasswordRequest resetPasswordRequest);
 
 }

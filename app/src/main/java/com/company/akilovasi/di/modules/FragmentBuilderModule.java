@@ -4,6 +4,7 @@ import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
 import com.company.akilovasi.ui.login.fragments.RegisterFragment;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 
+import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragment;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragment;
 
@@ -26,5 +27,8 @@ public abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract PlantFullImageFragment plantFullImageFragment();
+
+    @ContributesAndroidInjector
+    abstract ProfileFragment profileFragment();
 }
 

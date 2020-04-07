@@ -23,4 +23,6 @@ public interface BannerDao {
     @Query("SELECT * FROM banners WHERE bannerId=:bannerId")
     LiveData<Banner> getBanner(Long bannerId);
 
+    @Query("DELETE FROM banners")
+    void clearBanners();
 }
