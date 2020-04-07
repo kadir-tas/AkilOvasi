@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
     }
 
     @Override
@@ -171,6 +171,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         if(f != null){
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         }
+
         PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT, userPlantId);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, PlantFullImageFragment.TAG).commit();
     }
@@ -182,13 +183,17 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         Fragment f3 = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
         if(f3 != null){
+            Log.d(TAG, "onBackPressed: f3");
             getSupportFragmentManager().beginTransaction().remove(f3).commit();
         }else if (f != null) {
+            Log.d(TAG, "onBackPressed: f");
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         } else if (f2 != null) {
+            Log.d(TAG, "onBackPressed: f2");
             dataBinding.main.closeDrawer(Gravity.LEFT);
             getSupportFragmentManager().beginTransaction().remove(f2).commit();
         }else{
+            Log.d(TAG, "onBackPressed: else");
             super.onBackPressed();
         }
     }
