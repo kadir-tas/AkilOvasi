@@ -5,8 +5,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.company.akilovasi.data.Resource;
+import com.company.akilovasi.data.Status;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.remote.NetworkBoundResource;
@@ -27,6 +30,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class PlantRepositoryImpl implements PlantRepository {
@@ -73,12 +77,33 @@ public class PlantRepositoryImpl implements PlantRepository {
     }
 
     @Override
-    public Call<Response<Message>> addUserPlant(Long plantId, Long userId, String plantName, float plantSize, float potSize) {
-        return plantService.addUserPlant(new PlantAddRequest( plantId , userId , plantName, plantSize, potSize ));
+    public MediatorLiveData<Resource<Response<Message>>> addUserPlant(Long plantId, Long userId, String plantName, float plantSize, float potSize) {
+        final MediatorLiveData<Resource<Response<Message>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        plantService.addUserPlant(new PlantAddRequest( plantId , userId , plantName, plantSize, potSize )).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.setValue(Resource.success(response.body()));
+                    Log.d(TAG, "onResponse: here");
+                }else {
+                    resourceMutableLiveData.setValue(Resource.error(response.message(), null));
+                    Log.d(TAG, "onResponse: here2");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.setValue(Resource.error(t.getMessage(), null));
+                Log.d(TAG, "onResponse: here3");
+            }
+        });
+
+        return resourceMutableLiveData;
     }
 
     @Override
-    public Call<Response<Message>> addUserPlantWithImage(Long plantId, Long userId, String plantName, float plantSize, float potSize, String imageFilePath) {
+    public MediatorLiveData<Resource<Response<Message>>>  addUserPlantWithImage(Long plantId, Long userId, String plantName, float plantSize, float potSize, String imageFilePath) {
         File file = new File(imageFilePath);
         RequestBody requestFile =
                 RequestBody.create(file, MediaType.parse("multipart/form-data"));
@@ -86,16 +111,34 @@ public class PlantRepositoryImpl implements PlantRepository {
             Log.d(TAG, "addUserPlantWithImage: File exist");
         else
             Log.d(TAG, "addUserPlantWithImage: File does not ecist");
-// MultipartBody.Part is used to send also the actual file name
+        // MultipartBody.Part is used to send also the actual file name
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
         PlantAddRequest plantAddRequest = new PlantAddRequest( plantId , userId , plantName, plantSize, potSize );
-        return plantService.addUserPlantWithImage(plantAddRequest, body);
+        final MediatorLiveData<Resource<Response<Message>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        plantService.addUserPlantWithImage(plantAddRequest, body).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.setValue(Resource.success(response.body()));
+                }else {
+                    resourceMutableLiveData.setValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.setValue(Resource.error(t.getMessage(), null));
+            }
+        });
+
+        return resourceMutableLiveData;
     }
 
     @Override
-    public Call<Response<Message>> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId) {
+    public MediatorLiveData<Resource<Response<Message>>> updateUserPlantImage(String imageFilePath, Long userId, Long userPlantId) {
         File file = new File(imageFilePath);
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -111,11 +154,29 @@ public class PlantRepositoryImpl implements PlantRepository {
         RequestBody userIdResponseBody =
                 RequestBody.create(MediaType.parse("multipart/form-data"), userId + "" );
 
-        return plantService.uploadImage(userIdResponseBody, userPlantIdResponseBody, body);
+        final MediatorLiveData<Resource<Response<Message>>>  resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        plantService.uploadImage(userIdResponseBody, userPlantIdResponseBody, body).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.setValue(Resource.success(response.body()));
+                }else {
+                    resourceMutableLiveData.setValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.setValue(Resource.error(t.getMessage(), null));
+            }
+        });
+
+        return resourceMutableLiveData;
     }
 
     @Override
-    public Call<Response<Message>> updateSensorValue(PlantValueUpdateRequest plantValueUpdateRequest) {
+    public MediatorLiveData<Resource<Response<Message>>> updateSensorValue(PlantValueUpdateRequest plantValueUpdateRequest) {
         File imageFile = new File(plantValueUpdateRequest.getImagePath());
         MultipartBody.Part body = null;
         if(imageFile.exists()){
@@ -132,7 +193,26 @@ public class PlantRepositoryImpl implements PlantRepository {
         RequestBody pantPotSize = RequestBody.create( plantValueUpdateRequest.getPlantPotSize() + "" , MediaType.parse("multipart/form-data"));
         RequestBody plantSize = RequestBody.create( plantValueUpdateRequest.getPlantSize() + "" , MediaType.parse("multipart/form-data"));
 
-        return plantService.updatePlantSensorValue(userId,userPlantId,body,sensPh,sensTemp, sensHumidity,sensLight,plantSize,pantPotSize);
+
+        final MediatorLiveData<Resource<Response<Message>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        plantService.updatePlantSensorValue(userId,userPlantId,body,sensPh,sensTemp, sensHumidity,sensLight,plantSize,pantPotSize).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.setValue(Resource.success(response.body()));
+                }else {
+                    resourceMutableLiveData.setValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.setValue(Resource.error(t.getMessage(), null));
+            }
+        });
+
+        return resourceMutableLiveData;
     }
 
     @Override

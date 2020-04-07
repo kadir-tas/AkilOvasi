@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.Resource;
+import com.company.akilovasi.data.Status;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.remote.NetworkBoundResource;

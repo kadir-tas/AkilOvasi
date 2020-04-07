@@ -3,8 +3,10 @@ package com.company.akilovasi.ui.plantanalysis;
 import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantType;
 import com.company.akilovasi.data.remote.ApiConstants;
@@ -43,7 +45,7 @@ public class PlantAnalysisViewModel extends ViewModel {
         return userPlantRepository.getUserPlantLocal(userPlantId);
     }
 
-    public Call<Response<Message>> updatePlantSensValue(PlantValueUpdateRequest plantValueUpdateRequest){
+    public MutableLiveData<Resource<Response<Message>>> updatePlantSensValue(PlantValueUpdateRequest plantValueUpdateRequest){
         return userPlantRepository.updateSensorValue(plantValueUpdateRequest);
     }
 

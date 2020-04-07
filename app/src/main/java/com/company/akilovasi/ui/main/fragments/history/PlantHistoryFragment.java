@@ -135,6 +135,6 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     public void onPlantHistoryImageClick(Long plantHistoryId) {
         Log.d(TAG, "onPlantHistoryImageClick: " + plantHistoryId);
         PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT_HISTORY,plantHistoryId);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, PlantFullImageFragment.TAG).commit();
     }
 }

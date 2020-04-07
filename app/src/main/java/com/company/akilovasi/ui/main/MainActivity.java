@@ -123,7 +123,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 });
     }
 
-
     private void initBannerRecyclerView() {
 
         mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
@@ -146,7 +145,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         mPlantsRecyclerView.setAdapter(mPlantAdapter);
     }
 
-    //TODO:Still on development phase
     @Override
     public void onBannerClicked(Banner banner) {
         if(banner.getBannerLinkType().equals("link")){
@@ -161,21 +159,20 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onPlantClick(Long userPlantId) {
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
-        if (f == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).addToBackStack(null).commit();
+        if (f != null) {
+            getSupportFragmentManager().beginTransaction().remove(f).commit();
         }
-        /* Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
-        if (f == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
-        } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
-        }*/
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).addToBackStack(null).commit();
     }
 
     @Override
     public void onPlantImageClick(Long userPlantId) {
+        Fragment f = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
+        if(f != null){
+            getSupportFragmentManager().beginTransaction().remove(f).commit();
+        }
         PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT, userPlantId);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, PlantFullImageFragment.TAG).commit();
     }
 
     @Override
@@ -183,12 +180,15 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 //        super.onBackPressed();
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
-        if (f != null) {
+        Fragment f3 = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
+        if(f3 != null){
+            getSupportFragmentManager().beginTransaction().remove(f3).commit();
+        }else if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         } else if (f2 != null) {
             dataBinding.main.closeDrawer(Gravity.LEFT);
             getSupportFragmentManager().beginTransaction().remove(f2).commit();
-        } else {
+        }else{
             super.onBackPressed();
         }
     }
@@ -223,10 +223,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                         break;
                     case ERROR:
                         Log.e(TAG, "onChanged: Error" + responseResource.message);
-                        //TODO: I ADDED THIS TO TEST REMOVE THIS WHEN ITS DONE
-                        secretPreferences.edit().remove(ACCESS_TOKEN).apply();
-                        secretPreferences.edit().remove(REFRESH_TOKEN).apply();
-                        secretPreferences.edit().remove(ApiConstants.USER_ID).apply();
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();

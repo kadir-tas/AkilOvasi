@@ -125,7 +125,6 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
     }
 
     public void saveForm(){
-        dataBinding.setLoading(true);
         PlantValueUpdateRequest req = new PlantValueUpdateRequest();
 
         req.setUserId( viewModel.getUserId() );
@@ -146,23 +145,20 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
         req.setSensLight(light);
         req.setSensTemp(temp);
 
-        viewModel.updatePlantSensValue(req).enqueue(new Callback<Response<Message>>() {
-            @Override
-            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
-                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+        viewModel.updatePlantSensValue(req).observe(this, responseResource -> {
+            switch (responseResource.status){
+                case SUCCESS:
+                    dataBinding.setLoading(false);
                     Toast.makeText(PlantAnalysisActivity.this, R.string.plant_value_update, Toast.LENGTH_SHORT).show();
                     redirectToMain();
-                }else{
+                    break;
+                case ERROR:
+                    dataBinding.setLoading(false);
                     Toast.makeText(PlantAnalysisActivity.this, R.string.common_err, Toast.LENGTH_SHORT).show();
-                }
-                dataBinding.setLoading(false);
-            }
-
-            @Override
-            public void onFailure(Call<Response<Message>> call, Throwable t) {
-                Toast.makeText(PlantAnalysisActivity.this, R.string.common_err, Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onFailure: ", t);
-                dataBinding.setLoading(false);
+                    break;
+                case LOADING:
+                    dataBinding.setLoading(true);
+                    break;
             }
         });
     }
@@ -251,6 +247,13 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
             }
 
             Bitmap src=BitmapFactory.decodeFile(capturedImagePath);
+
+            if(src == null)
+            {
+                capturedImagePath = "";
+                return;
+            }
+
             Bitmap result = rotateImage(src,rotationDegrees);
             try {
                 FileOutputStream out = new FileOutputStream(capturedImagePath);

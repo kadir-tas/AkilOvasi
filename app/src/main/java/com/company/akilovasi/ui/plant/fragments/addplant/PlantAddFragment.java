@@ -153,6 +153,12 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
             }
 
             Bitmap src=BitmapFactory.decodeFile(capturedImagePath);
+            if(src == null)
+            {
+                capturedImagePath = "";
+                return;
+            }
+
             Bitmap result = rotateImage(src,rotationDegrees);
             try {
                 FileOutputStream out = new FileOutputStream(capturedImagePath);
@@ -277,37 +283,34 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
     }
 
     private void saveForm(){
-        dataBinding.setLoading(true);
         viewModel.saveUserPlant(
                 plantTypeId,
                 viewModel.getUserId(),
                 dataBinding.plantName.getText().toString(),
                 convetToPlantSize( dataBinding.plantSize.getCheckedRadioButtonId() ),
                 convetToPotSize( dataBinding.potSize.getCheckedRadioButtonId() )
-        ).enqueue(new Callback<Response<Message>>() {
-            @Override
-            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
-                Response<Message> message = response.body();
-                if(response.isSuccessful() && message != null){
-                    Log.d(TAG, "onResponse: " + message.getSuccess());
+        ).observe(getActivity(), responseResource -> {
+            Log.d(TAG, "saveForm: here");
+            switch (responseResource.status){
+                case SUCCESS:
+                    Log.d(TAG, "saveForm: Succsess");
                     plantAdded();
                     getActivity().onBackPressed();
-                }else{
+                    break;
+                case ERROR:
+                    Log.d(TAG, "saveForm: error");
                     loadingFailed();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Response<Message>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-                loadingFailed();
+                    break;
+                case LOADING:
+                    Log.d(TAG, "saveForm: loading");
+                    showLoading();
+                    break;
             }
         });
     }
 
 
     private void saveImage(){
-        dataBinding.setLoading(true);
         viewModel.saveUserPlantWithImage(
                 plantTypeId,
                 viewModel.getUserId(),
@@ -315,29 +318,24 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 convetToPlantSize( dataBinding.plantSize.getCheckedRadioButtonId() ),
                 convetToPotSize( dataBinding.potSize.getCheckedRadioButtonId() ),
                 capturedImagePath
-        ).enqueue(new Callback<Response<Message>>() {
-            @Override
-            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
-                Response<Message> message = response.body();
-                if(response.isSuccessful() && message != null){
-                    plantAdded();
-                    getActivity().onBackPressed();
-                }else{
-                    Log.d(TAG, "onResponse: HERE");
+        ).observe(getActivity(), responseResource -> {
+           switch (responseResource.status){
+               case SUCCESS:
+                   plantAdded();
+                   getActivity().onBackPressed();
+                   break;
+               case ERROR:
                    loadingFailed();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Response<Message>> call, Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                loadingFailed();
-            }
+                   break;
+               case LOADING:
+                   showLoading();
+                   break;
+           }
         });
     }
 
     private void showLoading(){
-
+        dataBinding.setLoading(true);
     }
 
     private void loadingFailed(){
@@ -355,7 +353,7 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
     }
 
     private void hideLoading(){
-
+        dataBinding.setLoading(false);
     }
 
     @Override

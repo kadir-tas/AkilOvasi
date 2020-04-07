@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public class PlantFullImageFragment extends BaseFragment<PlantFullImageViewModel, FragmentFullImageBinding> {
 
+    public static final String TAG = "PlantFullImageFragment";
     public static String USER_PLANT ="user-plant";
     public static String USER_PLANT_HISTORY ="user-plant-history";
 
