@@ -21,13 +21,17 @@ public class Notification {
          */
         Default,
         /**
-         * To Remind User To Do Analysis For his/her
+         * To Remind User To Do Analysis For his/her Plant
          */
         RemindAnalysis,
         /**
          *Remind User to Take Care of His/Her Plant, Give Water etc..
          */
         RemindCare,
+        /**
+         * TODO
+         */
+        AnalysisResult,
         /**
          * Notifications such as go to external links when clicked or show something on the screen
          */

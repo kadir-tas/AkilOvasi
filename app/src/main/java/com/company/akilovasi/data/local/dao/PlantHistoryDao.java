@@ -17,8 +17,11 @@ public interface PlantHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void savePlantHistory(List<PlantHistory> plantHistories);
 
-    @Query("SELECT * FROM plant_history WHERE userPlantId=:userPlantId")
+    @Query("SELECT * FROM plant_history WHERE userPlantId=:userPlantId ORDER BY dateSubmited DESC")
     LiveData<List<PlantHistory>> getUserPlantHistory(Long userPlantId);
+
+    @Query("SELECT * FROM plant_history WHERE userPlantId=:userPlantId AND pageId=:pageId ORDER BY dateSubmited DESC")
+    LiveData<List<PlantHistory>> getUserPlantHistoryPaged(Long userPlantId, int pageId);
 
     @Query("DELETE FROM plant_history")
     void clearPlantsHistory();

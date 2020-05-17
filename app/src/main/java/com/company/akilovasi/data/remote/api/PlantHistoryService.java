@@ -14,4 +14,8 @@ public interface PlantHistoryService {
     @GET("historical/userPlant")
     Call<PlantHistoryResponse> getUserPlantHistory(@Query("userPlantId") Long userPlantId);
 
+
+    @Headers("Cache-Control: public, max-stale=604800")
+    @GET("historical/paged/userPlant")
+    Call<PlantHistoryResponse> getUserPlantHistoryPaged(@Query("userPlantId") Long userPlantId, @Query("pageId") int pageId);
 }

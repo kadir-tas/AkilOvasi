@@ -10,6 +10,7 @@ import java.util.List;
 public interface PlantHistoryRepository {
 
     LiveData<Resource<List<PlantHistory>>> getUserPlantHistory(Long plantId);
+    LiveData<Resource<List<PlantHistory>>> getUserPlantHistoryPaged(Long plantId, int pageId);
 
 
 }

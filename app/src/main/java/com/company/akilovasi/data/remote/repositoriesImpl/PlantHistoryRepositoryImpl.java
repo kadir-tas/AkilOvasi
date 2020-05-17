@@ -66,4 +66,31 @@ public class PlantHistoryRepositoryImpl implements PlantHistoryRepository {
             }
         }.getAsLiveData();
     }
+
+    @Override
+    public LiveData<Resource<List<PlantHistory>>> getUserPlantHistoryPaged(Long userPlantId, int pageId) {
+        return new NetworkBoundResource<List<PlantHistory>, PlantHistoryResponse>() {
+            @Override
+            protected void saveCallResult(@NonNull PlantHistoryResponse item) {
+                plantHistoryDao.savePlantHistory(item.getResults());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<PlantHistory> data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<PlantHistory>> loadFromDb() {
+                return plantHistoryDao.getUserPlantHistoryPaged(userPlantId, pageId);
+            }
+
+            @NonNull
+            @Override
+            protected Call<PlantHistoryResponse> createCall() {
+                return plantHistoryService.getUserPlantHistoryPaged(userPlantId,pageId);
+            }
+        }.getAsLiveData();
+    }
 }
