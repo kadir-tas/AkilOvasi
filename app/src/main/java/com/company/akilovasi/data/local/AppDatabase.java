@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.company.akilovasi.data.local.dao.BannerDao;
-import com.company.akilovasi.data.local.dao.NotificationsDao;
+import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
@@ -40,5 +40,5 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract PlantHistoryDao plantHistoryDao();
 
-    public abstract NotificationsDao notificationsDao();
+    public abstract NotificationDao notificationDao();
 }

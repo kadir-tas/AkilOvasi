@@ -11,6 +11,7 @@ import com.company.akilovasi.di.modules.LocalModule;
 import com.company.akilovasi.di.modules.NetworkModule;
 import com.company.akilovasi.di.modules.ViewModelModule;
 import com.company.akilovasi.di.modules.banner.BannerModule;
+import com.company.akilovasi.di.modules.notification.NotificationModule;
 import com.company.akilovasi.di.modules.plant.PlantHistoryModule;
 import com.company.akilovasi.di.modules.plant.PlantModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
@@ -37,7 +38,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ViewModelModule.class,
         LocalModule.class,
         PlantModule.class,
-        PlantHistoryModule.class})
+        PlantHistoryModule.class,
+        NotificationModule.class})
 public interface AppComponent {
 
     @Component.Builder

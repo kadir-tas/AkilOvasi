@@ -6,12 +6,11 @@ import androidx.room.Room;
 
 import com.company.akilovasi.data.local.AppDatabase;
 import com.company.akilovasi.data.local.dao.BannerDao;
-import com.company.akilovasi.data.local.dao.NotificationsDao;
+import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
 import com.company.akilovasi.data.local.dao.UserDao;
-import com.company.akilovasi.data.local.entities.Notification;
 
 import javax.inject.Singleton;
 import dagger.Module;
@@ -58,5 +57,5 @@ public class LocalModule {
 
     @Provides
     @Singleton
-    NotificationsDao provideNotificationDao(AppDatabase appDatabase){ return appDatabase.notificationsDao(); }
+    NotificationDao provideNotificationDao(AppDatabase appDatabase){ return appDatabase.notificationDao(); }
 }

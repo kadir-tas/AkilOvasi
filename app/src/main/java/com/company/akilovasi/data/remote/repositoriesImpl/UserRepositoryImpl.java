@@ -1,7 +1,6 @@
 package com.company.akilovasi.data.remote.repositoriesImpl;
 
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +12,6 @@ import com.company.akilovasi.data.local.dao.BannerDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.UserDao;
-import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.User;
 import com.company.akilovasi.data.remote.NetworkBoundResource;
 import com.company.akilovasi.data.remote.api.UserService;

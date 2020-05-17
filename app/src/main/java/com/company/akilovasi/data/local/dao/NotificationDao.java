@@ -13,7 +13,7 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
 @Dao
-public interface NotificationsDao {
+public interface NotificationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addNotifications(List<Notification> notification);

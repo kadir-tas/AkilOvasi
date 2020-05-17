@@ -1,43 +1,41 @@
 package com.company.akilovasi.ui.notification;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-import com.company.akilovasi.data.local.dao.NotificationsDao;
+import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.entities.Notification;
+import com.company.akilovasi.data.remote.repositories.NotificationRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
-
 public class NotificationViewModel extends ViewModel {
     private static final String TAG = "NotificationViewModel";
 
-    private NotificationsDao notificationsDao;
+    private NotificationRepository notificationRepository;
 
     @Inject
-    public NotificationViewModel(NotificationsDao notificationsDao){
-        this.notificationsDao = notificationsDao;
+    public NotificationViewModel(NotificationRepository  notificationRepository){
+        this.notificationRepository = notificationRepository;
+
     }
 
     public void deleteNotification(Notification notification){
-        notificationsDao.deleteNotification(notification);
+        notificationRepository.deleteNotification(notification);
     }
 
     public void addNotifications(Notification notification){
-        notificationsDao.addNotification(notification);
+        notificationRepository.addNotification(notification);
     }
 
     public void testRemoveAll(){
-        notificationsDao.deleteAllNotifications();
+        notificationRepository.deleteAllNotifications();
     }
 
     public LiveData<List<Notification>> getNotifications(){
-        return notificationsDao.getAllNotifications();
+        return notificationRepository.getAllNotifications();
     }
 
     public void produceDummyData(){
@@ -62,7 +60,7 @@ public class NotificationViewModel extends ViewModel {
 
             notifications.add(notification);
         }
-        notificationsDao.addNotifications(notifications);
+        notificationRepository.addNotifications(notifications);
     }
 
 }
