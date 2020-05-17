@@ -105,7 +105,7 @@ public class PlantCategoryFragment extends BaseFragment<PlantCategoryFragmentVie
     }
 
     @Override
-    public DataBindingComponent getBindigComponent() {
+    public DataBindingComponent getBindingComponent() {
         return null;
     }
 

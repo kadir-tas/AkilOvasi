@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="notification"
+            type="com.company.akilovasi.data.local.entities.Notification" />
+
+        <variable
+            name="onclick"
+            type="com.company.akilovasi.ui.notification.callback.NotificationItemOnClick" />
+    </data>
+    
+    
+    <androidx.cardview.widget.CardView
+        app:cardBackgroundColor="@color/notification_default"
+        android:layout_margin="10dp"
+        notificationType="@{notification.type}"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:onClick="@{ () -> onclick.onNotificationItemClick( notification )}"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_weight="0.15"
+                    android:layout_gravity="start|center"
+                    android:src="@drawable/ic_info"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="TODO" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="0.7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="@{notification.date.toGMTString()}"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray"
+                        android:hint="@string/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"/>
+
+                    <TextView
+                        android:text="@{notification.message}"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:hint="@string/notifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </LinearLayout>
+
+
+                <ImageButton
+                    android:layout_weight="0.15"
+                    android:onClick="@{() -> onclick.onNotificationDismissClick(notification)}"
+                    android:src="@drawable/ic_cross"
+                    android:background="@color/transparent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="TODO" />
+            </LinearLayout>
+
+
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

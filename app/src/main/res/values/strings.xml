@@ -61,5 +61,8 @@
     <string name="new_password">Yeni Şifre</string>
     <string name="old_password">Eski Şifre</string>
     <string name="button_ok_text">Tamam</string>
+    <string name="notifications">Bildirimler</string>
+    <string name="date">tarih</string>
+    <string name="no_notification_available">Yeni Bildiriminiz Yok</string>
 
 </resources>

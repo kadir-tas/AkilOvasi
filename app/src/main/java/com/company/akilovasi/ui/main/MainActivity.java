@@ -3,6 +3,7 @@ package com.company.akilovasi.ui.main;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.Banner;
+import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.di.SecretPrefs;
@@ -30,9 +32,12 @@ import com.company.akilovasi.ui.main.callbacks.AddPlantClick;
 import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
 import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
+import com.company.akilovasi.ui.main.callbacks.NotificationClick;
 import com.company.akilovasi.ui.main.callbacks.ProfileButtonClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
+import com.company.akilovasi.ui.notification.NotificationFragment;
+import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +47,7 @@ import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
 import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
 
 
-public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick {
+public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick , NotificationClick , NotificationItemOnClick {
 
     private static final String TAG = "MainActivity";
     private BannerAdapter mBannerAdapter;
@@ -78,6 +83,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         dataBinding.content.wrapper.setAddPlantClick(this);
         dataBinding.leftMenu.setLogoutClick(this);
         dataBinding.leftMenu.setProfileClick(this);
+        dataBinding.leftMenu.setNotificationClick(this);
         initBannerRecyclerView();
         initPlantRecyclerView();
         subscribeObservers();
@@ -179,9 +185,11 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
+        //TODO: this part becomes unmanagle
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         Fragment f3 = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
+        Fragment f4 = getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
         if(f3 != null){
             Log.d(TAG, "onBackPressed: f3");
             getSupportFragmentManager().beginTransaction().remove(f3).commit();
@@ -192,6 +200,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
             Log.d(TAG, "onBackPressed: f2");
             dataBinding.main.closeDrawer(Gravity.LEFT);
             getSupportFragmentManager().beginTransaction().remove(f2).commit();
+        } else if (f4 != null) {
+            Log.d(TAG, "onBackPressed: f4");
+            dataBinding.main.closeDrawer(Gravity.LEFT);
+            getSupportFragmentManager().beginTransaction().remove(f4).commit();
         }else{
             Log.d(TAG, "onBackPressed: else");
             super.onBackPressed();
@@ -242,12 +254,38 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Override
     public void onProfileButtonClicked() {
+
         Fragment f = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         if (f == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
         }
+    }
+
+    @Override
+    public void onNotificationButtonClicked() {
+        Log.d(TAG, "onNotificationButtonClicked: ");
+        Fragment f = getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
+        if (f == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
+        }
+    }
+
+    @Override
+    public void onNotificationItemClick(Notification notification) {
+        Log.d(TAG, "onNotificationItemClick: ");
+    }
+
+    //TEST CODE
+    @Override
+    public void onNotificationDismissClick(Notification notification) {
+        Log.d(TAG, "onNotificationDismissClick: ");
+        NotificationFragment f = (NotificationFragment)getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
+        if(f == null) return;
+        AsyncTask.execute(() -> f.viewModel.deleteNotification(notification));
     }
 }
 

@@ -55,7 +55,7 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, FragmentRe
     }
 
     @Override
-    public DataBindingComponent getBindigComponent() {
+    public DataBindingComponent getBindingComponent() {
         return null;
     }
 

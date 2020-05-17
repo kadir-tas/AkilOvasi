@@ -231,7 +231,7 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
     }
 
     @Override
-    public DataBindingComponent getBindigComponent() {
+    public DataBindingComponent getBindingComponent() {
         return new BindingComponent(picasso);
     }
 

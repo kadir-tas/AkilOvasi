@@ -8,24 +8,17 @@ import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.company.akilovasi.di.modules.FragmentBuilderModule;
-
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
-import dagger.android.support.DaggerFragment;
 
 public abstract class BaseFragment<VM extends ViewModel, DB extends ViewDataBinding> extends Fragment {
 
@@ -43,7 +36,7 @@ public abstract class BaseFragment<VM extends ViewModel, DB extends ViewDataBind
     @LayoutRes
     public abstract int getLayoutRes();
 
-    public  abstract DataBindingComponent getBindigComponent();
+    public  abstract DataBindingComponent getBindingComponent();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +48,7 @@ public abstract class BaseFragment<VM extends ViewModel, DB extends ViewDataBind
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        dataBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false, getBindigComponent());
+        dataBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false, getBindingComponent());
         return dataBinding.getRoot();
     }
 

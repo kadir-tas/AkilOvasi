@@ -4,6 +4,7 @@ import androidx.databinding.DataBindingComponent;
 
 import com.company.akilovasi.databinding.adapters.BannerImageBindingAdapter;
 import com.company.akilovasi.databinding.adapters.HistoricalPlantImageBindingAdapter;
+import com.company.akilovasi.databinding.adapters.NotificationBindingAdapter;
 import com.company.akilovasi.databinding.adapters.PlantTypeImageBindingAdapter;
 import com.company.akilovasi.databinding.adapters.UserPlantsImageBindingAdapter;
 import com.squareup.picasso.Picasso;
@@ -34,5 +35,10 @@ public class BindingComponent implements DataBindingComponent {
     @Override
     public HistoricalPlantImageBindingAdapter getHistoricalPlantImageBindingAdapter() {
         return new HistoricalPlantImageBindingAdapter(picasso);
+    }
+
+    @Override
+    public NotificationBindingAdapter getNotificationBindingAdapter() {
+        return new NotificationBindingAdapter();
     }
 }

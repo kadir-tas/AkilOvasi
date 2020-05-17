@@ -68,7 +68,7 @@ public class ProfileFragment extends BaseFragment<ProfileFragmentViewModel, Frag
     }
 
     @Override
-    public DataBindingComponent getBindigComponent() {
+    public DataBindingComponent getBindingComponent() {
         return null;
     }
 

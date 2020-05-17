@@ -10,6 +10,9 @@
             name="profileClick"
             type="com.company.akilovasi.ui.main.callbacks.ProfileButtonClick" />
 
+        <variable
+            name="notificationClick"
+            type="com.company.akilovasi.ui.main.callbacks.NotificationClick" />
     </data>
 
     <com.company.akilovasi.util.DrawerContent
@@ -56,6 +59,22 @@
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <TextView
+            android:id="@+id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{() -> notificationClick.onNotificationButtonClicked()}"
+            android:text="@string/notifications"
+            app:fontFamily="sans-serif-smallcaps"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile" />
+
+        <TextView
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +88,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile" />
+            app:layout_constraintTop_toBottomOf="@+id/notifications" />
 
         <View
             android:id="@+id/view"

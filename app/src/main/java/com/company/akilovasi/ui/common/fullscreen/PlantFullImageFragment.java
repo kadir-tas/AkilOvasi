@@ -62,7 +62,7 @@ public class PlantFullImageFragment extends BaseFragment<PlantFullImageViewModel
     }
 
     @Override
-    public DataBindingComponent getBindigComponent() {
+    public DataBindingComponent getBindingComponent() {
         return new BindingComponent(picasso);
     }
 }

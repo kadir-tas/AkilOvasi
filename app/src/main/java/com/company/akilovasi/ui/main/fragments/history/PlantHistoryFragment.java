@@ -61,7 +61,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     }
 
     @Override
-    public DataBindingComponent getBindigComponent() {
+    public DataBindingComponent getBindingComponent() {
         return null;
     }
 
