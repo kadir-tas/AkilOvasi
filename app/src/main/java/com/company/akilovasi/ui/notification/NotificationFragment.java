@@ -1,7 +1,6 @@
 package com.company.akilovasi.ui.notification;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,15 +75,15 @@ public class NotificationFragment extends BaseFragment<NotificationViewModel , F
         adapter.notificationItemOnClick = notificationItemOnClick;
         dataBinding.setAdapter(adapter);
 
-        dataBinding.dummy.setOnClickListener(v -> AsyncTask.execute(() ->  viewModel.produceDummyData()));
-        dataBinding.dummyRemove.setOnClickListener(v -> AsyncTask.execute(() ->  viewModel.testRemoveAll()));
+        dataBinding.dummy.setOnClickListener(v -> viewModel.produceDummyData());
+        dataBinding.dummyRemove.setOnClickListener(v ->  viewModel.testRemoveAll());
 
         new ItemTouchHelper(new SwipeController() {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = viewHolder.getAdapterPosition();
                 Notification notification = dataBinding.getAdapter().getNotification(pos);
-                AsyncTask.execute(() -> viewModel.deleteNotification(notification));
+                viewModel.deleteNotification(notification);
             }
         }).attachToRecyclerView(dataBinding.notificationsRv);
         viewModel.getNotifications().observe(getViewLifecycleOwner(), notifications -> {
