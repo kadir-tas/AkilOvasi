@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.main.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlantHistoryAdapter extends BaseAdapter<PlantHistoryAdapter.PlantHistoryViewHolder, PlantHistory> {
-
+    private static final String TAG = "PlantHistoryAdapter";
     private List<PlantHistory> plantHistories;
 
     private Picasso picasso;
@@ -42,6 +43,11 @@ public class PlantHistoryAdapter extends BaseAdapter<PlantHistoryAdapter.PlantHi
         notifyDataSetChanged();
     }
 
+    public void addData(List<PlantHistory> plantHistories){
+        this.plantHistories.addAll(plantHistories);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public PlantHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,6 +60,7 @@ public class PlantHistoryAdapter extends BaseAdapter<PlantHistoryAdapter.PlantHi
     @Override
     public void onBindViewHolder(@NonNull PlantHistoryViewHolder holder, int position) {
         holder.onBind(plantHistories.get(position));
+        Log.d(TAG, "onBindViewHolder: Binding " + plantHistories.get(position).getPageId() );
     }
 
     @Override

@@ -2,9 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="analysisCallback"
             type="com.company.akilovasi.ui.main.callbacks.AnalysisCallback" />
+
+        <variable
+            name="loading"
+            type="boolean" />
 
         <variable name="userPlantId" type="Long"/>
     </data>
@@ -52,6 +57,14 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:onClick="@{() -> analysisCallback.onAnalysisClicked(userPlantId)}"

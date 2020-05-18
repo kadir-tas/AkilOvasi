@@ -6,16 +6,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.company.akilovasi.R;
+import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.Status;
+import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
 import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
@@ -25,6 +29,8 @@ import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
 import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,6 +42,9 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     private RecyclerView mHistoryRecyclerView;
     private FragmentActivity mActivity;
     private long userPlantId;
+    private LinearLayoutManager linearLayoutManager;
+    private int currentPage = 0;
+    private boolean finalPage = false;
 
     @Inject
     Picasso picasso;
@@ -69,10 +78,8 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "FRAGMENT CREATE");
-
+        Log.d(TAG, "onCreate: ");
     }
-
 
     @Nullable
     @Override
@@ -92,29 +99,71 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         dataBinding.setUserPlantId(userPlantId);
         initHistoryRecyclerView();
         Log.d(TAG, "onViewCreated: initHistoryRecyclerView done");
-        initObservers();
+        requestNextPage();
         Log.d(TAG, "onViewCreated: initObservers done");
     }
 
+    private void requestNextPage() {
+        dataBinding.setLoading(true);
+        //Log.d(TAG, "requestNextPage: Begin " + currentPage);
+        LiveData<Resource<List<PlantHistory>>> liveData = viewModel.getPlantHistoryPaged(userPlantId,currentPage);
 
-    private void initObservers() {
-        viewModel.getPlantHistory(userPlantId).observe(getViewLifecycleOwner(), listResource -> {
-            if(listResource.status == Status.SUCCESS){
-                mPlantHistoryAdapter.setData(listResource.data);
+        liveData.observe(getViewLifecycleOwner(), listResource -> {
+            //Log.d(TAG, "requestNextPage: Callback called for " + currentPage);
+            switch (listResource.status){
+                case SUCCESS:
+                    liveData.removeObservers(getViewLifecycleOwner());
+                    Log.d(TAG, "requestNextPage: Succsess");
+                    if(listResource.data != null){
+                        if(listResource.data.size() == 0){
+                            //Log.d(TAG, "requestNextPage: Final page " + currentPage);
+                            finalPage = true;
+                        }else{
+                            //for(PlantHistory p : listResource.data)
+                                //Log.d(TAG, "requestNextPage: " + p.getId() + " " + p.getPageId());
+                            mPlantHistoryAdapter.addData(listResource.data);
+                        }
+                    }
+                    currentPage += 1;
+                    dataBinding.setLoading(false);
+                    break;
+                case ERROR:
+                    liveData.removeObservers(getViewLifecycleOwner());
+                    //Toast.makeText(mActivity, R.string.common_err, Toast.LENGTH_SHORT).show();
+                    //Probably final page
+                    Log.d(TAG, "requestNextPage: Error");
+                    finalPage = true;
+                    break;
+                case LOADING:
+                    Log.d(TAG, "requestNextPage: Loading");
+                    dataBinding.setLoading(true);
+                    break;
             }
-
         });
-        Log.d(TAG, "FINISH OBSERVE");
     }
 
-
     private void initHistoryRecyclerView(){
-        Log.d(TAG, "İnitRec");
+        Log.d(TAG, "initHistoryRecyclerView: ");
 
+        linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mHistoryRecyclerView = dataBinding.plantHistory;
-        mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mHistoryRecyclerView.setLayoutManager(linearLayoutManager);
         mHistoryRecyclerView.setHasFixedSize(true);
-
+        RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dataBinding.getLoading() || finalPage)
+                    return;
+                int visibleItemCount = linearLayoutManager.getChildCount();
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
+                if (pastVisibleItems + visibleItemCount >= totalItemCount) {
+                    Log.d(TAG, "onScrolled: This called");
+                    requestNextPage();
+                }
+            }
+        };
+        mHistoryRecyclerView.addOnScrollListener(mScrollListener);
         mPlantHistoryAdapter = new PlantHistoryAdapter(picasso, this);
         mHistoryRecyclerView.setAdapter(mPlantHistoryAdapter);
     }
@@ -122,9 +171,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
     @Override
     public void onAnalysisClicked(Long userPlantId) {
-
         Log.d(TAG, "AnalysisClicked");
-
         Intent intent = new Intent(mActivity, PlantAnalysisActivity.class);
         intent.putExtra(PlantAnalysisActivity.PARAM_USER_PLANT, userPlantId);
         mActivity.startActivity(intent);

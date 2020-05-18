@@ -55,6 +55,10 @@ public class PlantHistory {
     @NotNull
     private Long humiditiy;
 
+    @SerializedName("pageId")
+    @NotNull
+    private int pageId;
+
     public Long getId() {
         return id;
     }
@@ -153,5 +157,14 @@ public class PlantHistory {
 
     public void setPlantCategory(String plantCategory) {
         this.plantCategory = plantCategory;
+    }
+
+    @NotNull
+    public int getPageId() {
+        return pageId;
+    }
+
+    public void setPageId(@NotNull int pageId) {
+        this.pageId = pageId;
     }
 }

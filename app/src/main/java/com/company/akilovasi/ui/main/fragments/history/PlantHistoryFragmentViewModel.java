@@ -1,6 +1,7 @@
 package com.company.akilovasi.ui.main.fragments.history;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,7 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class PlantHistoryFragmentViewModel extends ViewModel {
-
+    private static final String TAG = "PlantHistoryFragmentVie";
     PlantHistoryRepository plantHistoryRepository;
 
 
@@ -30,8 +31,12 @@ public class PlantHistoryFragmentViewModel extends ViewModel {
         this.plantHistoryRepository = plantHistoryRepository;
     }
 
-    LiveData<Resource<List<PlantHistory>>> getPlantHistory(Long userPlantsId) {
+    public LiveData<Resource<List<PlantHistory>>> getPlantHistory(Long userPlantsId) {
         return plantHistoryRepository.getUserPlantHistory(userPlantsId);
+    }
+
+    public LiveData<Resource<List<PlantHistory>>> getPlantHistoryPaged(Long userPlantId, int pageId){
+        return plantHistoryRepository.getUserPlantHistoryPaged(userPlantId,pageId);
     }
 
     private Long getUserId() {
