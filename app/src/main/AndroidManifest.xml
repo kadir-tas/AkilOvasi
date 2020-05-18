@@ -17,7 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.profile.ProfileActivity"></activity>
+        <service
+            android:name=".service.FCMService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".ui.camera.CameraActivity" />
         <activity android:name=".ui.plant.PlantCategoryActivity" />
         <activity android:name=".ui.main.MainActivity" />

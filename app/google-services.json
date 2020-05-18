@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "126223708738",
+    "firebase_url": "https://akilovasi.firebaseio.com",
+    "project_id": "akilovasi",
+    "storage_bucket": "akilovasi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126223708738:android:b856854334233559e9f3db",
+        "android_client_info": {
+          "package_name": "com.company.akilovasi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126223708738-6blegkfijoreuh1av9s6th1og7v5lfhn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.akilovasi",
+            "certificate_hash": "6db3093a9884c6bf3ac8b1a3eb8ac712f6065767"
+          }
+        },
+        {
+          "client_id": "126223708738-vro2h93j5cuupseuuhhu5eghqqq05gq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRwlA7Jj6ur9FUtfZR_2_6iyB05Bzx-wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126223708738-vro2h93j5cuupseuuhhu5eghqqq05gq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
