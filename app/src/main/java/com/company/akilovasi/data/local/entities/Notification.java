@@ -38,6 +38,14 @@ public class Notification {
     @SerializedName("id")
     private Long id;
 
+    /**
+     * Version 1 means that the extra data will be True and False string representation.
+     * In other words, a string like TFTT is expected to represent the data of
+     * soilTemperature, soilHumidty, airTemperature, airHumidity, airPressure, environmentLight.
+     */
+    @SerializedName("version")
+    private int version ;
+
     @SerializedName("message")
     private String message;
 
@@ -110,5 +118,13 @@ public class Notification {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

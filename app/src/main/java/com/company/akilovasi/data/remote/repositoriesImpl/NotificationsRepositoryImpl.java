@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.company.akilovasi.data.local.dao.NotificationDao;
+import com.company.akilovasi.data.local.entities.AnalysisResult;
 import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.remote.repositories.NotificationRepository;
 
@@ -20,6 +21,7 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
     NotificationDao notificationDao;
 
     private LiveData<List<Notification>> allNotifications;
+
     @Inject
     public NotificationsRepositoryImpl(Retrofit retrofit, NotificationDao notificationDao) {
         this.retrofit = retrofit;
@@ -30,12 +32,13 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
 
     @Override
     public void deleteNotification(Notification notification) {
-        new deleteNotificationAsyncTask(notificationDao,notification).execute();
+        new deleteNotificationAsyncTask(notificationDao, notification).execute();
     }
 
     @Override
     public void addNotification(Notification notification) {
-        new addNotificationAsyncTask(notificationDao,notification).execute();
+        parseExtraData(notification);
+        new addNotificationAsyncTask(notificationDao, notification).execute();
     }
 
     @Override
@@ -50,16 +53,18 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
 
     @Override
     public void addNotifications(List<Notification> notifications) {
-        new addNotificationsAsyncTask(notificationDao,notifications).execute();
+        for(Notification n : notifications){
+            parseExtraData(n);
+        }
+        new addNotificationsAsyncTask(notificationDao, notifications).execute();
     }
-
 
     private static class deleteNotificationAsyncTask extends AsyncTask<Void, Void, Void> {
         private NotificationDao notificationDao;
         private Notification notification;
 
         private deleteNotificationAsyncTask(NotificationDao notificationDao, Notification notification) {
-            this.notification =  notification;
+            this.notification = notification;
             this.notificationDao = notificationDao;
         }
 
@@ -113,6 +118,43 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
         protected Void doInBackground(Void... voids) {
             notificationDao.deleteAllNotifications();
             return null;
+        }
+    }
+
+    private static class addAnalysisResultAsyncTask extends AsyncTask<Void, Void, Void> {
+        private NotificationDao notificationDao;
+        private AnalysisResult analysisResult;
+
+        private addAnalysisResultAsyncTask(NotificationDao notificationDao, AnalysisResult analysisResult) {
+            this.notificationDao = notificationDao;
+            this.analysisResult = analysisResult;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            notificationDao.addAnalysisResult(analysisResult);
+            return null;
+        }
+    }
+
+    private void parseExtraData(Notification notification) {
+        switch (notification.getVersion()) {
+            case 1:
+                /**
+                 * The characters represent, soilTemperature, soilHum, airTemperature, airHumidity, airPressure, environmentalLight respectively.
+                 */
+                if (notification.getExtra() != null && !notification.getExtra().isEmpty()) {
+                    char[] array = notification.getExtra().toCharArray();
+                    AnalysisResult analysisResult = new AnalysisResult();
+                    analysisResult.setSoilTemperatureStatus(array[0] == 'T');
+                    analysisResult.setSoilHumidtyStatus(array[1] == 'T');
+                    analysisResult.setAirTemperatureStatus(array[2] == 'T');
+                    analysisResult.setAirHumidityStatus(array[3] == 'T');
+                    analysisResult.setAirPressureStatus(array[4] == 'T');
+                    analysisResult.setEnvironmentLightStatus(array[5] == 'T');
+                    new addAnalysisResultAsyncTask(notificationDao, analysisResult).execute();
+                }
+                break;
         }
     }
 }

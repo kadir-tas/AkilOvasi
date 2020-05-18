@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.company.akilovasi.data.local.entities.AnalysisResult;
 import com.company.akilovasi.data.local.entities.Notification;
 import java.util.List;
 
@@ -32,4 +34,7 @@ public interface NotificationDao {
 
     @Query("SELECT * FROM notifications ORDER BY date DESC")
     LiveData<List<Notification>> getAllNotifications();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addAnalysisResult(AnalysisResult analysisResult);
 }

@@ -47,6 +47,8 @@ public class NotificationViewModel extends ViewModel {
             notification.setDate(new Date());
             notification.setMessage("This is the " + i + " th notification");
             notification.setType(Notification.Type.Default);
+            notification.setVersion(1);
+            notification.setExtra("TTFFFT");
 
             if(i % 2 == 0){
                 notification.setType(Notification.Type.Default);
