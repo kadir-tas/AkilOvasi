@@ -101,8 +101,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         subscribeObservers();
 
         //Upon entering the application get all the latest notifications
-        //If any notification is received while in the app it will handled by the FCMService
-        //If any notification is received while app is not running FCM will show user notification in the top bar so when the user clicks it, they will be redirect to here causing polling of the notifications
+        //If any notification is received while app is running, it will handled by the FCMService but no top bar notifications is shown check out FCMService for more details
+        //If any notification is received while app is not running, FCM will show user notification in the top bar so when the user clicks it, they will be redirect to here causing polling of the notifications
+        //When notifications are polled they can be accessed NotificationRepository.getAllNotifications call if needed
         pollNotifications();
 
         notifyRemoteWithFcmToken();
