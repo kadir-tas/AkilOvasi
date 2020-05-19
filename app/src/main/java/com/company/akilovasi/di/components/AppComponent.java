@@ -9,6 +9,7 @@ import com.company.akilovasi.di.modules.AppPreference;
 import com.company.akilovasi.di.modules.FragmentBuilderModule;
 import com.company.akilovasi.di.modules.LocalModule;
 import com.company.akilovasi.di.modules.NetworkModule;
+import com.company.akilovasi.di.modules.ServiceModule;
 import com.company.akilovasi.di.modules.ViewModelModule;
 import com.company.akilovasi.di.modules.banner.BannerModule;
 import com.company.akilovasi.di.modules.notification.NotificationModule;
@@ -39,7 +40,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         LocalModule.class,
         PlantModule.class,
         PlantHistoryModule.class,
-        NotificationModule.class})
+        NotificationModule.class,
+        ServiceModule.class})
 public interface AppComponent {
 
     @Component.Builder

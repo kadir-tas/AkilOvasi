@@ -1,34 +1,146 @@
 package com.company.akilovasi.data.remote.repositoriesImpl;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
+import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.entities.AnalysisResult;
 import com.company.akilovasi.data.local.entities.Notification;
+import com.company.akilovasi.data.local.entities.Plant;
+import com.company.akilovasi.data.local.entities.PlantType;
+import com.company.akilovasi.data.remote.ApiConstants;
+import com.company.akilovasi.data.remote.NetworkBoundResource;
+import com.company.akilovasi.data.remote.api.NotificationService;
+import com.company.akilovasi.data.remote.models.other.Message;
+import com.company.akilovasi.data.remote.models.requests.PlantAddRequest;
+import com.company.akilovasi.data.remote.models.responses.PlantResponse;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.data.remote.repositories.NotificationRepository;
+import com.company.akilovasi.di.SecretPrefs;
+import com.company.akilovasi.util.AppConstants;
+import com.google.android.gms.common.api.Api;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class NotificationsRepositoryImpl implements NotificationRepository {
-
-    Retrofit retrofit;
-    NotificationDao notificationDao;
+    private static final String TAG = "NotificationsRepository";
+    private NotificationDao notificationDao;
+    private NotificationService notificationService;
 
     private LiveData<List<Notification>> allNotifications;
 
     @Inject
     public NotificationsRepositoryImpl(Retrofit retrofit, NotificationDao notificationDao) {
-        this.retrofit = retrofit;
         this.notificationDao = notificationDao;
+        this.notificationService = retrofit.create(NotificationService.class);
         allNotifications = notificationDao.getAllNotifications();
     }
 
+    @Override
+    public  MediatorLiveData<Resource<Response<Message>>> debugMock(Long userId) {
+        final MediatorLiveData<Resource<Response<Message>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        notificationService.debugMock( userId ).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.setValue(Resource.success(response.body()));
+                }else {
+                    resourceMutableLiveData.setValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.setValue(Resource.error(t.getMessage(), null));
+            }
+        });
+
+        return resourceMutableLiveData;
+    }
+
+    @Override
+    public  MediatorLiveData<Resource<Response<Message>>> updateFcmToken(Long userId,String token) {
+
+        final MediatorLiveData<Resource<Response<Message>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.postValue(Resource.loading(null));
+        notificationService.updateFcmToken( userId , token ).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.postValue(Resource.success(response.body()));
+                }else {
+                    resourceMutableLiveData.postValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.postValue(Resource.error(t.getMessage(), null));
+            }
+        });
+
+        return resourceMutableLiveData;
+    }
+
+    @Override
+    public MediatorLiveData<Resource<Response<Message>>> invalidateFcmToken(Long userId) {
+        final MediatorLiveData<Resource<Response<Message>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        notificationService.invalidateFcmToken( userId ).enqueue(new Callback<Response<Message>>() {
+            @Override
+            public void onResponse(Call<Response<Message>> call, retrofit2.Response<Response<Message>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.setValue(Resource.success(response.body()));
+                }else {
+                    resourceMutableLiveData.setValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Message>> call, Throwable t) {
+                resourceMutableLiveData.setValue(Resource.error(t.getMessage(), null));
+            }
+        });
+        return resourceMutableLiveData;
+    }
+
+    @Override
+    public MediatorLiveData<Resource<Response<List<Notification>>>> pollNotifications(Long userId) {
+        final MediatorLiveData<Resource<Response<List<Notification>>>> resourceMutableLiveData = new MediatorLiveData<>();
+        resourceMutableLiveData.postValue(Resource.loading(null));
+        notificationService.pollNotifications( userId ).enqueue(new Callback<Response<List<Notification>>>() {
+            @Override
+            public void onResponse(Call<Response<List<Notification>>> call, retrofit2.Response<Response<List<Notification>>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().getSuccess()){
+                    resourceMutableLiveData.postValue(Resource.success(response.body()));
+                    addNotifications(response.body().getResults());
+                }else {
+                    resourceMutableLiveData.postValue(Resource.error(response.message(), null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<List<Notification>>> call, Throwable t) {
+                resourceMutableLiveData.postValue(Resource.error(t.getMessage(), null));
+            }
+        });
+        return resourceMutableLiveData;
+    }
 
     @Override
     public void deleteNotification(Notification notification) {
