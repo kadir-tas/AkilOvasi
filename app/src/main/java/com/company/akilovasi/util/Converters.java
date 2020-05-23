@@ -46,9 +46,7 @@ public class Converters {
 
     @TypeConverter
     public static SensorTypes SensorTypeEnumToString(String string){
-        SensorTypes result;
-        result = SensorTypes.valueOf(string);
-        return result;
+        return SensorTypes.valueOf(string);
     }
 }
 

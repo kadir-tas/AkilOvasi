@@ -47,7 +47,6 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
     public NotificationsRepositoryImpl(Retrofit retrofit, NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
         this.notificationService = retrofit.create(NotificationService.class);
-        allNotifications = notificationDao.getAllNotifications();
     }
 
     @Override
@@ -291,7 +290,7 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
                             analysisResult.setResultId(notification.getId());
                             analysisResult.setVersion(notification.getVersion());
                             analysisResult.setSensorType(EXISTING_SENSOR_TYPES[i]);
-                            analysisResult.setMessage(EXISTING_SENSOR_TYPES[i].getSensorType() + " message");
+                            analysisResult.setMessage(EXISTING_SENSOR_TYPES[i].getSensorString() + " message");
                             new addAnalysisResultAsyncTask(notificationDao, analysisResult).execute();
                         }
                     }

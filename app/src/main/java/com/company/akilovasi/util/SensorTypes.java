@@ -21,6 +21,10 @@ public enum SensorTypes {
     }
 
     public String getSensorType() {
+        return this.name();
+    }
+
+    public String getSensorString(){
         return this.sensorType;
     }
 }
