@@ -8,21 +8,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.company.akilovasi.R;
+import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.remote.ApiConstants;
+import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
@@ -41,8 +47,14 @@ import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
 import com.company.akilovasi.ui.notification.NotificationFragment;
 import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.company.akilovasi.util.CustomLayoutManager;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -91,6 +103,87 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         initPlantRecyclerView();
         subscribeObservers();
 
+        //Upon entering the application get all the latest notifications
+        //If any notification is received while app is running, it will handled by the FCMService but no top bar notifications is shown check out FCMService for more details
+        //If any notification is received while app is not running, FCM will show user notification in the top bar so when the user clicks it, they will be redirect to here causing polling of the notifications
+        //When notifications are polled they can be accessed NotificationRepository.getAllNotifications call if needed
+        pollNotifications();
+
+        notifyRemoteWithFcmToken();
+        registerFCMNotificationTopic();
+    }
+
+    private void notifyRemoteWithFcmToken(){
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            if(!task.isSuccessful() || task.getResult() == null){
+                Log.e(TAG, "Firebase Error: " + task.getException());
+                return;
+            }
+
+            //Register fcm token for our backend server so that it knows which device to send push notifications
+            viewModel.updateFcmToken( task.getResult().getToken() ).observe(this,responseResource -> {
+                switch (responseResource.status){
+                    case SUCCESS:
+                        Log.d(TAG, "Updated FCm Token:");
+                        break;
+                    case ERROR:
+                        break;
+                    case LOADING:
+                        break;
+                }
+            });
+        });
+    }
+
+    private void registerFCMNotificationTopic(){
+        //Subscribe to this topic so whenever general push notification is fried from this topic we can get the message
+        FirebaseMessaging.getInstance().subscribeToTopic("app-notifications")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed to app-notifications";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed to subscribe app-notifications";
+                        }
+                        Log.d(TAG, msg);
+
+                    }
+                });
+    }
+
+    private void pollNotifications(){
+        MediatorLiveData<Resource<Response<List<Notification>>>> liveData = viewModel.pollNotifications();
+        liveData.observe(this, responseResource -> {
+            switch (responseResource.status){
+                case SUCCESS:
+                    liveData.removeObservers(this);
+                    Log.d(TAG, "pollNotifications: Recent notifications has been polled");
+                    break;
+                case ERROR:
+                    liveData.removeObservers(this);
+                    Log.d(TAG, "pollNotifications: Failed to poll recent notifications");
+                    break;
+                case LOADING:
+                    break;
+            }
+        });
+    }
+
+    //TODO: There is problem here @Sezer
+    private void invalidateRemoteFcmToken(){
+        viewModel.invalidateFcmToken().observe(this, responseResource -> {
+            switch (responseResource.status){
+
+                case SUCCESS:
+                    Log.d(TAG, "invalidateRemoteFcmToken: Invalidation successful");
+                    break;
+                case ERROR:
+                    Log.d(TAG, "invalidateRemoteFcmToken: Error While Invalidating");
+                    break;
+                case LOADING:
+                    break;
+            }
+        });
     }
 
     @Override

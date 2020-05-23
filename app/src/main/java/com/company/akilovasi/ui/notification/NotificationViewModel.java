@@ -1,10 +1,14 @@
 package com.company.akilovasi.ui.notification;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.entities.Notification;
+import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.repositories.NotificationRepository;
+import com.company.akilovasi.di.SecretPrefs;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +21,11 @@ public class NotificationViewModel extends ViewModel {
     private NotificationRepository notificationRepository;
 
     private LiveData<List<Notification>> allNotifications;
+
+    @Inject
+    @SecretPrefs
+    SharedPreferences secretPreferences;
+
 
     @Inject
     public NotificationViewModel(NotificationRepository  notificationRepository){
@@ -42,7 +51,8 @@ public class NotificationViewModel extends ViewModel {
     }
 
     public void produceDummyData(){
-        List<Notification> notifications = new ArrayList<>();
+        notificationRepository.debugMock(secretPreferences.getLong(ApiConstants.USER_ID,-1));
+      /*  List<Notification> notifications = new ArrayList<>();
 
         int color = 0;
         for (int i = 0; i < 10; i++) {
@@ -65,7 +75,7 @@ public class NotificationViewModel extends ViewModel {
 
             notifications.add(notification);
         }
-        notificationRepository.addNotifications(notifications);
+        notificationRepository.addNotifications(notifications);*/
     }
 
 }

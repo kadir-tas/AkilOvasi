@@ -27,11 +27,12 @@ import retrofit2.Retrofit;
 
 public class PlantHistoryRepositoryImpl implements PlantHistoryRepository {
     private static final String TAG = "PlantHistoryRepositoryI";
-    Retrofit retrofit;
 
-    PlantHistoryService plantHistoryService;
+    private Retrofit retrofit;
 
-    PlantHistoryDao plantHistoryDao;
+    private PlantHistoryService plantHistoryService;
+
+    private PlantHistoryDao plantHistoryDao;
 
     @Inject
     public PlantHistoryRepositoryImpl(Retrofit retrofit, PlantHistoryDao plantHistoryDao) {

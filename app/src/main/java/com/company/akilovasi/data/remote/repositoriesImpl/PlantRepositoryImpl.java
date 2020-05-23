@@ -35,11 +35,11 @@ import retrofit2.Retrofit;
 
 public class PlantRepositoryImpl implements PlantRepository {
     private static final String TAG = "PlantRepositoryImpl";
-    Retrofit retrofit;
+    private Retrofit retrofit;
 
-    PlantService plantService;
+    private PlantService plantService;
 
-    PlantDao plantDao;
+    private PlantDao plantDao;
 
     @Inject
     public PlantRepositoryImpl(Retrofit retrofit, PlantDao plantDao) {
