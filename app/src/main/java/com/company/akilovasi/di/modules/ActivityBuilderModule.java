@@ -1,5 +1,6 @@
 package com.company.akilovasi.di.modules;
 
+import com.company.akilovasi.ui.analysisresult.AnalysisResultActivity;
 import com.company.akilovasi.ui.camera.CameraActivity;
 import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.MainActivity;
@@ -26,5 +27,8 @@ public abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
     abstract PlantAnalysisActivity plantAnalysisActivity();
+
+    @ContributesAndroidInjector
+    abstract AnalysisResultActivity analysisResultActivity();
 }
 

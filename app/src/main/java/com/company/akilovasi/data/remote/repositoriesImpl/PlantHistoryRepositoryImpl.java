@@ -72,7 +72,9 @@ public class PlantHistoryRepositoryImpl implements PlantHistoryRepository {
         return new NetworkBoundResource<List<PlantHistory>, PlantHistoryResponse>() {
             @Override
             protected void saveCallResult(@NonNull PlantHistoryResponse item) {
-                plantHistoryDao.savePlantHistory(item.getResults());
+                if (item != null) {
+                    plantHistoryDao.savePlantHistory(item.getResults());
+                }
             }
 
             @Override

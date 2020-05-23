@@ -17,7 +17,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        android:onClick="@{() -> itemPlantClick.onPlantClick(plant.userPlantId)}"
+        android:onClick="@{() -> itemPlantClick.onPlantClick(plant)}"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center"

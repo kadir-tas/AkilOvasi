@@ -34,10 +34,22 @@
             android:layout_marginTop="16dp"
             android:rotation="90"
             android:translationX="100dp"
-            motion:layout_constraintBottom_toTopOf="@+id/logout"
+            motion:layout_constraintBottom_toTopOf="@+id/notifications"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <Constraint
+            android:id="@id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:rotation="90"
+            android:translationX="100dp"
+            motion:layout_constraintBottom_toTopOf="@+id/logout"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/profile" />
 
         <Constraint
             android:id="@id/logout"
@@ -49,7 +61,7 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/profile" />
+            motion:layout_constraintTop_toBottomOf="@+id/notifications" />
 
         <Constraint
             android:id="@id/view"
@@ -84,11 +96,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            motion:layout_constraintBottom_toTopOf="@+id/logout"
+            motion:layout_constraintBottom_toTopOf="@+id/notifications"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintHorizontal_bias="0.5"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <Constraint
+            android:id="@id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            motion:layout_constraintBottom_toTopOf="@+id/logout"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/profile" />
 
         <Constraint
             android:id="@id/logout"
@@ -99,7 +122,7 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintHorizontal_bias="0.5"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/profile" />
+            motion:layout_constraintTop_toBottomOf="@+id/notifications" />
 
         <Constraint
             android:id="@id/view"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <data>
@@ -8,23 +9,23 @@
             type="com.company.akilovasi.ui.main.callbacks.AddPlantClick" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/layout_white"
         android:fitsSystemWindows="true">
-        <androidx.constraintlayout.motion.widget.MotionLayout
+        <LinearLayout
             android:id="@+id/motion_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutDescription="@xml/scene_header">
+            android:orientation="vertical">
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +41,7 @@
 
 
 
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+        </LinearLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:layout_behavior="com.company.akilovasi.util.FabBehavior"
             android:onClick="@{() -> addPlantClick.onAddPlantClick()}"

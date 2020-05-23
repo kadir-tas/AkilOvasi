@@ -19,14 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.Status;
+import com.company.akilovasi.data.local.entities.AnalysisResult;
+import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
 import com.company.akilovasi.ui.BaseFragment;
+import com.company.akilovasi.ui.analysisresult.AnalysisResultActivity;
 import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
 import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.main.adapters.PlantHistoryAdapter;
+import com.company.akilovasi.ui.main.adapters.PlantProblemAdapter;
 import com.company.akilovasi.ui.main.callbacks.AnalysisCallback;
 import com.company.akilovasi.ui.main.callbacks.PlantHistoryClick;
+import com.company.akilovasi.ui.main.callbacks.PlantProblemClick;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.squareup.picasso.Picasso;
 
@@ -34,14 +39,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback , PlantHistoryClick {
+public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewModel, FragmentPlantHistoryBinding> implements AnalysisCallback , PlantHistoryClick, PlantProblemClick {
 
     public static final String TAG = "PlantHistoryFragment";
 
     private PlantHistoryAdapter mPlantHistoryAdapter;
+    private PlantProblemAdapter mPlantProblemAdapter;
     private RecyclerView mHistoryRecyclerView;
     private FragmentActivity mActivity;
-    private long userPlantId;
+    private Plant plant;
     private LinearLayoutManager linearLayoutManager;
     private int currentPage = 0;
     private boolean finalPage = false;
@@ -49,9 +55,9 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     @Inject
     Picasso picasso;
 
-    public static PlantHistoryFragment newInstance(Long userPlantId) {
+    public static PlantHistoryFragment newInstance(Plant plant) {
         Bundle args = new Bundle();
-        args.putLong("userPlantId", userPlantId);
+        args.putSerializable("plant", plant);
         PlantHistoryFragment fragment = new PlantHistoryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -85,7 +91,9 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        userPlantId = getArguments().getLong("userPlantId");
+        if (getArguments() != null) {
+            plant = (Plant) getArguments().getSerializable("plant");
+        }
         mActivity = getActivity();
         Log.d(TAG, "onCreate: Created");
         return dataBinding.getRoot();
@@ -96,17 +104,40 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dataBinding.setAnalysisCallback(this);
-        dataBinding.setUserPlantId(userPlantId);
-        initHistoryRecyclerView();
-        Log.d(TAG, "onViewCreated: initHistoryRecyclerView done");
-        requestNextPage();
+        dataBinding.setUserPlantId(plant.getUserPlantId());
+        dataBinding.plantProblemsButton.setEnabled(false);
+        dataBinding.historyButton.setEnabled(true);
+        setFragmentHeader();
+
+        linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mHistoryRecyclerView = dataBinding.plantDetailRcView;
+        mHistoryRecyclerView.setLayoutManager(linearLayoutManager);
+        mHistoryRecyclerView.setHasFixedSize(true);
+
+        initProblemsRecyclerView();
+        dataBinding.historyButton.setOnClickListener(v -> {
+            dataBinding.historyButton.setEnabled(false);
+            dataBinding.plantProblemsButton.setEnabled(true);
+            initHistoryRecyclerView();
+            Log.d(TAG, "onViewCreated: initHistoryRecyclerView done");
+            requestNextPage();
+        });
+        dataBinding.plantProblemsButton.setOnClickListener(v -> {
+            dataBinding.historyButton.setEnabled(true);
+            dataBinding.plantProblemsButton.setEnabled(false);
+            initProblemsRecyclerView();
+        });
         Log.d(TAG, "onViewCreated: initObservers done");
+    }
+
+    private void setFragmentHeader() {
+        dataBinding.setPlant(plant);
     }
 
     private void requestNextPage() {
         dataBinding.setLoading(true);
         //Log.d(TAG, "requestNextPage: Begin " + currentPage);
-        LiveData<Resource<List<PlantHistory>>> liveData = viewModel.getPlantHistoryPaged(userPlantId,currentPage);
+        LiveData<Resource<List<PlantHistory>>> liveData = viewModel.getPlantHistoryPaged(plant.getUserPlantId(),currentPage);
 
         liveData.observe(getViewLifecycleOwner(), listResource -> {
             //Log.d(TAG, "requestNextPage: Callback called for " + currentPage);
@@ -142,13 +173,10 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         });
     }
 
+    // This method works only when the plant "history" button is clicked
     private void initHistoryRecyclerView(){
         Log.d(TAG, "initHistoryRecyclerView: ");
 
-        linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mHistoryRecyclerView = dataBinding.plantHistory;
-        mHistoryRecyclerView.setLayoutManager(linearLayoutManager);
-        mHistoryRecyclerView.setHasFixedSize(true);
         RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -168,6 +196,15 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         mHistoryRecyclerView.setAdapter(mPlantHistoryAdapter);
     }
 
+    // This method works once when the fragment is first opened. After that, it only works when the "plant problem" button is clicked.
+    private void initProblemsRecyclerView() {
+        viewModel.getAnalysisResults(plant.getUserPlantId()).observe(getViewLifecycleOwner(), notifications -> {
+            mPlantProblemAdapter.setData(notifications);
+        });
+
+        mPlantProblemAdapter = new PlantProblemAdapter();
+        mHistoryRecyclerView.setAdapter(mPlantProblemAdapter);
+    }
 
     @Override
     public void onAnalysisClicked(Long userPlantId) {
@@ -183,5 +220,22 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
         Log.d(TAG, "onPlantHistoryImageClick: " + plantHistoryId);
         PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT_HISTORY,plantHistoryId);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, PlantFullImageFragment.TAG).commit();
+    }
+
+    @Override
+    public void onPlantHistoryClick(PlantHistory plantHistory) {
+        Intent intent = new Intent(getContext(), AnalysisResultActivity.class);
+        intent.putExtra("plantHistory", plantHistory);
+        getContext().startActivity(intent);
+    }
+
+    @Override
+    public void onCancelClicked(AnalysisResult analysisResult) {
+        viewModel.deleteProblem(analysisResult);
+    }
+
+    @Override
+    public void onInterfereClicked(AnalysisResult analysisResult) {
+        viewModel.deleteProblem(analysisResult);
     }
 }

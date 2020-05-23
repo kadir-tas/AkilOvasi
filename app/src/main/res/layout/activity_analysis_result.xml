@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="downloadPdfClick"
+            type="com.company.akilovasi.ui.analysisresult.callbacks.PdfClick" />
+
+        <variable
+            name="loading"
+            type="boolean" />
+
+        <variable
+            name="plantHistory"
+            type="com.company.akilovasi.data.local.entities.PlantHistory" />
+
+        <variable
+            name="analysisId"
+            type="Long" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/layout_white"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_bar_height"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/plantsDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(plantHistory.userPlantName)}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorMainDark"
+                        android:textSize="@dimen/header_text_size" />
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_weight="0.25"
+                android:stretchColumns="*">
+
+                <TableRow>
+
+                    <ImageView
+                        android:id="@+id/imageStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/plant" />
+
+                    <TextView
+                        android:id="@+id/plantStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text=": İyi"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:id="@+id/dateImage"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/date" />
+
+                    <TextView
+                        android:id="@+id/plantLastAnalysisDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf(plantHistory.dateSubmited)}"
+                        android:textStyle="normal" />
+
+
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageView
+                        android:id="@+id/imageSoilHum"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/water" />
+
+                    <TextView
+                        android:id="@+id/soilHum"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf((float)plantHistory.humiditiy / 100f)}"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:id="@+id/imagePh"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ph" />
+
+                    <TextView
+                        android:id="@+id/plantPh"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf((float)plantHistory.ph / 100f)}"
+                        android:textStyle="normal" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageView
+                        android:id="@+id/imageTemperature"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/temp" />
+
+                    <TextView
+                        android:id="@+id/pasdlant"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf((float)plantHistory.temp / 100f)}"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:id="@+id/imageEnvLight"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/sunny" />
+
+                    <TextView
+                        android:id="@+id/environmentLight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="7"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf((float)plantHistory.light / 100f)}"
+                        android:textStyle="normal" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/historyFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{() -> downloadPdfClick.onPDFButtonClicked(plantHistory)}"
+            android:src="@drawable/pdf_icon"
+            app:backgroundTint="@color/white_cardview_color"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:layout_behavior="com.company.akilovasi.util.FabBehavior"
+            app:maxImageSize="35dp" />
+
+    </FrameLayout>
+</layout>
+

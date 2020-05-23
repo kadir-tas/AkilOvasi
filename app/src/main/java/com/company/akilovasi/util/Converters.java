@@ -38,5 +38,17 @@ public class Converters {
         }
         return result;
     }
+
+    @TypeConverter
+    public static String SensorTypeEnumToString(SensorTypes sensorTypes){
+        return sensorTypes.getSensorType();
+    }
+
+    @TypeConverter
+    public static SensorTypes SensorTypeEnumToString(String string){
+        SensorTypes result;
+        result = SensorTypes.valueOf(string);
+        return result;
+    }
 }
 

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="analysisCallback"
             type="com.company.akilovasi.ui.main.callbacks.AnalysisCallback" />
@@ -11,52 +14,213 @@
             name="loading"
             type="boolean" />
 
-        <variable name="userPlantId" type="Long"/>
+        <variable
+            name="plant"
+            type="com.company.akilovasi.data.local.entities.Plant" />
+
+        <variable
+            name="userPlantId"
+            type="Long" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/layout_white"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="match_parent"
+            android:background="@color/layout_white"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/app_bar_height"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:theme="@style/AppTheme.AppBarOverlay">
 
-                <TextView
+                <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorMainDark"
-                    android:text="@string/history"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/header_text_size" />
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal">
 
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
+                    <TextView
+                        android:id="@+id/plantsDetailHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(plant.userPlantName)}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorMainDark"
+                        android:textSize="@dimen/header_text_size" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/plantHistory"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
 
-    </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_weight="0.25">-->
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="0.25"
+                    android:stretchColumns="*">
+
+                    <TableRow>
+
+                        <ImageView
+                            android:id="@+id/imageStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/plant" />
+
+                        <TextView
+                            android:id="@+id/plantStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:text=": İyi"
+                            android:textStyle="normal" />
+
+                        <ImageView
+                            android:id="@+id/dateImage"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/date" />
+
+                        <TextView
+                            android:id="@+id/plantLastAnalysisDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:text="@{String.valueOf(plant.lastAnalysisDate)}"
+                            android:textStyle="normal" />
+
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <ImageView
+                            android:id="@+id/imageSoilHum"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/water" />
+
+                        <TextView
+                            android:id="@+id/soilHum"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:text="@{String.valueOf((float)plant.lastSensHumidity / 100f)}"
+                            android:textStyle="normal" />
+
+                        <ImageView
+                            android:id="@+id/imagePh"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ph" />
+
+                        <TextView
+                            android:id="@+id/plantPh"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:text="@{String.valueOf((float)plant.lastSensPh / 100f)}"
+                            android:textStyle="normal" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <ImageView
+                            android:id="@+id/imageTemperature"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/temp" />
+
+                        <TextView
+                            android:id="@+id/pasdlant"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:text="@{String.valueOf((float)plant.lastSensTemp / 100f)}"
+                            android:textStyle="normal" />
+
+                        <ImageView
+                            android:id="@+id/imageEnvLight"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/sunny" />
+
+                        <TextView
+                            android:id="@+id/environmentLight"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxEms="7"
+                            android:maxLines="1"
+                            android:text="@{String.valueOf((float)plant.lastSensLight / 100f)}"
+                            android:textStyle="normal" />
+                    </TableRow>
+                </TableLayout>
+<!--            </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/plantProblemsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/plant_problems_str" />
+
+                <Button
+                    android:id="@+id/historyButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/history" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/plantDetailRcView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.75" />
+
+        </LinearLayout>
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progress_bar"
@@ -64,22 +228,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{loading ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:onClick="@{() -> analysisCallback.onAnalysisClicked(userPlantId)}"
+            android:id="@+id/historyFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:fabSize="normal"
-            app:backgroundTint="@color/white_cardview_color"
-            app:elevation="6dp"
-            android:id="@+id/historyFab"
-            app:borderWidth="0dp"
+            android:onClick="@{() -> analysisCallback.onAnalysisClicked(userPlantId)}"
             android:src="@drawable/analysis"
-            app:maxImageSize="35dp"
-            app:layout_behavior="com.company.akilovasi.util.FabBehavior"/>
+            app:backgroundTint="@color/white_cardview_color"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:layout_behavior="com.company.akilovasi.util.FabBehavior"
+            app:maxImageSize="35dp" />
 
     </FrameLayout>
 </layout>

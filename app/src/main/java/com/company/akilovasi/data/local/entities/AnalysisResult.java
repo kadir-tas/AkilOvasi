@@ -3,8 +3,13 @@ package com.company.akilovasi.data.local.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.company.akilovasi.util.SensorTypes;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * This entity is only client side entity. We only kept the data of warning notifications not all analysis results.
+ * So, we ignore the True results for this entity. All the "True" and "False" results are stored on the server side.
+ */
 @Entity(tableName = "analysis_result")
 public class AnalysisResult {
 
@@ -12,26 +17,17 @@ public class AnalysisResult {
     @SerializedName("resultId")
     private Long resultId;
 
+    @SerializedName("userPlantId")
+    private Long userPlantId;
+
     @SerializedName("version")
     private int version;
 
-    @SerializedName("soilTemperatureStatus")
-    private boolean soilTemperatureStatus;
+    @SerializedName("message")
+    private String message;
 
-    @SerializedName("soilHumidtyStatus")
-    private boolean soilHumidtyStatus;
-
-    @SerializedName("airTemperatureStatus")
-    private boolean airTemperatureStatus;
-
-    @SerializedName("airHumidityStatus")
-    private boolean airHumidityStatus;
-
-    @SerializedName("airPressureStatus")
-    private boolean airPressureStatus;
-
-    @SerializedName("environmentLightStatus")
-    private boolean environmentLightStatus;
+    @SerializedName("sensorType")
+    private SensorTypes sensorType;
 
     public Long getResultId() {
         return resultId;
@@ -45,55 +41,31 @@ public class AnalysisResult {
         return version;
     }
 
+    public Long getUserPlantId() {
+        return userPlantId;
+    }
+
+    public void setUserPlantId(Long userPlantId) {
+        this.userPlantId = userPlantId;
+    }
+
     public void setVersion(int version) {
         this.version = version;
     }
 
-    public boolean isSoilTemperatureStatus() {
-        return soilTemperatureStatus;
+    public String getMessage() {
+        return message;
     }
 
-    public void setSoilTemperatureStatus(boolean soilTemperatureStatus) {
-        this.soilTemperatureStatus = soilTemperatureStatus;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public boolean isSoilHumidtyStatus() {
-        return soilHumidtyStatus;
+    public SensorTypes getSensorType() {
+        return sensorType;
     }
 
-    public void setSoilHumidtyStatus(boolean soilHumidtyStatus) {
-        this.soilHumidtyStatus = soilHumidtyStatus;
-    }
-
-    public boolean isAirTemperatureStatus() {
-        return airTemperatureStatus;
-    }
-
-    public void setAirTemperatureStatus(boolean airTemperatureStatus) {
-        this.airTemperatureStatus = airTemperatureStatus;
-    }
-
-    public boolean isAirHumidityStatus() {
-        return airHumidityStatus;
-    }
-
-    public void setAirHumidityStatus(boolean airHumidityStatus) {
-        this.airHumidityStatus = airHumidityStatus;
-    }
-
-    public boolean isAirPressureStatus() {
-        return airPressureStatus;
-    }
-
-    public void setAirPressureStatus(boolean airPressureStatus) {
-        this.airPressureStatus = airPressureStatus;
-    }
-
-    public boolean isEnvironmentLightStatus() {
-        return environmentLightStatus;
-    }
-
-    public void setEnvironmentLightStatus(boolean environmentLightStatus) {
-        this.environmentLightStatus = environmentLightStatus;
+    public void setSensorType(SensorTypes sensorType) {
+        this.sensorType = sensorType;
     }
 }

@@ -9,10 +9,11 @@ import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "plant_history")
-public class PlantHistory {
+public class PlantHistory implements Serializable {
 
     @PrimaryKey
     @SerializedName("id")

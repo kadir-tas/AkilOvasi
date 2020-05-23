@@ -8,9 +8,12 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.Date;
+
 @Entity(tableName = "plants",indices = {@Index(value = {"userId", "userPlantId"},
         unique = true)})
-public class Plant {
+public class Plant implements Serializable {
 
     @PrimaryKey
     @SerializedName("id")
@@ -43,6 +46,17 @@ public class Plant {
 
     @SerializedName("lastSensLight")
     private float lastSensLight;
+
+    @SerializedName("lastAnalysisDate")
+    private Date lastAnalysisDate;
+
+    public Date getLastAnalysisDate() {
+        return lastAnalysisDate;
+    }
+
+    public void setLastAnalysisDate(Date lastAnalysisDate) {
+        this.lastAnalysisDate = lastAnalysisDate;
+    }
 
     public Long getId() {
         return id;

@@ -15,20 +15,18 @@ import javax.inject.Inject;
 
 import retrofit2.Retrofit;
 
+import static com.company.akilovasi.util.AppConstants.EXISTING_SENSOR_TYPES;
+
 public class NotificationsRepositoryImpl implements NotificationRepository {
 
     Retrofit retrofit;
     NotificationDao notificationDao;
 
-    private LiveData<List<Notification>> allNotifications;
-
     @Inject
     public NotificationsRepositoryImpl(Retrofit retrofit, NotificationDao notificationDao) {
         this.retrofit = retrofit;
         this.notificationDao = notificationDao;
-        allNotifications = notificationDao.getAllNotifications();
     }
-
 
     @Override
     public void deleteNotification(Notification notification) {
@@ -48,7 +46,7 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
 
     @Override
     public LiveData<List<Notification>> getAllNotifications() {
-        return allNotifications;
+        return notificationDao.getAllNotifications();
     }
 
     @Override
@@ -57,6 +55,16 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
             parseExtraData(n);
         }
         new addNotificationsAsyncTask(notificationDao, notifications).execute();
+    }
+
+    @Override
+    public LiveData<List<AnalysisResult>> getAllAnalysisResults(Long plantId) {
+        return notificationDao.getAllAnalysisResults(plantId);
+    }
+
+    @Override
+    public void deleteProblem(AnalysisResult analysisResult) {
+        new deleteAnalysisResultAsyncTask(notificationDao,analysisResult).execute();
     }
 
     private static class deleteNotificationAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -137,6 +145,22 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
         }
     }
 
+    private static class deleteAnalysisResultAsyncTask extends AsyncTask<Void, Void, Void> {
+        private NotificationDao notificationDao;
+        private AnalysisResult analysisResult;
+
+        private deleteAnalysisResultAsyncTask(NotificationDao notificationDao, AnalysisResult analysisResult) {
+            this.analysisResult = analysisResult;
+            this.notificationDao = notificationDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            notificationDao.deleteAnalysisResult(analysisResult);
+            return null;
+        }
+    }
+
     private void parseExtraData(Notification notification) {
         switch (notification.getVersion()) {
             case 1:
@@ -145,14 +169,18 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
                  */
                 if (notification.getExtra() != null && !notification.getExtra().isEmpty()) {
                     char[] array = notification.getExtra().toCharArray();
-                    AnalysisResult analysisResult = new AnalysisResult();
-                    analysisResult.setSoilTemperatureStatus(array[0] == 'T');
-                    analysisResult.setSoilHumidtyStatus(array[1] == 'T');
-                    analysisResult.setAirTemperatureStatus(array[2] == 'T');
-                    analysisResult.setAirHumidityStatus(array[3] == 'T');
-                    analysisResult.setAirPressureStatus(array[4] == 'T');
-                    analysisResult.setEnvironmentLightStatus(array[5] == 'T');
-                    new addAnalysisResultAsyncTask(notificationDao, analysisResult).execute();
+                    for(int i = 0; i < array.length; i++){
+                        char c = array[i];
+                        if(c == 'F'){
+                            AnalysisResult analysisResult = new AnalysisResult();
+                            analysisResult.setUserPlantId(notification.getUserPlantId());
+                            analysisResult.setResultId(notification.getId());
+                            analysisResult.setVersion(notification.getVersion());
+                            analysisResult.setSensorType(EXISTING_SENSOR_TYPES[i]);
+                            analysisResult.setMessage(EXISTING_SENSOR_TYPES[i].getSensorType() + " message");
+                            new addAnalysisResultAsyncTask(notificationDao, analysisResult).execute();
+                        }
+                    }
                 }
                 break;
         }

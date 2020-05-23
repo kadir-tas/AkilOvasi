@@ -16,9 +16,12 @@ public class NotificationViewModel extends ViewModel {
 
     private NotificationRepository notificationRepository;
 
+    private LiveData<List<Notification>> allNotifications;
+
     @Inject
     public NotificationViewModel(NotificationRepository  notificationRepository){
         this.notificationRepository = notificationRepository;
+        allNotifications = notificationRepository.getAllNotifications();
 
     }
 
@@ -35,7 +38,7 @@ public class NotificationViewModel extends ViewModel {
     }
 
     public LiveData<List<Notification>> getNotifications(){
-        return notificationRepository.getAllNotifications();
+        return allNotifications;
     }
 
     public void produceDummyData(){

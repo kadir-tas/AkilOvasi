@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Notification;
+import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.di.SecretPrefs;
@@ -39,6 +41,7 @@ import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
 import com.company.akilovasi.ui.notification.NotificationFragment;
 import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
+import com.company.akilovasi.util.CustomLayoutManager;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -144,7 +147,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
-        mPlantsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this,2, CustomLayoutManager.VERTICAL, false));
         mPlantsRecyclerView.setHasFixedSize(true);
 
         mPlantAdapter = new PlantAdapter(this, picasso);
@@ -163,12 +166,12 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
 
     @Override
-    public void onPlantClick(Long userPlantId) {
+    public void onPlantClick(Plant plant) {
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(userPlantId), PlantHistoryFragment.TAG).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(plant), PlantHistoryFragment.TAG).commit();
     }
 
     @Override

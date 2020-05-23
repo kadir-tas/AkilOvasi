@@ -64,5 +64,8 @@
     <string name="notifications">Bildirimler</string>
     <string name="date">tarih</string>
     <string name="no_notification_available">Yeni Bildiriminiz Yok</string>
+    <string name="plant_problems_str">Gerekli Müdahaleler</string>
+    <string name="interfered_button_string">Müdahale Edildi</string>
+    <string name="cancel">İptal et</string>
 
 </resources>
