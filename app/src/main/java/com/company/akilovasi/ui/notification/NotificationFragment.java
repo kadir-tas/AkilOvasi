@@ -6,13 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingComponent;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.ItemTouchHelper.Callback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.company.akilovasi.R;
@@ -87,7 +85,7 @@ public class NotificationFragment extends BaseFragment<NotificationViewModel , F
             }
         }).attachToRecyclerView(dataBinding.notificationsRv);
         viewModel.getNotifications().observe(getViewLifecycleOwner(), notifications -> {
-            dataBinding.getAdapter().setNotifications(notifications);
+            dataBinding.getAdapter().fitNotifications(notifications);
         });
     }
 
