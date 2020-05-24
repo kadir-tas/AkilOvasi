@@ -25,6 +25,8 @@ public interface NotificationRepository {
 
     void deleteNotification(Notification notification);
 
+    void deleteNotificationByTypeAndPlantId(Notification.Type type , Long userPlantId);
+
     void addNotification(Notification notification);
 
     void deleteAllNotifications();

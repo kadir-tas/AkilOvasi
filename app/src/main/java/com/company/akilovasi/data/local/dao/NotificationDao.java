@@ -32,6 +32,9 @@ public interface NotificationDao {
     @Query("DELETE FROM notifications WHERE id = :id")
     void deleteNotificationById(Long id);
 
+    @Query("DELETE FROM notifications WHERE type = :type AND userPlantId = :userPlantId")
+    void deleteNotificationByTypeAndUserPlantId( Notification.Type type,Long userPlantId);
+
     @Query("SELECT * FROM notifications ORDER BY date DESC")
     LiveData<List<Notification>> getAllNotifications();
 

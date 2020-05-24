@@ -2,6 +2,11 @@ package com.company.akilovasi.util;
 
 public class AppConstants {
 
+    /**
+     * Channel id for app notifications
+     */
+    public static String CHANNEL_ID = "akilovasi-notification";
+
     public static final String SECRET_PREFERENCE_FILE_NAME = "secrets";
 
     public static final SensorTypes[] EXISTING_SENSOR_TYPES = {

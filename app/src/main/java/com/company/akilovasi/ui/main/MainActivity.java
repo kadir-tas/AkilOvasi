@@ -47,6 +47,7 @@ import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
 import com.company.akilovasi.ui.notification.NotificationFragment;
 import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
+import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -356,6 +357,27 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onNotificationItemClick(Notification notification) {
         Log.d(TAG, "onNotificationItemClick: ");
+        switch (notification.getType()){
+            case Default:
+                //Do nothing
+                break;
+            case RemindAnalysis:
+                Intent intent = new Intent(this, PlantAnalysisActivity.class);
+                intent.putExtra( PlantAnalysisActivity.PARAM_USER_PLANT, notification.getUserPlantId().toString());
+                /*Sending as string because PlantAnalysisActivity checks for string input*/
+                startActivity(intent);
+                finish();
+                break;
+            case RemindCare:
+                //TODO:
+                break;
+            case AnalysisResult:
+                //TODO:
+                break;
+            case GeneralNotification:
+                //TODO:
+                break;
+        }
     }
 
     //TEST CODE
