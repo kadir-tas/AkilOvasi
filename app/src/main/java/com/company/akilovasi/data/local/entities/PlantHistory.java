@@ -60,52 +60,88 @@ public class PlantHistory implements Serializable {
     @NotNull
     private int pageId;
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getPlantTypeId() {
-        return plantTypeId;
     }
 
     public void setPlantTypeId(Long plantTypeId) {
         this.plantTypeId = plantTypeId;
     }
 
-    public Long getUserPlantId() {
-        return userPlantId;
-    }
-
     public void setUserPlantId(Long userPlantId) {
         this.userPlantId = userPlantId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public void setUserPlantName(String userPlantName) {
+        this.userPlantName = userPlantName;
+    }
+
+    public void setPlantCategory(String plantCategory) {
+        this.plantCategory = plantCategory;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Date getDateSubmited() {
-        return dateSubmited;
-    }
-
     public void setDateSubmited(Date dateSubmited) {
         this.dateSubmited = dateSubmited;
     }
 
-    public String getPlantImageId() {
-        return plantImageId;
-    }
-
     public void setPlantImageId(String plantImageId) {
         this.plantImageId = plantImageId;
+    }
+
+    public void setPh(@NotNull Long ph) {
+        this.ph = ph;
+    }
+
+    public void setTemp(@NotNull Long temp) {
+        this.temp = temp;
+    }
+
+    public void setLight(@NotNull Long light) {
+        this.light = light;
+    }
+
+    public void setHumiditiy(@NotNull Long humiditiy) {
+        this.humiditiy = humiditiy;
+    }
+
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getPlantTypeId() {
+        return plantTypeId;
+    }
+
+    public Long getUserPlantId() {
+        return userPlantId;
+    }
+
+    public String getUserPlantName() {
+        return userPlantName;
+    }
+
+    public String getPlantCategory() {
+        return plantCategory;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Date getDateSubmited() {
+        return dateSubmited;
+    }
+
+    public String getPlantImageId() {
+        return plantImageId;
     }
 
     @NotNull
@@ -113,17 +149,9 @@ public class PlantHistory implements Serializable {
         return ph;
     }
 
-    public void setPh(@NotNull Long ph) {
-        this.ph = ph;
-    }
-
     @NotNull
     public Long getTemp() {
         return temp;
-    }
-
-    public void setTemp(@NotNull Long temp) {
-        this.temp = temp;
     }
 
     @NotNull
@@ -131,41 +159,12 @@ public class PlantHistory implements Serializable {
         return light;
     }
 
-    public void setLight(@NotNull Long light) {
-        this.light = light;
-    }
-
     @NotNull
     public Long getHumiditiy() {
         return humiditiy;
     }
 
-    public void setHumiditiy(@NotNull Long humiditiy) {
-        this.humiditiy = humiditiy;
-    }
-
-    public String getUserPlantName() {
-        return userPlantName;
-    }
-
-    public void setUserPlantName(String userPlantName) {
-        this.userPlantName = userPlantName;
-    }
-
-    public String getPlantCategory() {
-        return plantCategory;
-    }
-
-    public void setPlantCategory(String plantCategory) {
-        this.plantCategory = plantCategory;
-    }
-
-    @NotNull
     public int getPageId() {
         return pageId;
-    }
-
-    public void setPageId(@NotNull int pageId) {
-        this.pageId = pageId;
     }
 }

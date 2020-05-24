@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingComponent;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.local.entities.PlantHistory;
@@ -13,7 +14,7 @@ import com.company.akilovasi.ui.analysisresult.callbacks.PdfClick;
 
 public class AnalysisResultActivity extends BaseActivity<AnalysisResultViewModel, ActivityAnalysisResultBinding> implements PdfClick {
     private static final String TAG = "AnalysisResultActivity";
-    private static final String PARAM_USER_PLANT_HISTORY = "user_plant_history";
+    public static final String PARAM_USER_PLANT_HISTORY = "user_plant_history";
 
     private PlantHistory mPlantHistory = null;
 
@@ -31,10 +32,16 @@ public class AnalysisResultActivity extends BaseActivity<AnalysisResultViewModel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getIntent().getExtras() != null){
-            mPlantHistory = (PlantHistory) getIntent().getExtras().get(PARAM_USER_PLANT_HISTORY);
+            Object obj = getIntent().getExtras().get(PARAM_USER_PLANT_HISTORY);
+            if(obj instanceof PlantHistory){
+                mPlantHistory = (PlantHistory) obj;
+            }else{
+                Log.e(TAG, "onCreate: PARAM " + PARAM_USER_PLANT_HISTORY + " is not instanceof PlantHistory");
+            }
         }
         dataBinding.setPlantHistory(mPlantHistory);
         dataBinding.setDownloadPdfClick(this);
+        Log.d(TAG, "onCreate: Finished");
     }
 
     @Override
