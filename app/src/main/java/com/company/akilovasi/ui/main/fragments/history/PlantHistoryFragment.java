@@ -226,9 +226,11 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
     @Override
     public void onPlantHistoryClick(PlantHistory plantHistory) {
+        Log.d(TAG, "onPlantHistoryClick: " + plantHistory.getId());
         Intent intent = new Intent(getContext(), AnalysisResultActivity.class);
-        intent.putExtra("plantHistory", plantHistory);
-        getContext().startActivity(intent);
+        intent.putExtra(AnalysisResultActivity.PARAM_USER_PLANT_HISTORY, plantHistory);
+        getActivity().startActivity(intent);
+        Log.d(TAG, "onPlantHistoryClick: StartNewActivity");
     }
 
     @Override

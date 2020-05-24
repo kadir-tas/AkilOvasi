@@ -169,23 +169,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         });
     }
 
-    //TODO: There is problem here @Sezer
-    private void invalidateRemoteFcmToken(){
-        viewModel.invalidateFcmToken().observe(this, responseResource -> {
-            switch (responseResource.status){
-
-                case SUCCESS:
-                    Log.d(TAG, "invalidateRemoteFcmToken: Invalidation successful");
-                    break;
-                case ERROR:
-                    Log.d(TAG, "invalidateRemoteFcmToken: Error While Invalidating");
-                    break;
-                case LOADING:
-                    break;
-            }
-        });
-    }
-
     @Override
     protected DataBindingComponent getDataBindingComponent() {
         return null;
