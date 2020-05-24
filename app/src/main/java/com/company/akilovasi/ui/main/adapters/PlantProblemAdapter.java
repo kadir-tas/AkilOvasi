@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.main.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +69,9 @@ public class PlantProblemAdapter extends BaseAdapter<PlantProblemAdapter.PlantPr
         }
 
         public void onBind(AnalysisResult analysisResult) {
-            itemRvPlantProblemsBinding.plantwarningMessage.setText(analysisResult.getMessage());
-            itemRvPlantProblemsBinding.plantWarningSensorType.setText(analysisResult.getSensorType().getSensorType());
+            itemRvPlantProblemsBinding.setWarning(analysisResult);
+            //itemRvPlantProblemsBinding.plantwarningMessage.setText(analysisResult.getMessage());
+            // itemRvPlantProblemsBinding.plantWarningSensorType.setText(analysisResult.getSensorType().getSensorType());
             itemRvPlantProblemsBinding.executePendingBindings();
         }
     }
