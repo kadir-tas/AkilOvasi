@@ -34,6 +34,7 @@ public class PlantAdapter extends BaseAdapter<PlantAdapter.PlantViewHolder, Plan
     }
 
 
+
     @Override
     public void setData(List<Plant> list) {
         this.plants = list;

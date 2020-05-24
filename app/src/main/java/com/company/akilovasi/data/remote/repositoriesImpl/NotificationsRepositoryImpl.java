@@ -28,6 +28,7 @@ import com.company.akilovasi.util.AppConstants;
 import com.google.android.gms.common.api.Api;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -244,18 +245,19 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
 
     private static class addAnalysisResultAsyncTask extends AsyncTask<Void, Void, Void> {
         private NotificationDao notificationDao;
-        private AnalysisResult analysisResult;
+        private List<AnalysisResult> analysisResults;
 
-        private addAnalysisResultAsyncTask(NotificationDao notificationDao, AnalysisResult analysisResult) {
+        private addAnalysisResultAsyncTask(NotificationDao notificationDao, List<AnalysisResult> analysisResults) {
             this.notificationDao = notificationDao;
-            this.analysisResult = analysisResult;
+            this.analysisResults = analysisResults;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            notificationDao.addAnalysisResult(analysisResult);
+            notificationDao.addAnalysisResults(analysisResults);
             return null;
         }
+
     }
 
     private static class deleteAnalysisResultAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -282,6 +284,7 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
                  */
                 if (notification.getExtra() != null && !notification.getExtra().isEmpty()) {
                     char[] array = notification.getExtra().toCharArray();
+                    List<AnalysisResult> analysisResults = new ArrayList<>();
                     for(int i = 0; i < array.length; i++){
                         char c = array[i];
                         if(c == 'F'){
@@ -291,9 +294,10 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
                             analysisResult.setVersion(notification.getVersion());
                             analysisResult.setSensorType(EXISTING_SENSOR_TYPES[i]);
                             analysisResult.setMessage(EXISTING_SENSOR_TYPES[i].getSensorString() + " message");
-                            new addAnalysisResultAsyncTask(notificationDao, analysisResult).execute();
+                            analysisResults.add(analysisResult);
                         }
                     }
+                    new addAnalysisResultAsyncTask(notificationDao, analysisResults).execute();
                 }
                 break;
         }

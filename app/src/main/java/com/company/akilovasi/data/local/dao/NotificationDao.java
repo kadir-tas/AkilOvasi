@@ -36,7 +36,7 @@ public interface NotificationDao {
     LiveData<List<Notification>> getAllNotifications();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addAnalysisResult(AnalysisResult analysisResult);
+    void addAnalysisResults(List<AnalysisResult> analysisResults);
 
     @Query("SELECT * FROM analysis_result WHERE  userPlantId = :userPlantId")
     LiveData<List<AnalysisResult>> getAllAnalysisResults(Long userPlantId);

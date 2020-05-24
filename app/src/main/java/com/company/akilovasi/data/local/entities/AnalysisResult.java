@@ -1,6 +1,7 @@
 package com.company.akilovasi.data.local.entities;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.company.akilovasi.util.SensorTypes;
@@ -10,10 +11,14 @@ import com.google.gson.annotations.SerializedName;
  * This entity is only client side entity. We only kept the data of warning notifications not all analysis results.
  * So, we ignore the True results for this entity. All the "True" and "False" results are stored on the server side.
  */
-@Entity(tableName = "analysis_result")
+@Entity(tableName = "analysis_result",indices = {@Index(value = {"resultId", "userPlantId","sensorType"},
+        unique = true)})
 public class AnalysisResult {
 
     @PrimaryKey
+    @SerializedName("id")
+    private Long id;
+
     @SerializedName("resultId")
     private Long resultId;
 
@@ -67,5 +72,13 @@ public class AnalysisResult {
 
     public void setSensorType(SensorTypes sensorType) {
         this.sensorType = sensorType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

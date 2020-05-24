@@ -62,6 +62,8 @@ public class CustomLayoutManager extends GridLayoutManager {
         return scrolled;
     }
 
+
+
     @Override
     public void onAttachedToWindow(RecyclerView view) {
         recyclerView = view;
