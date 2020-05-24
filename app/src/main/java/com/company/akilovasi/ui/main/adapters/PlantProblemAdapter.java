@@ -14,6 +14,7 @@ import com.company.akilovasi.data.local.entities.AnalysisResult;
 import com.company.akilovasi.databinding.ItemRvPlantProblemsBinding;
 import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.ui.BaseAdapter;
+import com.company.akilovasi.ui.main.callbacks.PlantProblemClick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,11 @@ public class PlantProblemAdapter extends BaseAdapter<PlantProblemAdapter.PlantPr
     private static final String TAG = "PlantProblemAdapter";
     private List<AnalysisResult> analysisWarnings;
 
-    public PlantProblemAdapter() {
+    private PlantProblemClick plantProblemClick;
+
+    public PlantProblemAdapter(PlantProblemClick plantProblemClick) {
         analysisWarnings = new ArrayList<>();
+        this.plantProblemClick = plantProblemClick;
     }
 
     @Override
@@ -58,7 +62,6 @@ public class PlantProblemAdapter extends BaseAdapter<PlantProblemAdapter.PlantPr
         return analysisWarnings.size();
     }
 
-
     public class PlantProblemViewHolder extends RecyclerView.ViewHolder {
 
         ItemRvPlantProblemsBinding itemRvPlantProblemsBinding;
@@ -70,8 +73,7 @@ public class PlantProblemAdapter extends BaseAdapter<PlantProblemAdapter.PlantPr
 
         public void onBind(AnalysisResult analysisResult) {
             itemRvPlantProblemsBinding.setWarning(analysisResult);
-            //itemRvPlantProblemsBinding.plantwarningMessage.setText(analysisResult.getMessage());
-            // itemRvPlantProblemsBinding.plantWarningSensorType.setText(analysisResult.getSensorType().getSensorType());
+            itemRvPlantProblemsBinding.setWarningCancel(plantProblemClick);
             itemRvPlantProblemsBinding.executePendingBindings();
         }
     }

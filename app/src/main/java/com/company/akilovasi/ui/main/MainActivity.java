@@ -209,6 +209,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 });
     }
 
+
+    /**
+     * Init main banners recyclerview
+     */
     private void initBannerRecyclerView() {
 
         mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
@@ -221,10 +225,15 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         mBannerRecyclerView.setAdapter(mBannerAdapter);
     }
 
+    /**
+     * Init Main user plants recyclerview
+     */
     private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
         mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this,2, CustomLayoutManager.VERTICAL, false));
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mPlantsRecyclerView);
         mPlantsRecyclerView.setHasFixedSize(true);
 
         mPlantAdapter = new PlantAdapter(this, picasso);

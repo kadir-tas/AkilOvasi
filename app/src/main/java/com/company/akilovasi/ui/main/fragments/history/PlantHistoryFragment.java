@@ -20,6 +20,7 @@ import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.Status;
 import com.company.akilovasi.data.local.entities.AnalysisResult;
+import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.databinding.FragmentPlantHistoryBinding;
@@ -198,11 +199,12 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
     // This method works once when the fragment is first opened. After that, it only works when the "plant problem" button is clicked.
     private void initProblemsRecyclerView() {
-        viewModel.getAnalysisResults(plant.getUserPlantId()).observe(getViewLifecycleOwner(), notifications -> {
-            mPlantProblemAdapter.setData(notifications);
+        viewModel.getAnalysisResults(plant.getUserPlantId()).observe(getViewLifecycleOwner(), analysisResultList -> {
+            mPlantProblemAdapter.setData(analysisResultList);
+            Log.d(TAG, "initProblemsRecyclerView: " + analysisResultList.size());
         });
 
-        mPlantProblemAdapter = new PlantProblemAdapter();
+        mPlantProblemAdapter = new PlantProblemAdapter(this);
         mHistoryRecyclerView.setAdapter(mPlantProblemAdapter);
     }
 
