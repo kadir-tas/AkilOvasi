@@ -12,7 +12,6 @@ public class NotificationBindingAdapter {
         switch (type){
             case Default:
                 cardView.setCardBackgroundColor(cardView.getResources().getColor(R.color.notification_default));
-
                 break;
             case RemindAnalysis:
                 cardView.setCardBackgroundColor(cardView.getResources().getColor(R.color.notification_remind_analysis));
@@ -22,6 +21,9 @@ public class NotificationBindingAdapter {
                 break;
             case GeneralNotification:
                 cardView.setCardBackgroundColor(cardView.getResources().getColor(R.color.notification_generic));
+                break;
+            case AnalysisResult:
+                cardView.setCardBackgroundColor(cardView.getResources().getColor(R.color.notification_analysis_result));
                 break;
             default:
                 cardView.setCardBackgroundColor(cardView.getResources().getColor(R.color.notification_type_error));

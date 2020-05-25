@@ -47,7 +47,7 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
 
     private static final int REQUEST_CODE = 1;
     private static final String TAG = "PlantAnalysisActivity";
-    public static String PARAM_USER_PLANT = "user_plant";
+    public static String PARAM_USER_PLANT = "userPlantId";
 
     private Long userPlantId;
     private String capturedImagePath = "";
@@ -70,8 +70,16 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
         super.onCreate(savedInstanceState);
         dataBinding.setLoading(true);
         userPlantId = -1L;
-        if(getIntent().getExtras() != null){
-            userPlantId = getIntent().getExtras().getLong(PARAM_USER_PLANT);
+        
+        if(getIntent().hasExtra(PARAM_USER_PLANT)){
+            String userPlantIdStr = getIntent().getStringExtra(PARAM_USER_PLANT);
+            if(userPlantIdStr != null){
+                userPlantId =  Long.parseLong( userPlantIdStr );
+            }else{
+                userPlantId = getIntent().getLongExtra(PARAM_USER_PLANT , -1);
+            }
+        }else {
+            Log.e(TAG, "onCreate: intent has no  " + PARAM_USER_PLANT + " parameter" );
         }
 
         if(userPlantId == -1L){
@@ -83,6 +91,9 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},  1);
 
+        //If user enters this activity directly recent notifications wont be polled thus when user completes analysis action related notification wont be removed
+        //So poll them here
+        viewModel.pollNotifications();
         initObservers();
     }
 
@@ -150,6 +161,7 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
                 case SUCCESS:
                     dataBinding.setLoading(false);
                     Toast.makeText(PlantAnalysisActivity.this, R.string.plant_value_update, Toast.LENGTH_SHORT).show();
+                    viewModel.removeRelatedNotifications( userPlantId );
                     redirectToMain();
                     break;
                 case ERROR:

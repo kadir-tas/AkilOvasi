@@ -29,8 +29,13 @@
 
         <activity android:name=".ui.camera.CameraActivity" />
         <activity android:name=".ui.plant.PlantCategoryActivity" />
-        <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.plantanalysis.PlantAnalysisActivity" />
+        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.plantanalysis.PlantAnalysisActivity">
+            <intent-filter>
+                <action android:name="remind-analysis"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:configChanges="keyboardHidden"

@@ -148,6 +148,11 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
     }
 
     @Override
+    public void deleteNotificationByTypeAndPlantId(Notification.Type type, Long userPlantId) {
+        new deleteNotificationByTypeAndIdAsyncTask( notificationDao,type,userPlantId).execute();
+    }
+
+    @Override
     public void addNotification(Notification notification) {
         parseExtraData(notification);
         new addNotificationAsyncTask(notificationDao, notification).execute();
@@ -193,6 +198,24 @@ public class NotificationsRepositoryImpl implements NotificationRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             notificationDao.deleteNotification(notification);
+            return null;
+        }
+    }
+
+    private static class deleteNotificationByTypeAndIdAsyncTask extends AsyncTask<Void, Void, Void> {
+        private NotificationDao notificationDao;
+        private Notification.Type type;
+        private Long userPlantId;
+
+        private deleteNotificationByTypeAndIdAsyncTask(NotificationDao notificationDao, Notification.Type type, Long userPlantId) {
+            this.userPlantId = userPlantId;
+            this.type = type;
+            this.notificationDao = notificationDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            notificationDao.deleteNotificationByTypeAndUserPlantId(type, userPlantId);
             return null;
         }
     }
