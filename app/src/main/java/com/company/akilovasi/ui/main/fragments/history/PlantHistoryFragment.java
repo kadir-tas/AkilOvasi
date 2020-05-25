@@ -183,7 +183,7 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
     // This method works only when the plant "history" button is clicked
     private void initHistoryRecyclerView(){
         Log.d(TAG, "initHistoryRecyclerView: ");
-
+        currentPage = 0;
         RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
