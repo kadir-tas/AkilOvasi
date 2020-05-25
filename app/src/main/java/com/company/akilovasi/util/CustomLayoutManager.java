@@ -97,6 +97,7 @@ public class CustomLayoutManager extends GridLayoutManager {
     @Override
     public void onAttachedToWindow(RecyclerView view) {
         recyclerView = view;
+        recyclerView.smoothScrollToPosition(0);
         super.onAttachedToWindow(view);
     }
 
@@ -125,10 +126,6 @@ public class CustomLayoutManager extends GridLayoutManager {
             return 0;
         }
     }
-
-
-
-
 
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state,
