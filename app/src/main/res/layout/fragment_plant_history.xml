@@ -89,10 +89,12 @@
                             android:id="@+id/plantStatus"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingEnd="10dp"
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
-                            android:text=": İyi"
+                            android:text="İyi"
                             android:textStyle="normal" />
 
                         <ImageView
@@ -100,17 +102,17 @@
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:layout_marginEnd="10dp"
                             android:src="@drawable/date" />
 
                         <TextView
                             android:id="@+id/plantLastAnalysisDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingEnd="10dp"
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
-                            android:text="@{String.valueOf(plant.lastAnalysisDate)}"
                             android:textStyle="normal" />
 
 
@@ -121,7 +123,7 @@
                         <ImageView
                             android:id="@+id/imageSoilHum"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:src="@drawable/water" />
 
@@ -129,6 +131,8 @@
                             android:id="@+id/soilHum"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingEnd="10dp"
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
@@ -146,6 +150,8 @@
                             android:id="@+id/plantPh"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingEnd="10dp"
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
@@ -167,6 +173,8 @@
                             android:id="@+id/pasdlant"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingEnd="10dp"
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
@@ -184,6 +192,8 @@
                             android:id="@+id/environmentLight"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingEnd="10dp"
                             android:ellipsize="end"
                             android:maxEms="7"
                             android:maxLines="1"
