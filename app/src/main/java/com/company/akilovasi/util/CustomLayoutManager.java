@@ -1,14 +1,18 @@
 package com.company.akilovasi.util;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.util.Log;
 import android.view.View;
 
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import kotlin.jvm.JvmOverloads;
+
+import static androidx.recyclerview.widget.LinearSmoothScroller.SNAP_TO_START;
 
 public class CustomLayoutManager extends GridLayoutManager {
     private static final String TAG = "CustomLayoutManager";
@@ -36,11 +40,11 @@ public class CustomLayoutManager extends GridLayoutManager {
             isPaddingSet = true;
             float scale = recyclerView.getResources().getDisplayMetrics().density;
             int dpAsPixels = (int) (((recyclerView.getHeight()/4))*scale + 0.5f);
-            recyclerView.setPadding(0,dpAsPixels,0,0);
+            recyclerView.setPadding(0,dpAsPixels,0,dpAsPixels/2);
         }
         int scrolled = super.scrollVerticallyBy(dy, recycler, state);
-        float midpoint = getHeight() / 1.05f;
-        float d0 = 0.f;
+        float midpoint = getHeight() / 1.5f;
+        float d0 = 0.1f;
         float d1 = mShrinkDistance * midpoint * 2;
         float s0 = 1.f;
         float s1 = 0.f - mShrinkAmount;
@@ -48,10 +52,10 @@ public class CustomLayoutManager extends GridLayoutManager {
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
 //            if (computeVerticalScrollOffset(state) == 0) {
-//
+//              0th item
 //            }
             float childMidpoint =
-                    (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.f;
+                    (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.5f;
             float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
             float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
             child.setScaleX(scale);
@@ -66,8 +70,8 @@ public class CustomLayoutManager extends GridLayoutManager {
     @Override
     public void onLayoutCompleted(RecyclerView.State state) {
 
-        float midpoint = getHeight() / 1.05f;
-        float d0 = 0.f;
+        float midpoint = getHeight() / 1.5f;
+        float d0 = 0.1f;
         float d1 = mShrinkDistance * midpoint * 2;
         float s0 = 1.f;
         float s1 = 0.f - mShrinkAmount;
@@ -75,7 +79,7 @@ public class CustomLayoutManager extends GridLayoutManager {
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
 
-            float childMidpoint = (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.f;
+            float childMidpoint = (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.5f;
             float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
             float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
 
@@ -120,6 +124,35 @@ public class CustomLayoutManager extends GridLayoutManager {
         } else {
             return 0;
         }
+    }
 
+
+
+
+
+    @Override
+    public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state,
+                                       int position) {
+        RecyclerView.SmoothScroller smoothScroller = new TopSnappedSmoothScroller(recyclerView.getContext());
+        smoothScroller.setTargetPosition(position);
+        startSmoothScroll(smoothScroller);
+    }
+
+    private class TopSnappedSmoothScroller extends LinearSmoothScroller {
+        public TopSnappedSmoothScroller(Context context) {
+            super(context);
+
+        }
+
+        @Override
+        public PointF computeScrollVectorForPosition(int targetPosition) {
+            return CustomLayoutManager.this
+                    .computeScrollVectorForPosition(targetPosition);
+        }
+
+        @Override
+        protected int getVerticalSnapPreference() {
+            return SNAP_TO_START;
+        }
     }
 }

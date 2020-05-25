@@ -274,7 +274,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         //TODO: this part becomes unmanagle
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
@@ -294,7 +293,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
             Log.d(TAG, "onBackPressed: f4");
             dataBinding.main.closeDrawer(Gravity.LEFT);
             getSupportFragmentManager().beginTransaction().remove(f4).commit();
-        }else{
+        }else if(dataBinding.main.isDrawerOpen(Gravity.LEFT)){
+            dataBinding.main.closeDrawer(Gravity.LEFT);
+        }
+        else{
             Log.d(TAG, "onBackPressed: else");
             super.onBackPressed();
         }
