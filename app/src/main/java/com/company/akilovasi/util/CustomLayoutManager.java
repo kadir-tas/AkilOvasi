@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,7 +63,32 @@ public class CustomLayoutManager extends GridLayoutManager {
         return scrolled;
     }
 
+    @Override
+    public void onLayoutCompleted(RecyclerView.State state) {
 
+        float midpoint = getHeight() / 1.05f;
+        float d0 = 0.f;
+        float d1 = mShrinkDistance * midpoint * 2;
+        float s0 = 1.f;
+        float s1 = 0.f - mShrinkAmount;
+
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+
+            float childMidpoint = (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.f;
+            float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
+            float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
+
+            child.setScaleX(scale);
+            child.setScaleY(scale);
+
+            if (i % 2 == 0) child.setPivotX((getWidth() / 2.f) - scale);
+            else child.setPivotX(scale);
+
+            child.setPivotY(getHeight());
+        }
+        super.onLayoutCompleted(state);
+    }
 
     @Override
     public void onAttachedToWindow(RecyclerView view) {
