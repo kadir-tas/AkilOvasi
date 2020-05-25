@@ -133,6 +133,12 @@ public class PlantHistoryFragment extends BaseFragment<PlantHistoryFragmentViewM
 
     private void setFragmentHeader() {
         dataBinding.setPlant(plant);
+        if(plant.getLastAnalysisDate() == null){
+            dataBinding.plantLastAnalysisDate.setText(R.string.last_analysis_default_value);
+        }
+        else{
+            dataBinding.plantLastAnalysisDate.setText(plant.getLastAnalysisDate().toString());
+        }
     }
 
     private void requestNextPage() {

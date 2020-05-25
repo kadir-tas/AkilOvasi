@@ -67,6 +67,7 @@
     <string name="plant_problems_str">Gerekli Müdahaleler</string>
     <string name="interfered_button_string">Müdahale Edildi</string>
     <string name="cancel">İptal et</string>
+    <string name="last_analysis_default_value">Analiz yapılmadı</string>
     <string name="channel_name">akilovasi-notfication</string>
     <string name="channel_description">Notifcations about plant analysis results, reminders and offers</string>
 

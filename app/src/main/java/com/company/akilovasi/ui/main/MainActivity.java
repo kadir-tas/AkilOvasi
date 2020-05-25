@@ -100,6 +100,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         dataBinding.leftMenu.setLogoutClick(this);
         dataBinding.leftMenu.setProfileClick(this);
         dataBinding.leftMenu.setNotificationClick(this);
+        dataBinding.content.wrapper.bottomAppbar.setNavigationOnClickListener(v -> dataBinding.main.openDrawer(Gravity.LEFT));
         initBannerRecyclerView();
         initPlantRecyclerView();
         subscribeObservers();

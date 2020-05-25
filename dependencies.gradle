@@ -35,7 +35,7 @@ ext{
     lifecycleExtensions= '1.1.1'
 
     //Material
-    androidMaterial= '1.1.0'
+    androidMaterial= '1.2.0-alpha06'
 
     //View
     recylerviewVersion = '1.0.0'
