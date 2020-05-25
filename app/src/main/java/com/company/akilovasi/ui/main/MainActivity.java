@@ -56,6 +56,7 @@ import com.company.akilovasi.util.CustomLayoutManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -63,7 +64,7 @@ import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
 import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
 
 
-public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick , NotificationClick , NotificationItemOnClick {
+public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick, NotificationClick, NotificationItemOnClick {
 
     private static final String TAG = "MainActivity";
     private BannerAdapter mBannerAdapter;
@@ -71,6 +72,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     private RecyclerView mBannerRecyclerView;
     private RecyclerView mPlantsRecyclerView;
+
+    private int oldPos = 0;
 
     @Inject
     @SecretPrefs
@@ -115,16 +118,16 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         registerFCMNotificationTopic();
     }
 
-    private void notifyRemoteWithFcmToken(){
+    private void notifyRemoteWithFcmToken() {
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
-            if(!task.isSuccessful() || task.getResult() == null){
+            if (!task.isSuccessful() || task.getResult() == null) {
                 Log.e(TAG, "Firebase Error: " + task.getException());
                 return;
             }
 
             //Register fcm token for our backend server so that it knows which device to send push notifications
-            viewModel.updateFcmToken( task.getResult().getToken() ).observe(this,responseResource -> {
-                switch (responseResource.status){
+            viewModel.updateFcmToken(task.getResult().getToken()).observe(this, responseResource -> {
+                switch (responseResource.status) {
                     case SUCCESS:
                         Log.d(TAG, "Updated FCm Token:");
                         break;
@@ -137,7 +140,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         });
     }
 
-    private void registerFCMNotificationTopic(){
+    private void registerFCMNotificationTopic() {
         //Subscribe to this topic so whenever general push notification is fried from this topic we can get the message
         FirebaseMessaging.getInstance().subscribeToTopic("app-notifications")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -153,10 +156,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 });
     }
 
-    private void pollNotifications(){
+    private void pollNotifications() {
         MediatorLiveData<Resource<Response<List<Notification>>>> liveData = viewModel.pollNotifications();
         liveData.observe(this, responseResource -> {
-            switch (responseResource.status){
+            switch (responseResource.status) {
                 case SUCCESS:
                     liveData.removeObservers(this);
                     Log.d(TAG, "pollNotifications: Recent notifications has been polled");
@@ -232,18 +235,29 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
-        mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this,2, CustomLayoutManager.VERTICAL, false));
+        mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mPlantsRecyclerView);
         mPlantsRecyclerView.setHasFixedSize(true);
 
+        mPlantsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                View v = snapHelper.findSnapView(recyclerView.getLayoutManager());
+                if (v != null) {
+                    oldPos = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(v);
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+        });
         mPlantAdapter = new PlantAdapter(this, picasso);
         mPlantsRecyclerView.setAdapter(mPlantAdapter);
     }
 
     @Override
     public void onBannerClicked(Banner banner) {
-        if(banner.getBannerLinkType().equals("link")){
+        if (banner.getBannerLinkType().equals("link")) {
             String url = banner.getBannerLink();
             if (!url.startsWith("http://") && !url.startsWith("https://")) url = "http://" + url;
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -253,18 +267,25 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
 
     @Override
-    public void onPlantClick(Plant plant) {
-        Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
-        if (f != null) {
-            getSupportFragmentManager().beginTransaction().remove(f).commit();
+    public void onPlantClick(Plant plant, int position) {
+
+        if (position != oldPos && position != oldPos + 1) {
+            mPlantsRecyclerView.smoothScrollToPosition(position);
+            oldPos = position;
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(plant), PlantHistoryFragment.TAG).commit();
+        else {
+            Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+            if (f != null) {
+                getSupportFragmentManager().beginTransaction().remove(f).commit();
+            }
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(plant), PlantHistoryFragment.TAG).commit();
+        }
     }
 
     @Override
     public void onPlantImageClick(Long userPlantId) {
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
-        if(f != null){
+        if (f != null) {
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         }
 
@@ -274,16 +295,15 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         //TODO: this part becomes unmanagle
         Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         Fragment f3 = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
         Fragment f4 = getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
-        if(f3 != null){
+        if (f3 != null) {
             Log.d(TAG, "onBackPressed: f3");
             getSupportFragmentManager().beginTransaction().remove(f3).commit();
-        }else if (f != null) {
+        } else if (f != null) {
             Log.d(TAG, "onBackPressed: f");
             getSupportFragmentManager().beginTransaction().remove(f).commit();
         } else if (f2 != null) {
@@ -294,7 +314,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
             Log.d(TAG, "onBackPressed: f4");
             dataBinding.main.closeDrawer(Gravity.LEFT);
             getSupportFragmentManager().beginTransaction().remove(f4).commit();
-        }else{
+        } else if (dataBinding.main.isDrawerOpen(Gravity.LEFT)) {
+            dataBinding.main.closeDrawer(Gravity.LEFT);
+        } else {
             Log.d(TAG, "onBackPressed: else");
             super.onBackPressed();
         }
@@ -358,7 +380,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         Log.d(TAG, "onNotificationButtonClicked: ");
         Fragment f = getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
         if (f == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
         }
@@ -367,13 +389,13 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onNotificationItemClick(Notification notification) {
         Log.d(TAG, "onNotificationItemClick: ");
-        switch (notification.getType()){
+        switch (notification.getType()) {
             case Default:
                 //Do nothing
                 break;
             case RemindAnalysis:
                 Intent intent = new Intent(this, PlantAnalysisActivity.class);
-                intent.putExtra( PlantAnalysisActivity.PARAM_USER_PLANT, notification.getUserPlantId().toString());
+                intent.putExtra(PlantAnalysisActivity.PARAM_USER_PLANT, notification.getUserPlantId().toString());
                 /*Sending as string because PlantAnalysisActivity checks for string input*/
                 startActivity(intent);
                 finish();
@@ -394,8 +416,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onNotificationDismissClick(Notification notification) {
         Log.d(TAG, "onNotificationDismissClick: ");
-        NotificationFragment f = (NotificationFragment)getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
-        if(f == null) return;
+        NotificationFragment f = (NotificationFragment) getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
+        if (f == null) return;
         AsyncTask.execute(() -> f.viewModel.deleteNotification(notification));
     }
 }

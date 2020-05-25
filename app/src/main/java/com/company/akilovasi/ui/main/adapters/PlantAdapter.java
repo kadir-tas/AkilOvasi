@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.main.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlantAdapter extends BaseAdapter<PlantAdapter.PlantViewHolder, Plant> {
-
+    private static final String TAG = "PlantAdapter";
     private List<Plant> plants;
 
     private ItemPlantClick itemPlantClick;
@@ -51,7 +52,7 @@ public class PlantAdapter extends BaseAdapter<PlantAdapter.PlantViewHolder, Plan
 
     @Override
     public void onBindViewHolder(PlantAdapter.PlantViewHolder viewHolder, int i) {
-        viewHolder.onBind(plants.get(i), itemPlantClick);
+        viewHolder.onBind(plants.get(i), itemPlantClick,i);
     }
 
     @Override
@@ -70,8 +71,10 @@ public class PlantAdapter extends BaseAdapter<PlantAdapter.PlantViewHolder, Plan
             this.itemRvPlantMainBinding = itemRvPlantMainBinding;
         }
 
-        public void onBind(Plant plant, ItemPlantClick itemPlantClick) {
+        public void onBind(Plant plant, ItemPlantClick itemPlantClick,int position) {
+            Log.d(TAG, "onBind: " + getAdapterPosition() + "    " + position);
             itemRvPlantMainBinding.setPlant(plant);
+            itemRvPlantMainBinding.setPosition(getAdapterPosition());
             itemRvPlantMainBinding.setItemPlantClick(itemPlantClick);
             itemRvPlantMainBinding.executePendingBindings();
         }
