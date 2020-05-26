@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private RecyclerView mPlantsRecyclerView;
 
     private int oldPos = 0;
+    private boolean isAnimationDirectionToStart = true;
 
     @Inject
     @SecretPrefs
@@ -93,6 +94,11 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public int getLayoutRes() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected DataBindingComponent getDataBindingComponent() {
+        return null;
     }
 
     @Override
@@ -116,6 +122,84 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
         notifyRemoteWithFcmToken();
         registerFCMNotificationTopic();
+    }
+
+    private void subscribeObservers() {
+        viewModel.getAllActiveBanners()
+                .observe(this, listResource -> {
+                    Log.v("MSGG", listResource.message + "");
+                    Log.v("MSGG", listResource.data + "");
+                    Log.v("MSGG", listResource.status + "");
+                    mBannerAdapter.setData(listResource.data);
+                    viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
+                    plantsLoaded = true;
+                    if (bannersLoaded) {
+                        dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                    }
+
+                });
+
+        viewModel.getAllPlants()
+                .observe(this, listResource -> {
+                    if (listResource.data != null && listResource.data.size() == 0) {
+                        dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.VISIBLE);
+                        dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.INVISIBLE);
+                        bannersLoaded = true;
+                        if (plantsLoaded) {
+                            dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                        }
+                    } else if (listResource.data != null) {
+                        dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.VISIBLE);
+                        dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.INVISIBLE);
+                        mPlantAdapter.setData(listResource.data);
+                        viewModel.getAllPlants().removeObservers(MainActivity.this);
+                        dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                    }
+                });
+    }
+
+    /**
+     * Init main banners recyclerview
+     */
+    private void initBannerRecyclerView() {
+
+        mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
+        mBannerRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mBannerRecyclerView);
+        mBannerRecyclerView.setHasFixedSize(true);
+
+        mBannerAdapter = new BannerAdapter(this, picasso);
+        mBannerRecyclerView.setAdapter(mBannerAdapter);
+    }
+
+    /**
+     * Init Main user plants recyclerview
+     */
+    private void initPlantRecyclerView() {
+
+        mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
+        mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mPlantsRecyclerView);
+        mPlantsRecyclerView.setHasFixedSize(true);
+
+        //Keeping the last item position to manage the onclick of the plant. See onPlantClick to understand this logic
+        mPlantsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                View v = snapHelper.findSnapView(recyclerView.getLayoutManager());
+                if (v != null) {
+                    oldPos = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(v);
+                }
+                if(dataBinding.content.wrapper.motionLayout.getProgress() < 0.3){
+                    recyclerView.smoothScrollToPosition(0);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+        mPlantAdapter = new PlantAdapter(this, picasso);
+        mPlantsRecyclerView.setAdapter(mPlantAdapter);
     }
 
     private void notifyRemoteWithFcmToken() {
@@ -175,87 +259,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     }
 
     @Override
-    protected DataBindingComponent getDataBindingComponent() {
-        return null;
-    }
-
-    private void subscribeObservers() {
-        viewModel.getAllActiveBanners()
-                .observe(this, listResource -> {
-                    Log.v("MSGG", listResource.message + "");
-                    Log.v("MSGG", listResource.data + "");
-                    Log.v("MSGG", listResource.status + "");
-                    mBannerAdapter.setData(listResource.data);
-                    viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
-                    plantsLoaded = true;
-                    if (bannersLoaded) {
-                        dataBinding.waitScreen.setVisibility(View.INVISIBLE);
-                    }
-
-                });
-
-        viewModel.getAllPlants()
-                .observe(this, listResource -> {
-                    if (listResource.data != null && listResource.data.size() == 0) {
-                        dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.VISIBLE);
-                        dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.INVISIBLE);
-                        bannersLoaded = true;
-                        if (plantsLoaded) {
-                            dataBinding.waitScreen.setVisibility(View.INVISIBLE);
-                        }
-                    } else if (listResource.data != null) {
-                        dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.VISIBLE);
-                        dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.INVISIBLE);
-                        mPlantAdapter.setData(listResource.data);
-                        viewModel.getAllPlants().removeObservers(MainActivity.this);
-                        dataBinding.waitScreen.setVisibility(View.INVISIBLE);
-                    }
-                });
-    }
-
-
-    /**
-     * Init main banners recyclerview
-     */
-    private void initBannerRecyclerView() {
-
-        mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
-        mBannerRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(mBannerRecyclerView);
-        mBannerRecyclerView.setHasFixedSize(true);
-
-        mBannerAdapter = new BannerAdapter(this, picasso);
-        mBannerRecyclerView.setAdapter(mBannerAdapter);
-    }
-
-    /**
-     * Init Main user plants recyclerview
-     */
-    private void initPlantRecyclerView() {
-
-        mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
-        mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(mPlantsRecyclerView);
-        mPlantsRecyclerView.setHasFixedSize(true);
-
-        mPlantsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                View v = snapHelper.findSnapView(recyclerView.getLayoutManager());
-                if (v != null) {
-                    oldPos = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(v);
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-        });
-        mPlantAdapter = new PlantAdapter(this, picasso);
-        mPlantsRecyclerView.setAdapter(mPlantAdapter);
-    }
-
-    @Override
     public void onBannerClicked(Banner banner) {
         if (banner.getBannerLinkType().equals("link")) {
             String url = banner.getBannerLink();
@@ -269,6 +272,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onPlantClick(Plant plant, int position) {
 
+        //Current layout is grid layout with 2 span. Thus, I checked also the oldPos + 1. Because each snap contains 2 items
         if (position != oldPos && position != oldPos + 1) {
             mPlantsRecyclerView.smoothScrollToPosition(position);
             oldPos = position;

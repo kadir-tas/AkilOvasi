@@ -36,12 +36,13 @@ public class CustomLayoutManager extends GridLayoutManager {
     @Override
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
 
-        if(!isPaddingSet){
-            isPaddingSet = true;
-            float scale = recyclerView.getResources().getDisplayMetrics().density;
-            int dpAsPixels = (int) (((recyclerView.getHeight()/4))*scale + 0.5f);
-            recyclerView.setPadding(0,dpAsPixels,0,dpAsPixels/2);
-        }
+//        if(!isPaddingSet){
+//            Log.d(TAG, "scrollVerticallyBy: " + "BURADA OLMAMAN LAZIMMMM");
+//            isPaddingSet = true;
+//            float scale = recyclerView.getResources().getDisplayMetrics().density;
+//            int dpAsPixels = (int) (((recyclerView.getHeight()/4))*scale + 0.5f);
+//            recyclerView.setPadding(0,dpAsPixels,0,dpAsPixels/2);
+//        }
         int scrolled = super.scrollVerticallyBy(dy, recycler, state);
         float midpoint = getHeight() / 1.5f;
         float d0 = 0.1f;
@@ -55,12 +56,15 @@ public class CustomLayoutManager extends GridLayoutManager {
 //              0th item
 //            }
             float childMidpoint =
-                    (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.5f;
+                    (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.2f;
             float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
             float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
+            if(scale < 0){
+                scale = 0;
+            }
             child.setScaleX(scale);
             child.setScaleY(scale);
-            if (i % 2 == 0) child.setPivotX((getWidth() / 2) - scale);
+            if (i % 2 == 0) child.setPivotX((getWidth() / 2.f) - scale);
             else child.setPivotX(scale);
             child.setPivotY(getHeight());
         }
@@ -70,6 +74,13 @@ public class CustomLayoutManager extends GridLayoutManager {
     @Override
     public void onLayoutCompleted(RecyclerView.State state) {
 
+//        if(!isPaddingSet){
+//            Log.d(TAG, "scrollVerticallyBy: " + "BURADA OLMAMAN LAZIMMMM");
+//            isPaddingSet = true;
+//            float scale = recyclerView.getResources().getDisplayMetrics().density;
+//            int dpAsPixels = (int) (((recyclerView.getHeight()/4))*scale + 0.5f);
+//            recyclerView.setPadding(0,dpAsPixels,0,dpAsPixels/2);
+//        }
         float midpoint = getHeight() / 1.5f;
         float d0 = 0.1f;
         float d1 = mShrinkDistance * midpoint * 2;
@@ -79,10 +90,12 @@ public class CustomLayoutManager extends GridLayoutManager {
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
 
-            float childMidpoint = (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.5f;
+            float childMidpoint = (getDecoratedBottom(child) + getDecoratedTop(child)) / 2.2f;
             float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
             float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
-
+            if(scale < 0){
+                scale = 0;
+            }
             child.setScaleX(scale);
             child.setScaleY(scale);
 
@@ -101,31 +114,31 @@ public class CustomLayoutManager extends GridLayoutManager {
         super.onAttachedToWindow(view);
     }
 
-    @Override
-    public int scrollHorizontallyBy(int dx, RecyclerView.Recycler recycler, RecyclerView.State state) {
-        int orientation = getOrientation();
-        if (orientation == HORIZONTAL) {
-            int scrolled = super.scrollHorizontallyBy(dx, recycler, state);
-
-            float midpoint = getWidth() / 2.f;
-            float d0 = 0.f;
-            float d1 = mShrinkDistance * midpoint;
-            float s0 = 1.f;
-            float s1 = 1.f - mShrinkAmount;
-            for (int i = 0; i < getChildCount(); i++) {
-                View child = getChildAt(i);
-                float childMidpoint =
-                        (getDecoratedRight(child) + getDecoratedLeft(child)) / 2.f;
-                float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
-                float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
-                child.setScaleX(scale);
-                child.setScaleY(scale);
-            }
-            return scrolled;
-        } else {
-            return 0;
-        }
-    }
+//    @Override
+//    public int scrollHorizontallyBy(int dx, RecyclerView.Recycler recycler, RecyclerView.State state) {
+//        int orientation = getOrientation();
+//        if (orientation == HORIZONTAL) {
+//            int scrolled = super.scrollHorizontallyBy(dx, recycler, state);
+//
+//            float midpoint = getWidth() / 2.f;
+//            float d0 = 0.f;
+//            float d1 = mShrinkDistance * midpoint;
+//            float s0 = 1.f;
+//            float s1 = 1.f - mShrinkAmount;
+//            for (int i = 0; i < getChildCount(); i++) {
+//                View child = getChildAt(i);
+//                float childMidpoint =
+//                        (getDecoratedRight(child) + getDecoratedLeft(child)) / 2.f;
+//                float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
+//                float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
+//                child.setScaleX(scale);
+//                child.setScaleY(scale);
+//            }
+//            return scrolled;
+//        } else {
+//            return 0;
+//        }
+//    }
 
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state,
