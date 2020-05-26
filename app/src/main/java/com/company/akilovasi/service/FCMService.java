@@ -110,10 +110,14 @@ public class FCMService extends com.google.firebase.messaging.FirebaseMessagingS
                     case "message":
                         sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
                         break;
-                    case "remind-analysis":
+                    case "remind_analysis":
                         //TODO: Null Check
                         notificationRepository.pollNotifications(secretPreferences.getLong(ApiConstants.USER_ID, -1));
                         sendRemindAnalysisNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(),remoteMessage.getData().get("userPlantId"));
+                        break;
+                    case "analysis_result":
+                        break;
+                    case "remind_care":
                         break;
                     default:
                         Log.e(TAG, "onMessageReceived: unidentified case for intent " + intent);

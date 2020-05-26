@@ -14,6 +14,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_margin="10dp"
+                android:id="@+id/remove"
+                android:src="@drawable/ic_trash"
+                android:background="@color/transparent"
+                android:layout_gravity="end|center"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_gravity="start"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginVertical="10dp"
+                android:text="@string/notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </FrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/notifications_rv"
@@ -26,19 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:visibility="@{ adapter.isEmpty ? View.VISIBLE : View.GONE }"
             android:text="@string/no_notification_available" />
 
-        <Button
-            android:id="@+id/dummy"
-            android:text="create_dummy_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/dummy_remove"
-            android:text="remove_all_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </layout>

@@ -70,5 +70,6 @@
     <string name="last_analysis_default_value">Analiz yapılmadı</string>
     <string name="channel_name">akilovasi-notfication</string>
     <string name="channel_description">Notifcations about plant analysis results, reminders and offers</string>
+    <string name="clear_notifications">Bildirimleri Kaldır</string>
 
 </resources>

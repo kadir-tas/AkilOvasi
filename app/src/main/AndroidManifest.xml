@@ -29,10 +29,27 @@
 
         <activity android:name=".ui.camera.CameraActivity" />
         <activity android:name=".ui.plant.PlantCategoryActivity" />
-        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="Default"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="GeneralNotification"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="AnalysisResult"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="RemindCare"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.plantanalysis.PlantAnalysisActivity">
             <intent-filter>
-                <action android:name="remind-analysis"/>
+                <action android:name="RemindAnalysis"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

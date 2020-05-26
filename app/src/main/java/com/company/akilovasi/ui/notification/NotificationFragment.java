@@ -72,9 +72,8 @@ public class NotificationFragment extends BaseFragment<NotificationViewModel , F
         adapter = new NotificationRvAdapter();
         adapter.notificationItemOnClick = notificationItemOnClick;
         dataBinding.setAdapter(adapter);
-
-        dataBinding.dummy.setOnClickListener(v -> viewModel.produceDummyData());
-        dataBinding.dummyRemove.setOnClickListener(v ->  viewModel.testRemoveAll());
+        dataBinding.emptyView.setVisibility( View.VISIBLE );
+        dataBinding.remove.setOnClickListener(v ->  viewModel.removeAllNotifications());
 
         new ItemTouchHelper(new SwipeController() {
             @Override
@@ -85,6 +84,8 @@ public class NotificationFragment extends BaseFragment<NotificationViewModel , F
             }
         }).attachToRecyclerView(dataBinding.notificationsRv);
         viewModel.getNotifications().observe(getViewLifecycleOwner(), notifications -> {
+            if(notifications.size() > 0) dataBinding.emptyView.setVisibility(View.INVISIBLE);
+            else dataBinding.emptyView.setVisibility(View.VISIBLE);
             dataBinding.getAdapter().fitNotifications(notifications);
         });
     }

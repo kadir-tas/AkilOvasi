@@ -20,31 +20,23 @@
         app:cardCornerRadius="25dp"
         app:cardElevation="1dp"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="wrap_content">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <FrameLayout
                 android:onClick="@{ () -> onclick.onNotificationItemClick( notification )}"
                 android:orientation="horizontal"
-                android:weightSum="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageView
-                    android:layout_weight="0.15"
-                    android:layout_gravity="start|center"
-                    android:src="@drawable/ic_info"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:contentDescription="TODO" />
 
                 <LinearLayout
+                    android:layout_margin="10dp"
                     android:orientation="vertical"
-                    android:layout_weight="0.7"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
                     <TextView
                         android:text="@{notification.date.toGMTString()}"
                         android:textStyle="bold"
@@ -59,21 +51,22 @@
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:hint="@string/notifications"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
 
                 <ImageButton
-                    android:layout_weight="0.15"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center|end"
                     android:onClick="@{() -> onclick.onNotificationDismissClick(notification)}"
                     android:src="@drawable/ic_cross"
                     android:background="@color/transparent"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:contentDescription="TODO" />
-            </LinearLayout>
+            </FrameLayout>
 
 
 
