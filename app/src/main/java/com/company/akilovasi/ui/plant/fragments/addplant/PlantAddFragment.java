@@ -33,6 +33,8 @@ import com.company.akilovasi.databinding.FragmentPlantAddBinding;
 import com.company.akilovasi.databinding.components.BindingComponent;
 import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.camera.CameraActivity;
+import com.company.akilovasi.ui.main.MainActivity;
+import com.company.akilovasi.ui.plant.PlantCategoryActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
@@ -295,7 +297,10 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 case SUCCESS:
                     Log.d(TAG, "saveForm: Succsess");
                     plantAdded();
-                    getActivity().onBackPressed();
+                    //TODO: Create Single plant request api so that after adding new plant there will be no need to go back to main activity
+                    //TODO: This a work around it will be fixed
+                    startActivity(new Intent( getActivity(),MainActivity.class));
+                    getActivity().finish();
                     break;
                 case ERROR:
                     Log.d(TAG, "saveForm: error");
