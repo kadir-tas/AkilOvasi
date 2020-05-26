@@ -272,7 +272,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     public void onPlantClick(Plant plant, int position) {
 
-        //Current layout is grid layout with 2 span. Thus, I checked also the oldPos + 1. Because each snap contains 2 items
+        //This if check for snap to clicked item.
+        // Current layout is grid layout with 2 span. Thus, I checked also the oldPos + 1. Because each snap contains 2 items
         if (position != oldPos && position != oldPos + 1) {
             mPlantsRecyclerView.smoothScrollToPosition(position);
             oldPos = position;

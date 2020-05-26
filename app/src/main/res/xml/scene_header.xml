@@ -9,24 +9,11 @@
         motion:motionInterpolator="linear">
         <OnSwipe
             motion:onTouchUp="autoComplete"
-            motion:maxAcceleration="40"
+            motion:maxAcceleration="80"
             motion:dragDirection="dragUp"
             motion:touchAnchorId="@id/recyclerView"
             motion:touchAnchorSide="bottom"/>
     </Transition>
-
-<!--    <Transition-->
-<!--        motion:constraintSetEnd="@+id/start"-->
-<!--        motion:constraintSetStart="@+id/end"-->
-<!--        motion:duration="1000"-->
-<!--        motion:motionInterpolator="linear">-->
-<!--        <OnSwipe-->
-<!--            motion:onTouchUp="autoComplete"-->
-<!--            motion:maxAcceleration="40"-->
-<!--            motion:dragDirection="dragDown"-->
-<!--            motion:touchAnchorId="@id/recyclerView"-->
-<!--            motion:touchAnchorSide="bottom"/>-->
-<!--    </Transition>-->
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
