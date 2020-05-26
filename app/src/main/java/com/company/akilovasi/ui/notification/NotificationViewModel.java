@@ -42,7 +42,7 @@ public class NotificationViewModel extends ViewModel {
         notificationRepository.addNotification(notification);
     }
 
-    public void testRemoveAll(){
+    public void removeAllNotifications(){
         notificationRepository.deleteAllNotifications();
     }
 
