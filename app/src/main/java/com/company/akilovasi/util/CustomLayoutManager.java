@@ -47,7 +47,7 @@ public class CustomLayoutManager extends GridLayoutManager {
         float d0 = 0.1f;
         float d1 = mShrinkDistance * midpoint * 2;
         //S0 and S1 represent the Point of view of items (small value of s0 means looking to items from a more upright perspective)
-        float s0 = 0.8f;
+        float s0 = 0.7f;
         float s1 = -0.1f - mShrinkAmount;
 
         for (int i = 0; i < getChildCount(); i++) {
@@ -66,7 +66,7 @@ public class CustomLayoutManager extends GridLayoutManager {
             child.setScaleY(scale*1.35f);
             if (i % 2 == 0) child.setPivotX((getWidth() / 2.f) - scale);
             else child.setPivotX(scale/2);
-            child.setPivotY(getHeight()/1.4f);
+            child.setPivotY(getHeight()/1.3f);
         }
         return scrolled;
     }
@@ -83,7 +83,7 @@ public class CustomLayoutManager extends GridLayoutManager {
         float midpoint = getHeight() / 1.5f;
         float d0 = 0.1f;
         float d1 = mShrinkDistance * midpoint * 2;
-        float s0 = 0.8f;
+        float s0 = 0.7f;
         float s1 = -0.1f - mShrinkAmount;
 
         for (int i = 0; i < getChildCount(); i++) {
@@ -101,7 +101,7 @@ public class CustomLayoutManager extends GridLayoutManager {
             if (i % 2 == 0) child.setPivotX((getWidth() / 2.f) - scale);
             else child.setPivotX(scale/2);
 
-            child.setPivotY(getHeight()/1.4f);
+            child.setPivotY(getHeight()/1.3f);
         }
         super.onLayoutCompleted(state);
     }
