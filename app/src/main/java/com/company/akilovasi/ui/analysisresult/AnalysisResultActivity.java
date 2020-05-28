@@ -86,14 +86,13 @@ public class AnalysisResultActivity extends BaseActivity<AnalysisResultViewModel
     @Override
     protected void onStop() {
         super.onStop();
-        viewModel.removeByUserPlantIdAndType(Notification.Type.AnalysisResult , mPlantHistory.getUserPlantId()); /*Remove the appropriate notifications*/
+        viewModel.removeByUserPlantIdAndType(Notification.Type.AnalysisResult , mPlantHistory.getUserPlantId()); /*Remove the appropriate notifications upon exiting*/
     }
 
     private void setBindings(){
         dataBinding.setPlantHistory(mPlantHistory);
         dataBinding.setDownloadPdfClick(this);
         dataBinding.setLoading(false);
-        viewModel.removeByUserPlantIdAndType(Notification.Type.AnalysisResult , mPlantHistory.getUserPlantId()); /*Remove the appropriate notifications*/
     }
 
     @Override
