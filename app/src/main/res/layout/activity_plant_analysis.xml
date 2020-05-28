@@ -24,6 +24,40 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <FrameLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_margin="10dp"
+                        android:id="@+id/go_back"
+                        android:src="@drawable/ic_back"
+                        android:background="@color/transparent"
+                        android:layout_gravity="end|center"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_margin="10dp"
+                        android:layout_gravity="start"
+                        android:textSize="30sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginVertical="10dp"
+                        android:text="@string/anlaysis_screen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </FrameLayout>
+                <View
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+
 
                 <LinearLayout
                     android:layout_margin="10dp"

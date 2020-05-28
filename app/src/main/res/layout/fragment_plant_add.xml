@@ -21,13 +21,47 @@
     android:background="@color/colorPrimary">
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_margin="10dp"
+                    android:id="@+id/go_back"
+                    android:src="@drawable/ic_back"
+                    android:background="@color/transparent"
+                    android:layout_gravity="end|center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="TODO" />
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:layout_gravity="start"
+                    android:textSize="30sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginVertical="10dp"
+                    android:text="@string/new_plant_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </FrameLayout>
+            <View
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -245,11 +279,13 @@
             <Button
                 android:enabled="@{!loading}"
                 android:id="@+id/addNewPlantButton"
-                style="?android:attr/buttonBarButtonStyle"
                 android:layout_gravity="center"
+                android:background="@drawable/rounded_login_button"
                 android:layout_margin="15dp"
                 android:textAllCaps="false"
+                android:textColor="@color/layout_white"
                 android:text="@string/add_plant"
+                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

@@ -15,10 +15,13 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
+import com.company.akilovasi.data.local.entities.AnalysisResult;
 import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.repositories.NotificationRepository;
 import com.company.akilovasi.di.SecretPrefs;
+import com.company.akilovasi.ui.analysisresult.AnalysisResultActivity;
+import com.company.akilovasi.ui.main.MainActivity;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.company.akilovasi.util.AppConstants;
 import com.google.firebase.messaging.RemoteMessage;
@@ -115,8 +118,11 @@ public class FCMService extends com.google.firebase.messaging.FirebaseMessagingS
                         notificationRepository.pollNotifications(secretPreferences.getLong(ApiConstants.USER_ID, -1));
                         sendRemindAnalysisNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(),remoteMessage.getData().get("userPlantId"));
                         break;
-                    case "analysis_result":
-                        break;
+                    case "analysis_result":{
+                        notificationRepository.pollNotifications(secretPreferences.getLong(ApiConstants.USER_ID, -1));
+                        sendAnalysisResultNotification( remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody() , remoteMessage.getData().get("userPlantId") );
+                    }
+                    break;
                     case "remind_care":
                         break;
                     default:
@@ -152,6 +158,26 @@ public class FCMService extends com.google.firebase.messaging.FirebaseMessagingS
                 Log.e(TAG, "createNotificationChannel: notificationManager null");
         }
     }
+
+
+    private void sendAnalysisResultNotification(String title, String content, String userPlantId){
+        createNotificationChannel();
+        Intent intent = new Intent(this, AnalysisResultActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Log.d(TAG, "sendRemindAnalysisNotification: " + userPlantId);
+        intent.putExtra( AnalysisResultActivity.PARAM_USER_PLANT_HISTORY, userPlantId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), AppConstants.CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_info)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+        NotificationManagerCompat.from(getBaseContext()).notify( 1, builder.build() );
+    }
+
 
     private void sendRemindAnalysisNotification(String title, String content, String userPlantId){
         createNotificationChannel();

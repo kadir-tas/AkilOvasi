@@ -44,6 +44,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -98,6 +99,7 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                     Log.d(TAG, "onChanged: " + plantType.getDescription());
                     dataBinding.addNewPlantButton.setOnClickListener(PlantAddFragment.this);
                     dataBinding.takePictureButton.setOnClickListener(PlantAddFragment.this);
+                    dataBinding.goBack.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
                     dataBinding.setLoading(false);
                 }
             }

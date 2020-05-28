@@ -20,15 +20,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageButton
-                android:layout_margin="10dp"
-                android:id="@+id/remove"
-                android:src="@drawable/ic_trash"
-                android:background="@color/transparent"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_gravity="end|center"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="TODO" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_margin="10dp"
+                    android:id="@+id/go_back"
+                    android:src="@drawable/ic_back"
+                    android:background="@color/transparent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="TODO" />
+
+                <ImageButton
+                    android:layout_margin="10dp"
+                    android:id="@+id/remove"
+                    android:src="@drawable/ic_trash"
+                    android:background="@color/transparent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="TODO" />
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_margin="10dp"
@@ -42,6 +60,12 @@
                 android:layout_height="wrap_content"/>
 
         </FrameLayout>
+        <View
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
         <androidx.recyclerview.widget.RecyclerView
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

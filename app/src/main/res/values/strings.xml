@@ -71,5 +71,8 @@
     <string name="channel_name">akilovasi-notfication</string>
     <string name="channel_description">Notifcations about plant analysis results, reminders and offers</string>
     <string name="clear_notifications">Bildirimleri Kaldır</string>
+    <string name="plant_categories">Bitkiler</string>
+    <string name="new_plant_add">Yeni Bitki Ekleme</string>
+    <string name="anlaysis_screen">Analiz Ekranı</string>
 
 </resources>

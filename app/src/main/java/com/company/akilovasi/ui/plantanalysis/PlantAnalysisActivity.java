@@ -95,6 +95,7 @@ public class PlantAnalysisActivity extends BaseActivity<PlantAnalysisViewModel, 
         //So poll them here
         viewModel.pollNotifications();
         initObservers();
+        dataBinding.goBack.setOnClickListener(v -> onBackPressed());
     }
 
     @Override

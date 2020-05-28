@@ -201,6 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:clickable="@{!loading}"
             android:onClick="@{() -> downloadPdfClick.onPDFButtonClicked(plantHistory)}"
             android:src="@drawable/pdf_icon"
             app:backgroundTint="@color/white_cardview_color"

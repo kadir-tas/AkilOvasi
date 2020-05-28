@@ -21,6 +21,8 @@ import com.company.akilovasi.ui.notification.adapters.NotificationRvAdapter;
 import com.company.akilovasi.ui.notification.adapters.SwipeController;
 import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 
+import java.util.Objects;
+
 public class NotificationFragment extends BaseFragment<NotificationViewModel , FragmentNotificationBinding>{
     public static final String TAG = "NotificationFragment";
 
@@ -74,6 +76,7 @@ public class NotificationFragment extends BaseFragment<NotificationViewModel , F
         dataBinding.setAdapter(adapter);
         dataBinding.emptyView.setVisibility( View.VISIBLE );
         dataBinding.remove.setOnClickListener(v ->  viewModel.removeAllNotifications());
+        dataBinding.goBack.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
 
         new ItemTouchHelper(new SwipeController() {
             @Override

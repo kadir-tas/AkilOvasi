@@ -32,6 +32,7 @@ import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityMainBinding;
 import com.company.akilovasi.di.SecretPrefs;
 import com.company.akilovasi.ui.BaseActivity;
+import com.company.akilovasi.ui.analysisresult.AnalysisResultActivity;
 import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
 import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.adapters.BannerAdapter;
@@ -393,24 +394,44 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
     @Override
     public void onNotificationItemClick(Notification notification) {
-        Log.d(TAG, "onNotificationItemClick: ");
+        Log.d(TAG, "onNotificationItemClick: " + notification.getType());
         switch (notification.getType()) {
             case Default:
                 //Do nothing
                 break;
-            case RemindAnalysis:
+            case RemindAnalysis:{
                 Intent intent = new Intent(this, PlantAnalysisActivity.class);
                 intent.putExtra(PlantAnalysisActivity.PARAM_USER_PLANT, notification.getUserPlantId().toString());
                 /*Sending as string because PlantAnalysisActivity checks for string input*/
                 startActivity(intent);
                 finish();
-                break;
-            case RemindCare:
-                //TODO:
-                break;
-            case AnalysisResult:
-                //TODO:
-                break;
+            }break;
+            case RemindCare:{
+                LiveData<Resource<List<Plant>>> liveData =  viewModel.getAllPlants();
+                liveData.observe(this, listResource -> {
+                    if(listResource.data != null){
+                        for(Plant p : listResource.data)
+                            if(p.getUserPlantId().equals( notification.getUserPlantId() ))
+                            {
+                                Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+                                if (f != null) {
+                                    getSupportFragmentManager().beginTransaction().remove(f).commit();
+                                }
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(p), PlantHistoryFragment.TAG).commit();
+                                liveData.removeObservers(this);
+                                break;
+                            }
+                    }
+                });
+            }
+            break;
+            case AnalysisResult:{
+                Intent intent = new Intent(MainActivity.this, AnalysisResultActivity.class);
+                intent.putExtra(AnalysisResultActivity.PARAM_USER_PLANT_HISTORY, notification.getUserPlantId());
+                startActivity(intent);
+                finish();
+            }
+            break;
             case GeneralNotification:
                 //TODO:
                 break;
