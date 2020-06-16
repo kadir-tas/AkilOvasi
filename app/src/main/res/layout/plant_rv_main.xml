@@ -6,13 +6,74 @@
         android:id="@+id/plantFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/layout_white">
+        android:background="@color/transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/hamburger_menu"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_menu_black_24dp"
+                    android:background="@color/transparent"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"/>
+
+                <FrameLayout
+                    android:layout_margin="5dp"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_margin="5dp"
+                        android:id="@+id/notification_bell"
+                        android:src="@drawable/ic_bell"
+                        android:background="@color/transparent"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"/>
+
+
+                    <TextView
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="end|top"
+                        android:background="@drawable/ic_red_circle"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"/>
+
+
+                </FrameLayout>
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/wooden_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:contentDescription="TODO" />
+
+                <TextView
+                    android:id="@+id/user_name_garden"
+                    android:text="TESTIN BAHCESU"
+                    android:layout_gravity="center"
+                    android:textColor="@color/layout_white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="19dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </FrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/plantRecyclerView"
@@ -27,7 +88,6 @@
             android:layout_height="match_parent"
             android:visibility="visible"
             android:orientation="vertical">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

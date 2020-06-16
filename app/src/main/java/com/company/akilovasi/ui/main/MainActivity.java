@@ -53,7 +53,6 @@ import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
 import com.company.akilovasi.util.OnSwipeTouchListener;
-import com.company.akilovasi.util.Test;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -120,7 +119,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         dataBinding.leftMenu.setLogoutClick(this);
         dataBinding.leftMenu.setProfileClick(this);
         dataBinding.leftMenu.setNotificationClick(this);
-        dataBinding.content.wrapper.bottomAppbar.setNavigationOnClickListener(v -> dataBinding.main.openDrawer(Gravity.LEFT));
+        dataBinding.content.wrapper.plantRecyclerView.hamburgerMenu.setOnClickListener( v -> dataBinding.main.openDrawer(Gravity.LEFT));
+       // dataBinding.content.wrapper.bottomAppbar.setNavigationOnClickListener(v -> ;
         initBannerRecyclerView();
         initPlantRecyclerView();
         subscribeObservers();
