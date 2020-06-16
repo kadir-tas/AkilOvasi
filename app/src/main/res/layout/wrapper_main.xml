@@ -12,45 +12,105 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:background="@drawable/bg_main"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:background="@color/layout_white">
+        <include
+            android:id="@+id/plantRecyclerView"
+            layout="@layout/plant_rv_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/motion_layout"
+
+
+
+
+
+
+
+
+
+
+        <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/top_app_bar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/constraintToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutDescription="@xml/scene_header"
-            app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+            android:minHeight="40dp"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <AdapterViewFlipper
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/wwww"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerView"
-                android:src="@drawable/add_plant"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
 
-            <include
-                android:id="@+id/plantRecyclerView"
-                layout="@layout/plant_rv_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                app:layout_constraintTop_toBottomOf="@id/wwww">
-            </include>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <!--                <androidx.appcompat.widget.Toolbar-->
+        <!--                    android:id="@+id/AppBar"-->
+        <!--                    style="@style/ThemeOverlay.AppCompat.Light"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/app_bar_height"-->
+        <!--                    app:layout_collapseMode="pin"/>-->
+        </com.google.android.material.appbar.AppBarLayout>
 
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--            <com.google.android.material.appbar.AppBarLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/top_app_bar"-->
+<!--                android:theme="@style/AppTheme.AppBarOverlay">-->
+
+<!--                <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--                    android:id="@+id/constraintToolbar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:contentScrim="?attr/colorPrimary"-->
+<!--                    android:minHeight="40dp"-->
+<!--                    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">-->
+
+<!--                <AdapterViewFlipper-->
+<!--                    android:id="@+id/recyclerView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"/>-->
+
+<!--                </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+<!--&lt;!&ndash;                <androidx.appcompat.widget.Toolbar&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/AppBar"&ndash;&gt;-->
+<!--&lt;!&ndash;                    style="@style/ThemeOverlay.AppCompat.Light"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="@dimen/app_bar_height"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:layout_collapseMode="pin"/>&ndash;&gt;-->
+<!--            </com.google.android.material.appbar.AppBarLayout>-->
+
+
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_appbar"
@@ -61,71 +121,162 @@
             app:fabAlignmentMode="center"
             app:fabAnimationMode="scale"
             app:fabCradleRoundedCornerRadius="50dp"
-            app:hideOnScroll="false">
-
-            <LinearLayout
-                android:layout_marginHorizontal="20dp"
-                android:weightSum="4"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:src="@drawable/ic_profile_black"
-                    android:id="@+id/bottom_bar_profile"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@+id/bottom_bar_shop"
-                    android:src="@drawable/ic_shop"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="80dp"/>
-                <ImageView
-                    android:id="@+id/bottom_bar_youtube"
-                    android:src="@drawable/ic_play"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@+id/bottom_bar_support"
-                    android:src="@drawable/ic_support"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
+            app:navigationIcon="@drawable/ic_menu_black_24dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/middle_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_strawberry"
-            app:backgroundTint="@color/white_cardview_color"
-            app:borderWidth="0dp"
-            app:elevation="6dp"
-            app:fabSize="normal"
-            app:layout_anchor="@id/bottom_appbar"
-            app:maxImageSize="35dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_margin="20dp"
             android:id="@+id/addPlantFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> addPlantClick.onAddPlantClick()}"
             android:src="@drawable/add_plant"
-            app:backgroundTint="@color/white_cardview_color"
-            app:borderWidth="0dp"
-            app:layout_anchor="@id/bottom_appbar"
-            app:layout_anchorGravity="end"
-            android:layout_gravity="top"
-            app:elevation="40dp"
             app:fabSize="normal"
-            app:maxImageSize="35dp" />
+            app:layout_anchor="@id/bottom_appbar" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
+
+
+
+
+
+
+
+
+
+
+
+<!--<com.google.android.material.appbar.AppBarLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:id="@+id/top_app_bar"-->
+<!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+<!--<com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--    android:id="@+id/constraintToolbar"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    app:contentScrim="?attr/colorPrimary"-->
+<!--    android:minHeight="40dp"-->
+<!--    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">-->
+
+<!--    <AdapterViewFlipper-->
+<!--        android:id="@+id/recyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+<!--</com.google.android.material.appbar.CollapsingToolbarLayout>-->
+<!--&lt;!&ndash;                <androidx.appcompat.widget.Toolbar&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/AppBar"&ndash;&gt;-->
+<!--&lt;!&ndash;                    style="@style/ThemeOverlay.AppCompat.Light"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="@dimen/app_bar_height"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:layout_collapseMode="pin"/>&ndash;&gt;-->
+<!--</com.google.android.material.appbar.AppBarLayout>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--<layout xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+
+<!--<data>-->
+
+<!--    <variable-->
+<!--        name="addPlantClick"-->
+<!--        type="com.company.akilovasi.ui.main.callbacks.AddPlantClick" />-->
+<!--</data>-->
+
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/main_content"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/layout_white">-->
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/top_app_bar"-->
+<!--        android:theme="@style/AppTheme.AppBarOverlay">-->
+
+<!--        <com.company.akilovasi.util.CollapsibleToolbar-->
+<!--            android:id="@+id/constraintToolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fitsSystemWindows="true"-->
+<!--            android:minHeight="40dp"-->
+<!--            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">-->
+
+<!--            <AdapterViewFlipper-->
+<!--                android:id="@+id/recyclerView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
+<!--        </com.company.akilovasi.util.CollapsibleToolbar>-->
+
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    <include-->
+<!--        android:id="@+id/plantRecyclerView"-->
+<!--        layout="@layout/plant_rv_main"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clipToPadding="false"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/recyclerView" />-->
+
+<!--    <com.google.android.material.bottomappbar.BottomAppBar-->
+<!--        android:id="@+id/bottom_appbar"-->
+<!--        style="@style/Widget.MaterialComponents.BottomAppBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        app:fabAlignmentMode="center"-->
+<!--        app:fabAnimationMode="scale"-->
+<!--        app:fabCradleRoundedCornerRadius="50dp"-->
+<!--        app:navigationIcon="@drawable/ic_menu_black_24dp" />-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/addPlantFab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:onClick="@{() -> addPlantClick.onAddPlantClick()}"-->
+<!--        android:src="@drawable/add_plant"-->
+<!--        app:fabSize="normal"-->
+<!--        app:layout_anchor="@id/bottom_appbar" />-->
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+<!--</layout>-->

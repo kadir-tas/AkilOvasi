@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterViewFlipper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ import com.company.akilovasi.ui.analysisresult.AnalysisResultActivity;
 import com.company.akilovasi.ui.common.fullscreen.PlantFullImageFragment;
 import com.company.akilovasi.ui.login.LoginActivity;
 import com.company.akilovasi.ui.main.adapters.BannerAdapter;
+import com.company.akilovasi.ui.main.adapters.BannerFlipperAdapter;
 import com.company.akilovasi.ui.main.adapters.PlantAdapter;
 import com.company.akilovasi.ui.main.callbacks.AddPlantClick;
 import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
@@ -49,6 +52,8 @@ import com.company.akilovasi.ui.notification.NotificationFragment;
 import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
 import com.company.akilovasi.ui.plantanalysis.PlantAnalysisActivity;
+import com.company.akilovasi.util.OnSwipeTouchListener;
+import com.company.akilovasi.util.Test;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -70,8 +75,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private static final String TAG = "MainActivity";
     private BannerAdapter mBannerAdapter;
     private PlantAdapter mPlantAdapter;
+    private BannerFlipperAdapter mBannerFlipperAdapter;
 
-    private RecyclerView mBannerRecyclerView;
+    private AdapterViewFlipper mBannerRecyclerView;
     private RecyclerView mPlantsRecyclerView;
 
     private int oldPos = 0;
@@ -105,6 +111,10 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setSupportActionBar(dataBinding.content.wrapper.toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         dataBinding.waitScreen.setVisibility(View.VISIBLE);
         dataBinding.content.wrapper.setAddPlantClick(this);
         dataBinding.leftMenu.setLogoutClick(this);
@@ -125,16 +135,18 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         registerFCMNotificationTopic();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void subscribeObservers() {
         viewModel.getAllActiveBanners()
                 .observe(this, listResource -> {
-                    Log.v("MSGG", listResource.message + "");
-                    Log.v("MSGG", listResource.data + "");
-                    Log.v("MSGG", listResource.status + "");
-                    mBannerAdapter.setData(listResource.data);
+                    mBannerFlipperAdapter.setData(listResource.data);
                     viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
-                    plantsLoaded = true;
-                    if (bannersLoaded) {
+                    bannersLoaded = true;
+                    if (plantsLoaded) {
                         dataBinding.waitScreen.setVisibility(View.INVISIBLE);
                     }
 
@@ -145,8 +157,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     if (listResource.data != null && listResource.data.size() == 0) {
                         dataBinding.content.wrapper.plantRecyclerView.noPlantFrameLayout.setVisibility(View.VISIBLE);
                         dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView.setVisibility(View.INVISIBLE);
-                        bannersLoaded = true;
-                        if (plantsLoaded) {
+                        plantsLoaded = true;
+                        if (bannersLoaded) {
                             dataBinding.waitScreen.setVisibility(View.INVISIBLE);
                         }
                     } else if (listResource.data != null) {
@@ -163,15 +175,38 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
      * Init main banners recyclerview
      */
     private void initBannerRecyclerView() {
-
         mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
-        mBannerRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(mBannerRecyclerView);
-        mBannerRecyclerView.setHasFixedSize(true);
 
-        mBannerAdapter = new BannerAdapter(this, picasso);
-        mBannerRecyclerView.setAdapter(mBannerAdapter);
+        //creating adapter object
+        mBannerFlipperAdapter = new BannerFlipperAdapter(this,picasso);
+
+
+        //adding it to adapterview flipper
+        mBannerRecyclerView.setAdapter(mBannerFlipperAdapter);
+        mBannerRecyclerView.setFlipInterval(8000);
+        mBannerRecyclerView.startFlipping();
+
+        mBannerRecyclerView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+            @Override
+            public void onSwipeRight() {
+                Log.d(TAG, "onSwipeRight: ");
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                Log.d(TAG, "onSwipeLeft: ");
+            }
+
+            @Override
+            public void onSwipeTop() {
+                Log.d(TAG, "onSwipeTop: ");
+            }
+
+            @Override
+            public void onSwipeBottom() {
+                Log.d(TAG, "onSwipeBottom: ");
+            }
+        });
     }
 
     /**
@@ -193,9 +228,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 if (v != null) {
                     oldPos = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(v);
                 }
-                if(dataBinding.content.wrapper.motionLayout.getProgress() < 0.3){
-                    recyclerView.smoothScrollToPosition(0);
-                }
+//                if(dataBinding.content.wrapper.motionLayout.getProgress() < 0.3){
+//                    recyclerView.smoothScrollToPosition(0);
+//                }
                 super.onScrolled(recyclerView, dx, dy);
             }
         });

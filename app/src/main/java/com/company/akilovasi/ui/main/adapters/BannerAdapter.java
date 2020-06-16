@@ -35,8 +35,10 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
 
     @Override
     public void setData(List<Banner> banners) {
-        this.banners = banners;
-        notifyDataSetChanged();
+        if (banners != null && !banners.isEmpty()) {
+            this.banners = banners;
+            notifyDataSetChanged();
+        }
     }
 
     @NonNull
@@ -57,7 +59,7 @@ public class BannerAdapter extends BaseAdapter<BannerAdapter.BannerViewHolder, B
 
     @Override
     public int getItemCount() {
-        if(banners == null)
+        if (banners == null)
             return 0;
         return banners.size();
     }
