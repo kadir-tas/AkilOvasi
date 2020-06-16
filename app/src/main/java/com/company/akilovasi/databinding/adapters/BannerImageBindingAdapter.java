@@ -36,7 +36,7 @@ public class BannerImageBindingAdapter {
                 @Override
                 public void onError(Exception e) {
                     picasso.load(BuildConfig.BASE_URL + ApiConstants.BANNER_IMAGE_ENDPOINT_PREFIX + imageUrl)
-                            .placeholder(R.drawable.placeholder)
+                            .placeholder(R.drawable.ic_photo_black_24dp)
                             .into(imageView);
                     Log.d("CACHEEE", "IMAGE IS NOT FROM CACHE");
 
