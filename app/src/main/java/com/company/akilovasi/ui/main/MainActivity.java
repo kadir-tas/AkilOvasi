@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         dataBinding.leftMenu.setNotificationClick(this);
         dataBinding.content.wrapper.plantRecyclerView.hamburgerMenu.setOnClickListener( v -> dataBinding.main.openDrawer(Gravity.LEFT));
        // dataBinding.content.wrapper.bottomAppbar.setNavigationOnClickListener(v -> ;
-        initBannerRecyclerView();
+     //   initBannerRecyclerView();
         initPlantRecyclerView();
         subscribeObservers();
 
@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     }
 
     private void subscribeObservers() {
-        viewModel.getAllActiveBanners()
+       /* viewModel.getAllActiveBanners()
                 .observe(this, listResource -> {
                     mBannerFlipperAdapter.setData(listResource.data);
                     viewModel.getAllActiveBanners().removeObservers(MainActivity.this);
@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     }
 
                 });
-
+*/
         viewModel.getAllPlants()
                 .observe(this, listResource -> {
                     if (listResource.data != null && listResource.data.size() == 0) {
@@ -175,7 +175,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
      * Init main banners recyclerview
      */
     private void initBannerRecyclerView() {
-        mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
+      //  mBannerRecyclerView = dataBinding.content.wrapper.recyclerView;
 
         //creating adapter object
         mBannerFlipperAdapter = new BannerFlipperAdapter(this,picasso);
@@ -215,19 +215,20 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
+        //mPlantsRecyclerView.setLayoutManager( new GridLayoutManager(this ,2) );
         mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(mPlantsRecyclerView);
+        //SnapHelper snapHelper = new PagerSnapHelper();
+        //snapHelper.attachToRecyclerView(mPlantsRecyclerView);
         mPlantsRecyclerView.setHasFixedSize(true);
 
         //Keeping the last item position to manage the onclick of the plant. See onPlantClick to understand this logic
         mPlantsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                View v = snapHelper.findSnapView(recyclerView.getLayoutManager());
+               /* View v = snapHelper.findSnapView(recyclerView.getLayoutManager());
                 if (v != null) {
                     oldPos = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(v);
-                }
+                }*/
 //                if(dataBinding.content.wrapper.motionLayout.getProgress() < 0.3){
 //                    recyclerView.smoothScrollToPosition(0);
 //                }

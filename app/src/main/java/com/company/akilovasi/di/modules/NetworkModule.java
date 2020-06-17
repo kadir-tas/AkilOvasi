@@ -47,8 +47,8 @@ public class NetworkModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(Application application, @SecretPrefs SharedPreferences secretPreferences, Lazy<UserRepository> userRepositoryLazyWrapper) {
-//        final int cacheSize = 10 * 1024 * 1024;
-//        Cache cache = new Cache(application.getCacheDir(), cacheSize);
+        final int cacheSize = 10 * 1024 * 1024;
+       // Cache cache = new okhttp3.Cache();
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -59,14 +59,14 @@ public class NetworkModule {
                 .connectTimeout(ApiConstants.TIMEOUT_IN_SEC, TimeUnit.SECONDS)
                 .addInterceptor(new RequestInterceptor(secretPreferences))
                 .addInterceptor(loggingInterceptor)
-//                .cache(cache)
+              //  .cache( new Cache(application.getCacheDir() , Integer.MAX_VALUE) )
                 .build();
     }
 
     @Provides
     @Singleton
     Picasso providePicasso(OkHttpClient client, Application application){
-        return new Picasso.Builder(application).downloader(new OkHttp3Downloader(client)).build();
+        return new Picasso.Builder(application).downloader(new OkHttp3Downloader(client)).loggingEnabled(true).indicatorsEnabled(true).build();
 
     }
 }

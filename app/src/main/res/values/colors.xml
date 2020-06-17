@@ -24,4 +24,5 @@
     <color name="notification_type_error">#C536F4</color>
     <color name="transparent">#00F44336</color>
     <color name="notification_analysis_result">#F8E8CD</color>
+    <color name="white_transparent">#D8FFFFFF</color>
 </resources>

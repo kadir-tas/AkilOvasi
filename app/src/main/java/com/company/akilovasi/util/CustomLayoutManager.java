@@ -17,8 +17,8 @@ import static androidx.recyclerview.widget.LinearSmoothScroller.SNAP_TO_START;
 public class CustomLayoutManager extends GridLayoutManager {
     private static final String TAG = "CustomLayoutManager";
 
-    private final float mShrinkAmount = 0.35f;
-    private final float mShrinkDistance = 1.f;
+    private final float mShrinkAmount = 0.07f;
+    private final float mShrinkDistance = 2.3f;
 
     private RecyclerView recyclerView;
     private boolean isPaddingSet = false;
@@ -74,12 +74,12 @@ public class CustomLayoutManager extends GridLayoutManager {
     @Override
     public void onLayoutCompleted(RecyclerView.State state) {
 
-        if(!isPaddingSet){
+      /*  if(!isPaddingSet){
             isPaddingSet = true;
             float scale = recyclerView.getResources().getDisplayMetrics().density;
             int dpAsPixels = (int) (((recyclerView.getHeight()/3))*scale + 0.5f);
             recyclerView.setPadding(0,dpAsPixels*4,0,dpAsPixels);
-        }
+        }*/
         float midpoint = getHeight() / 1.5f;
         float d0 = 0.1f;
         float d1 = mShrinkDistance * midpoint * 2;
