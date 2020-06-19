@@ -167,6 +167,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                         mPlantAdapter.setData(listResource.data);
                         viewModel.getAllPlants().removeObservers(MainActivity.this);
                         dataBinding.waitScreen.setVisibility(View.INVISIBLE);
+                        Log.d(TAG, "subscribeObservers: Plants Loaded");
                     }
                 });
     }
@@ -217,8 +218,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
         //mPlantsRecyclerView.setLayoutManager( new GridLayoutManager(this ,2) );
         mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
-        //SnapHelper snapHelper = new PagerSnapHelper();
-        //snapHelper.attachToRecyclerView(mPlantsRecyclerView);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mPlantsRecyclerView);
         mPlantsRecyclerView.setHasFixedSize(true);
 
         //Keeping the last item position to manage the onclick of the plant. See onPlantClick to understand this logic
@@ -235,6 +236,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+
         mPlantAdapter = new PlantAdapter(this, picasso);
         mPlantsRecyclerView.setAdapter(mPlantAdapter);
     }
