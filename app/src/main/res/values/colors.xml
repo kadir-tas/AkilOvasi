@@ -25,4 +25,6 @@
     <color name="transparent">#00F44336</color>
     <color name="notification_analysis_result">#F8E8CD</color>
     <color name="white_transparent">#D8FFFFFF</color>
+    <color name="tab_selected">#74BB01</color>
+    <color name="tab_unselected">#B14C00</color>
 </resources>

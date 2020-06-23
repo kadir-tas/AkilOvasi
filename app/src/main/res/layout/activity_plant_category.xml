@@ -10,6 +10,7 @@
     </data>
 
     <FrameLayout
+        android:background="@drawable/plant_add_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.plant.PlantCategoryActivity">
@@ -19,39 +20,73 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:orientation="horizontal"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <ImageButton
-                    android:layout_margin="10dp"
-                    android:id="@+id/go_back"
-                    android:src="@drawable/ic_back"
-                    android:background="@color/transparent"
-                    android:layout_gravity="end|center"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:contentDescription="TODO" />
-
-                <TextView
-                    android:layout_margin="10dp"
-                    android:layout_gravity="start"
-                    android:textSize="30sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_marginVertical="10dp"
-                    android:text="@string/plant_categories"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-            </FrameLayout>
-            <View
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                    <ImageButton
+                        android:id="@+id/hamburger_menu"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/ic_menu_black_24dp"
+                        android:background="@color/transparent"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"/>
 
+                    <FrameLayout
+                        android:layout_margin="5dp"
+                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:layout_margin="5dp"
+                            android:id="@+id/notification_bell"
+                            android:src="@drawable/ic_bell"
+                            android:background="@color/transparent"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"/>
+
+
+                        <TextView
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_gravity="end|top"
+                            android:background="@drawable/ic_red_circle"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"/>
+
+
+                    </FrameLayout>
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/wooden_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:id="@+id/user_name_garden"
+                        android:text="@string/plant_categories"
+                        android:layout_gravity="center"
+                        android:textColor="@color/layout_white"
+                        android:textSize="35sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="19dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </FrameLayout>
+            </LinearLayout>
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
@@ -61,8 +96,10 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.tabs.TabLayout
+                    app:tabBackground="@drawable/tab_selector_color"
                     android:id="@+id/tab_layout"
                     app:tabMode="fixed"
+                    app:tabGravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

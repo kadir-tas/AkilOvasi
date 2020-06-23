@@ -216,8 +216,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
-        //mPlantsRecyclerView.setLayoutManager( new GridLayoutManager(this ,2) );
-        mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
+        mPlantsRecyclerView.setLayoutManager( new GridLayoutManager(this ,2) );
+        //mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mPlantsRecyclerView);
         mPlantsRecyclerView.setHasFixedSize(true);
