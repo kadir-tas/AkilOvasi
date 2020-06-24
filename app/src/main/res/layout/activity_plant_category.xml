@@ -25,45 +25,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
-
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
-                    <ImageButton
-                        android:id="@+id/hamburger_menu"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_menu_black_24dp"
-                        android:background="@color/transparent"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"/>
-
-                    <FrameLayout
-                        android:layout_margin="5dp"
-                        android:layout_gravity="end"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageButton
-                            android:layout_margin="5dp"
-                            android:id="@+id/notification_bell"
-                            android:src="@drawable/ic_bell"
-                            android:background="@color/transparent"
-                            android:layout_width="34dp"
-                            android:layout_height="34dp"/>
-
-
-                        <TextView
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_gravity="end|top"
-                            android:background="@drawable/ic_red_circle"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"/>
-
-
-                    </FrameLayout>
-
 
                     <ImageView
                         android:layout_gravity="center"
@@ -92,19 +56,25 @@
                 android:id="@+id/viewpager"
                 app:setAdapter="@{plantCategoryPagerAdapter}"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp">
 
                 <com.google.android.material.tabs.TabLayout
                     app:tabBackground="@drawable/tab_selector_color"
                     android:id="@+id/tab_layout"
-                    app:tabMode="fixed"
+                    app:tabMode="auto"
                     app:tabGravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             </androidx.viewpager.widget.ViewPager>
-
+            <include
+                android:id="@+id/bottom_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                layout="@layout/bottom_app_bar" />
         </LinearLayout>
 
         <FrameLayout
@@ -112,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </FrameLayout>
+
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progress_bar"

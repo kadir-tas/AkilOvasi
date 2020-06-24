@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingComponent;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -62,22 +63,21 @@ public class PlantCategoryFragment extends BaseFragment<PlantCategoryFragmentVie
     }
 
     private void initObservers(){
-        viewModel.getPlants().observe(getViewLifecycleOwner(), new Observer<List<PlantType>>() {
+        final LiveData<List<PlantType>> plants = viewModel.getPlants();
+        plants.observe(getViewLifecycleOwner(), new Observer<List<PlantType>>() {
             @Override
             public void onChanged(List<PlantType> plantTypes) {
                 Log.d(TAG + plantCategory, "onChanged: Called");
                 if(plantTypes != null){
                     Log.d(TAG + plantCategory, "onChanged: Plant " + plantCategory + " Types Recevied");
-
                     adapter.setData( plantTypes );
                     adapter.notifyDataSetChanged();
-
                     dataBinding.progressBar.hide();
-
                 }else{
                     Log.d(TAG + plantCategory, "onChanged: Plant " + plantCategory + " Types are not Recevied");
                     dataBinding.progressBar.show();
                 }
+                plants.removeObservers(getViewLifecycleOwner());
             }
         });
     }
@@ -116,7 +116,7 @@ public class PlantCategoryFragment extends BaseFragment<PlantCategoryFragmentVie
         initObservers();
         dataBinding.setPlantCategoryAdapter(adapter);
         adapter.setItemPlantTypeClick(itemPlantTypeClick);
-        dataBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        dataBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         return dataBinding.getRoot();
     }
 

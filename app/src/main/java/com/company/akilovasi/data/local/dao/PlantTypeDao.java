@@ -22,7 +22,7 @@ public interface PlantTypeDao {
     @Query("SELECT * FROM plantType WHERE plantCategory = :plantCategory")
     LiveData<List<PlantType>> loadPlantByCategories( String plantCategory );
 
-    @Query("SELECT DISTINCT plantCategory FROM plantType")
+    @Query("SELECT DISTINCT plantCategory FROM plantType  ORDER BY plantCategory ASC")
     LiveData<List<String>> loadListOfPlantCategories();
 
     @Query("SELECT * FROM plantType WHERE plantId=:plantId")

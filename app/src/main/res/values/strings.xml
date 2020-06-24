@@ -6,7 +6,7 @@
     <string name="shared_image">sharedimage</string>
     <string name="history">Geçmiş Analizler</string>
     <string name="plant_name">Plant Name</string>
-    <string name="plant_size">Bitkinizin Boyu</string>
+    <string name="plant_size">Bitkinizin Mevcut Boyu</string>
     <string name="pot_size">Saksınızın Boyu</string>
     <string name="plant_name_field">Yeni Bitkinizin İsmini Giriniz</string>
     <string name="my_plant">Benim Çiçeğim</string>
@@ -74,5 +74,16 @@
     <string name="plant_categories">Bitkiler</string>
     <string name="new_plant_add">Yeni Bitki Ekleme</string>
     <string name="anlaysis_screen">Analiz Ekranı</string>
+    <string name="your_plant_name">Bitkinizin İsmi</string>
+    <string name="plant_location">Bitkiniz Nerde</string>
+    <string name="pot_depth">Saksınızın Derinliği</string>
+
+
+    <string-array name="plant_depth_sizes">
+        <item>&lt; 12 cm</item>
+        <item>12 - 25 cm</item>
+        <item>25 - 40 cm</item>
+        <item>&gt; 40 cm</item>
+    </string-array>
 
 </resources>

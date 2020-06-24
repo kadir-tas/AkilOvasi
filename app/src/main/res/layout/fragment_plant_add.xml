@@ -1,308 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
 
         <variable
             name="plantType"
-            type="com.company.akilovasi.data.local.entities.PlantType"/>
+            type="com.company.akilovasi.data.local.entities.PlantType" />
 
         <variable
             name="loading"
             type="boolean" />
     </data>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@color/colorPrimary">
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@drawable/plant_add_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_margin="10dp"
-                    android:id="@+id/go_back"
-                    android:src="@drawable/ic_back"
-                    android:background="@color/transparent"
-                    android:layout_gravity="end|center"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:contentDescription="TODO" />
-
-                <TextView
-                    android:layout_margin="10dp"
-                    android:layout_gravity="start"
-                    android:textSize="30sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_marginVertical="10dp"
-                    android:text="@string/new_plant_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </FrameLayout>
-            <View
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
-
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:layout_width="130dp"
-                android:layout_height="140dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp">
-                    <ProgressBar
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
                     <ImageView
-                        android:layout_gravity="center"
-                        android:id="@+id/imageViewCover"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:transitionName="@string/shared_image"
-                        bind:imageUrl="@{plantType.plantId}" />
+                        android:layout_gravity="center"
+                        android:contentDescription="TODO"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/wooden_sign" />
+
+                    <TextView
+                        android:id="@+id/user_name_garden"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="19dp"
+                        android:text="@string/new_plant_add"
+                        android:textColor="@color/layout_white"
+                        android:textSize="35sp"
+                        android:textStyle="bold" />
+
                 </FrameLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+
+                            <ProgressBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageViewCover"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:layout_gravity="center"
+                                    android:transitionName="@string/shared_image"
+                                    bind:imageUrl="@{plantType.plantId}" />
+                            </FrameLayout>
+
+                            <ImageButton
+                                android:id="@+id/takePictureButton"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="bottom|end"
+                                android:background="@color/transparent"
+                                android:enabled="@{!loading}"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/camera"
+                                android:text="@string/take_picture"
+                                android:textAllCaps="false" />
+
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/bannerHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:hint="@string/plant_name"
+                            android:text="@{plantType.plantName}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/header_text_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:text="@{plantType.description}"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_margin="10dp"
+                        android:text="@string/your_plant_name"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                    <EditText
+                        android:layout_weight="1"
+                        android:id="@+id/plant_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:enabled="@{!loading}"
+                        android:hint="@string/plant_name_field"
+                        android:inputType="text"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
                 <TextView
-                    android:hint="@string/plant_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bannerHeader"
-                    android:text="@{plantType.plantName}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/header_text_size"
-                    android:textStyle="bold"/>
+                    android:text="@string/plant_size"
+                    android:textSize="30sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/plant_size_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        bind:cardBackgroundColor="@color/white_cardview_color"
+                        android:id="@+id/plant_state_1"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_margin="10dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/transparent"
+                            android:src="@drawable/plant_state_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        bind:cardBackgroundColor="@color/white_cardview_color"
+                        android:id="@+id/plant_state_2"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_margin="10dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/transparent"
+                            android:src="@drawable/plant_state_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        bind:cardBackgroundColor="@color/white_cardview_color"
+                        android:id="@+id/plant_state_3"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_margin="10dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/transparent"
+                            android:src="@drawable/plant_state_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        bind:cardBackgroundColor="@color/white_cardview_color"
+                        android:id="@+id/plant_state_4"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_margin="10dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/transparent"
+                            android:src="@drawable/plant_state_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="@string/plant_location"
+                    android:textSize="30sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <ImageButton
+                            android:layout_margin="10dp"
+                            android:layout_gravity="bottom"
+                            android:id="@+id/plant_location_1"
+                            android:scaleType="fitXY"
+                            android:background="@color/transparent"
+                            android:src="@drawable/plant_location_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <ImageButton
+                            android:layout_margin="10dp"
+                            android:layout_gravity="bottom"
+                            android:id="@+id/plant_location_2"
+                            android:background="@color/transparent"
+                            android:src="@drawable/plant_location_2"
+                            android:scaleType="fitXY"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="@string/pot_depth"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:background="@color/white_transparent"
+                        android:id="@+id/plant_depth"
+                        android:entries="@array/plant_depth_sizes"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/addNewPlantButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/plant_add_button"
+                        android:enabled="@{!loading}"
+                        android:padding="10dp"
+                        android:text="@string/add_plant"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_margin="20dp"
-                android:layout_gravity="center"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                android:text="@{plantType.description}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/plant_size_text"
-            android:text="@string/plant_size"
-            android:layout_width="match_parent"
-            android:textSize="36sp"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content"/>
-
-        <RadioGroup
-                android:id="@+id/plant_size"
-                android:orientation="horizontal"
-                android:weightSum="4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:layout_gravity="center"
-                    android:enabled="@{!loading}"
-                    android:text="@string/placeholder_small"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:layout_margin="10dp"
-                    android:id="@+id/plant_small"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"/>
-
-                <RadioButton
-                    android:layout_gravity="center"
-                    android:enabled="@{!loading}"
-                    android:text="@string/placeholder_medium"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:layout_margin="10dp"
-                    android:id="@+id/plant_medium"
-                    android:layout_weight="1"
-                    android:src="@drawable/placeholder_medium_plant"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"/>
-
-
-                <RadioButton
-                    android:enabled="@{!loading}"
-                    android:text="@string/placeholder_big"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/plant_big"
-                    android:layout_weight="1"
-                    android:src="@drawable/placeholder_big_plant"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"/>
-
-
-                <RadioButton
-                    android:enabled="@{!loading}"
-                    android:text="@string/placeholder_huge"
-                    android:textColor="@color/design_default_color_secondary"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:id="@+id/plant_huge"
-                    android:layout_weight="1"
-                    android:src="@drawable/placeholder_huge_plant"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"/>
-
-            </RadioGroup>
-
-        <TextView
-            android:id="@+id/pot_size_text"
-            android:text="@string/pot_size"
-            android:layout_width="match_parent"
-            android:textSize="36sp"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content"/>
-
-        <RadioGroup
-            android:id="@+id/pot_size"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:layout_gravity="center"
-                android:enabled="@{!loading}"
-                android:text="@string/placeholder_small"
-                android:textColor="@color/design_default_color_secondary"
-                android:layout_margin="10dp"
-                android:id="@+id/pot_small"
-                android:layout_weight="1"
-                android:src="@drawable/placeholder_small_pot"
-                android:layout_width="0dp"
-                android:layout_height="50dp"/>
-
-            <RadioButton
-                android:layout_gravity="center"
-                android:enabled="@{!loading}"
-                android:text="@string/placeholder_medium"
-                android:textColor="@color/design_default_color_secondary"
-                android:layout_margin="10dp"
-                android:id="@+id/pot_medium"
-                android:layout_weight="1"
-                android:src="@drawable/placeholder_medium_pot"
-                android:layout_width="0dp"
-                android:layout_height="50dp"/>
-
-
-            <RadioButton
-                android:layout_gravity="center"
-                android:enabled="@{!loading}"
-                android:text="@string/placeholder_medium"
-                android:textColor="@color/design_default_color_secondary"
-                android:layout_margin="10dp"
-                android:id="@+id/pot_big"
-                android:layout_weight="1"
-                android:src="@drawable/placeholder_big_pot"
-                android:layout_width="0dp"
-                android:layout_height="50dp"/>
-
-
-            <RadioButton
-                android:layout_gravity="center"
-                android:enabled="@{!loading}"
-                android:text="@string/placeholder_huge"
-                android:textColor="@color/design_default_color_secondary"
-                android:layout_margin="10dp"
-                android:id="@+id/pot_huge"
-                android:layout_weight="1"
-                android:src="@drawable/placeholder_huge_pot"
-                android:layout_width="0dp"
-                android:layout_height="50dp"/>
-        </RadioGroup>
-
-        <EditText
-            android:enabled="@{!loading}"
-            android:inputType="text"
-            android:id="@+id/plant_name"
-            android:hint="@string/plant_name_field"
-            android:layout_width="match_parent"
-            android:textSize="25sp"
-            android:layout_margin="15dp"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="right"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/capturedPlantImage"
-                android:src="@drawable/placeholder_small_pot"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <Button
-                android:enabled="@{!loading}"
-                android:id="@+id/takePictureButton"
-                style="?android:attr/buttonBarButtonStyle"
-                android:textAllCaps="false"
-                android:layout_gravity="center"
-                android:layout_margin="15dp"
-                android:text="@string/take_picture"
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:enabled="@{!loading}"
-                android:id="@+id/addNewPlantButton"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/rounded_login_button"
-                android:layout_margin="15dp"
-                android:textAllCaps="false"
-                android:textColor="@color/layout_white"
-                android:text="@string/add_plant"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:visibility="@{loading? View.VISIBLE : View.GONE}" />
+        </FrameLayout>
 
-        </LinearLayout>
-
-    </LinearLayout>
-
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{loading? View.VISIBLE : View.GONE}"
-            android:layout_gravity="center"/>
-    </FrameLayout>
-
-</ScrollView>
+    </ScrollView>
 
 
 </layout>

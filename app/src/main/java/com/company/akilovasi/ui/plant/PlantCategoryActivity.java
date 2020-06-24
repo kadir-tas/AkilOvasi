@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import android.Manifest;
@@ -95,7 +96,8 @@ public class PlantCategoryActivity extends BaseActivity<PlantCategoryActivityVie
 
     public void setAdapterWithPlantTypeList(){
         Log.d(TAG, "setAdapterWithPlantTypeList: setting up adapter with plant type list");
-        viewModel.getListOfPlantCategories().observe(this, new Observer<List<String>>() {
+        final LiveData<List<String>> listOfPlantCategories = viewModel.getListOfPlantCategories();
+        listOfPlantCategories.observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {
                 if(strings != null){
@@ -109,10 +111,11 @@ public class PlantCategoryActivity extends BaseActivity<PlantCategoryActivityVie
                     PlantCategoryPagerAdapter plantCategoryPagerAdapter = new PlantCategoryPagerAdapter(getSupportFragmentManager());
                     plantCategoryPagerAdapter.setPlantCategoryFragments( plantCategoryFragments );
                     dataBinding.setPlantCategoryPagerAdapter(plantCategoryPagerAdapter);
-                    viewModel.getListOfPlantCategories().removeObserver(this);
-
+/*
                     if(plantCategoryFragments.size() > 4)
                         dataBinding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+*/
+                    listOfPlantCategories.removeObserver(this);
                 }
             }
         });
