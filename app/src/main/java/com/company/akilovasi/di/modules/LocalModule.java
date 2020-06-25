@@ -10,6 +10,7 @@ import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
+import com.company.akilovasi.data.local.dao.SupportTicketDao;
 import com.company.akilovasi.data.local.dao.UserDao;
 
 import javax.inject.Singleton;
@@ -58,4 +59,9 @@ public class LocalModule {
     @Provides
     @Singleton
     NotificationDao provideNotificationDao(AppDatabase appDatabase){ return appDatabase.notificationDao(); }
+
+
+    @Provides
+    @Singleton
+    SupportTicketDao provideSupportTicketDao(AppDatabase appDatabase){ return appDatabase.supportTicketDao(); }
 }

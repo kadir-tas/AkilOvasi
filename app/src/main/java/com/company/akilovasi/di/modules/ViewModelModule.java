@@ -11,6 +11,10 @@ import com.company.akilovasi.ui.login.fragments.RegisterViewModel;
 import com.company.akilovasi.ui.main.MainViewModel;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragmentViewModel;
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragmentViewModel;
+import com.company.akilovasi.ui.main.fragments.support.SupportFragmentViewModel;
+import com.company.akilovasi.ui.main.fragments.support.create.SupportCreateFragment;
+import com.company.akilovasi.ui.main.fragments.support.create.SupportCreateFragmentViewModel;
+import com.company.akilovasi.ui.main.fragments.support.mysupports.MySupportsFragmentViewModel;
 import com.company.akilovasi.ui.notification.NotificationViewModel;
 import com.company.akilovasi.ui.plant.PlantCategoryActivityViewModel;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragmentViewModel;
@@ -89,6 +93,20 @@ public abstract class ViewModelModule {
     @ViewModelKey(AnalysisResultViewModel.class)
     abstract ViewModel bindAnalysisResultViewModel(AnalysisResultViewModel analysisResultViewModel);
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(SupportFragmentViewModel.class)
+    abstract ViewModel bindSupportFragmentViewModel(SupportFragmentViewModel supportFragmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SupportCreateFragmentViewModel.class)
+    abstract ViewModel bindSupportCreateFragmentViewModel(SupportCreateFragmentViewModel supportCreateFragmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MySupportsFragmentViewModel.class)
+    abstract ViewModel bindMySupportsFragmentViewModel(MySupportsFragmentViewModel mySupportsFragmentViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);

@@ -5,6 +5,9 @@ import com.company.akilovasi.ui.login.fragments.RegisterFragment;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
+import com.company.akilovasi.ui.main.fragments.support.SupportFragment;
+import com.company.akilovasi.ui.main.fragments.support.create.SupportCreateFragment;
+import com.company.akilovasi.ui.main.fragments.support.mysupports.MySupportsFragment;
 import com.company.akilovasi.ui.notification.NotificationFragment;
 import com.company.akilovasi.ui.plant.fragments.addplant.PlantAddFragment;
 import com.company.akilovasi.ui.plant.fragments.plantcategory.PlantCategoryFragment;
@@ -34,5 +37,15 @@ public abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract NotificationFragment notificationFragment();
+
+    @ContributesAndroidInjector
+    abstract SupportFragment supportFragment();
+
+    @ContributesAndroidInjector
+    abstract MySupportsFragment mySupportsFragment();
+
+    @ContributesAndroidInjector
+    abstract SupportCreateFragment supportCreateFragment();
+
 }
 

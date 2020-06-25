@@ -8,11 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterViewFlipper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.databinding.DataBindingComponent;
 import androidx.fragment.app.Fragment;
@@ -29,6 +31,7 @@ import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.local.entities.Plant;
+import com.company.akilovasi.data.local.entities.User;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.responses.Response;
 import com.company.akilovasi.databinding.ActivityMainBinding;
@@ -45,9 +48,11 @@ import com.company.akilovasi.ui.main.callbacks.ItemBannerClick;
 import com.company.akilovasi.ui.main.callbacks.ItemPlantClick;
 import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
 import com.company.akilovasi.ui.main.callbacks.NotificationClick;
+import com.company.akilovasi.ui.main.callbacks.OnBottomAppBarClicked;
 import com.company.akilovasi.ui.main.callbacks.ProfileButtonClick;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
+import com.company.akilovasi.ui.main.fragments.support.SupportFragment;
 import com.company.akilovasi.ui.notification.NotificationFragment;
 import com.company.akilovasi.ui.notification.callback.NotificationItemOnClick;
 import com.company.akilovasi.ui.plant.PlantCategoryActivity;
@@ -69,7 +74,8 @@ import static com.company.akilovasi.data.remote.ApiConstants.ACCESS_TOKEN;
 import static com.company.akilovasi.data.remote.ApiConstants.REFRESH_TOKEN;
 
 
-public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding> implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick, NotificationClick, NotificationItemOnClick {
+public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBinding>
+        implements ItemBannerClick, ItemPlantClick, AddPlantClick, LogoutButtonClick, ProfileButtonClick, NotificationClick, NotificationItemOnClick, OnBottomAppBarClicked {
 
     private static final String TAG = "MainActivity";
     private BannerAdapter mBannerAdapter;
@@ -120,6 +126,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         dataBinding.leftMenu.setProfileClick(this);
         dataBinding.leftMenu.setNotificationClick(this);
         dataBinding.content.wrapper.plantRecyclerView.hamburgerMenu.setOnClickListener( v -> dataBinding.main.openDrawer(Gravity.LEFT));
+        dataBinding.content.wrapper.bottomAppbar.setOnBottomAppBarClicked(this);
+
        // dataBinding.content.wrapper.bottomAppbar.setNavigationOnClickListener(v -> ;
      //   initBannerRecyclerView();
         initPlantRecyclerView();
@@ -170,6 +178,23 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                         Log.d(TAG, "subscribeObservers: Plants Loaded");
                     }
                 });
+
+
+        final LiveData<Resource<User>> userData = viewModel.getUserData();
+        userData.observe(this, userResource -> {
+            switch (userResource.status){
+                case SUCCESS:
+                    dataBinding.content.wrapper.plantRecyclerView.setUser( userResource.data );
+                    userData.removeObservers(this);
+                    break;
+                case ERROR:
+                    Toast.makeText(this, "Error While Getting User Data", Toast.LENGTH_SHORT).show();
+                    userData.removeObservers(this);
+                    break;
+                case LOADING:
+                    break;
+            }
+        });
     }
 
     /**
@@ -322,7 +347,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
             if (f != null) {
                 getSupportFragmentManager().beginTransaction().remove(f).commit();
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(plant), PlantHistoryFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(plant), PlantHistoryFragment.TAG).addToBackStack("main").commit();
         }
     }
 
@@ -334,13 +359,13 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         }
 
         PlantFullImageFragment fragment = new PlantFullImageFragment(PlantFullImageFragment.USER_PLANT, userPlantId);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, PlantFullImageFragment.TAG).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment, PlantFullImageFragment.TAG).addToBackStack("main").commit();
     }
 
     @Override
     public void onBackPressed() {
         //TODO: this part becomes unmanagle
-        Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
+   /*     Fragment f = getSupportFragmentManager().findFragmentByTag(PlantHistoryFragment.TAG);
         Fragment f2 = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         Fragment f3 = getSupportFragmentManager().findFragmentByTag(PlantFullImageFragment.TAG);
         Fragment f4 = getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
@@ -363,7 +388,8 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         } else {
             Log.d(TAG, "onBackPressed: else");
             super.onBackPressed();
-        }
+        }*/
+        super.onBackPressed();
     }
 
     @Override
@@ -413,9 +439,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
 
         Fragment f = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
         if (f == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).addToBackStack("main").commit();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
+          //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
         }
     }
 
@@ -424,9 +450,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         Log.d(TAG, "onNotificationButtonClicked: ");
         Fragment f = getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
         if (f == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).addToBackStack("main").commit();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
+       //     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, NotificationFragment.newInstance(), NotificationFragment.TAG).commit();
         }
     }
 
@@ -455,7 +481,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                                 if (f != null) {
                                     getSupportFragmentManager().beginTransaction().remove(f).commit();
                                 }
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(p), PlantHistoryFragment.TAG).commit();
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, PlantHistoryFragment.newInstance(p), PlantHistoryFragment.TAG).addToBackStack("main").commit();
                                 liveData.removeObservers(this);
                                 break;
                             }
@@ -476,13 +502,27 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
         }
     }
 
-    //TEST CODE
     @Override
     public void onNotificationDismissClick(Notification notification) {
         Log.d(TAG, "onNotificationDismissClick: ");
         NotificationFragment f = (NotificationFragment) getSupportFragmentManager().findFragmentByTag(NotificationFragment.TAG);
         if (f == null) return;
         AsyncTask.execute(() -> f.viewModel.deleteNotification(notification));
+    }
+
+    @Override
+    public void onBottomAppBarClicked(View view) {
+        switch (view.getId()){
+            case R.id.bottom_bar_support:{
+                Fragment f = getSupportFragmentManager().findFragmentByTag(SupportFragment.TAG);
+                if (f == null) {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, SupportFragment.newInstance(), SupportFragment.TAG).addToBackStack("main").commit();
+                } else {
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SupportFragment.newInstance(), SupportFragment.TAG).commit();
+                }
+                break;
+            }
+        }
     }
 }
 

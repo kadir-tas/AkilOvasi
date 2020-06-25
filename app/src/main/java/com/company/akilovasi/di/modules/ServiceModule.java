@@ -7,7 +7,6 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module
 abstract public class ServiceModule {
-    // for my case, the service class which needs injection is MyFirebaseMessagingService
     @ContributesAndroidInjector
     abstract FCMService contributeMyFirebaseMessagingService();
 }

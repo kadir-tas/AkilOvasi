@@ -9,6 +9,7 @@ import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
+import com.company.akilovasi.data.local.dao.SupportTicketDao;
 import com.company.akilovasi.data.local.dao.UserDao;
 import com.company.akilovasi.data.local.entities.AnalysisResult;
 import com.company.akilovasi.data.local.entities.Banner;
@@ -17,6 +18,7 @@ import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.local.entities.Plant;
 import com.company.akilovasi.data.local.entities.PlantHistory;
 import com.company.akilovasi.data.local.entities.PlantType;
+import com.company.akilovasi.data.local.entities.SupportTicket;
 import com.company.akilovasi.data.local.entities.User;
 import com.company.akilovasi.util.Converters;
 
@@ -27,6 +29,7 @@ import com.company.akilovasi.util.Converters;
         PlantHistory.class,
         Notification.class,
         Login.class,
+        SupportTicket.class,
         AnalysisResult.class},
         version = 2, exportSchema = false)
 @TypeConverters({Converters.class})
@@ -43,4 +46,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PlantHistoryDao plantHistoryDao();
 
     public abstract NotificationDao notificationDao();
+
+    public abstract SupportTicketDao supportTicketDao();
 }

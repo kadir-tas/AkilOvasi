@@ -16,6 +16,7 @@ import com.company.akilovasi.di.modules.notification.NotificationModule;
 import com.company.akilovasi.di.modules.plant.PlantHistoryModule;
 import com.company.akilovasi.di.modules.plant.PlantModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
+import com.company.akilovasi.di.modules.supportTicket.SupportTicketModule;
 import com.company.akilovasi.di.modules.user.UserModule;
 
 import javax.inject.Singleton;
@@ -41,6 +42,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         PlantModule.class,
         PlantHistoryModule.class,
         NotificationModule.class,
+        SupportTicketModule.class,
         ServiceModule.class})
 public interface AppComponent {
 

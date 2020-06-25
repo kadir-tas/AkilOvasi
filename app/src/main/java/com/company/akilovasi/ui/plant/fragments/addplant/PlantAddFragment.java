@@ -102,16 +102,21 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
             public void onChanged(PlantType plantType) {
                 if(plantType != null){
                     dataBinding.setPlantType( plantType );
-                    Log.d(TAG, "onChanged: " + plantType.getPlantName());
-                    Log.d(TAG, "onChanged: " + plantType.getPlantCategory());
-                    Log.d(TAG, "onChanged: " + plantType.getDescription());
                     dataBinding.addNewPlantButton.setOnClickListener(PlantAddFragment.this);
                     dataBinding.takePictureButton.setOnClickListener(PlantAddFragment.this);
+
                     final LinearLayout plantSizeContainer = dataBinding.plantSizeContainer;
                     final int childCount = plantSizeContainer.getChildCount();
                     for (int i = 0; i < childCount; i++) {
                         plantSizeContainer.getChildAt(i).setOnClickListener(PlantAddFragment.this);
                     }
+
+                    final LinearLayout plantLocationContainer = dataBinding.plantLocationContainer;
+                    final int childCount1 = plantLocationContainer.getChildCount();
+                    for (int i = 0; i < childCount1; i++) {
+                        plantLocationContainer.getChildAt(i).setOnClickListener(PlantAddFragment.this);
+                    }
+
                     //     dataBinding.goBack.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
                     dataBinding.setLoading(false);
                 }
@@ -376,6 +381,17 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
         dataBinding.setLoading(false);
     }
 
+    private void handlePlantLocationButtons(View plantLocationButton){
+        final LinearLayout plantLocationContainer = dataBinding.plantLocationContainer;
+        final int childCount = plantLocationContainer.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = plantLocationContainer.getChildAt(i);
+            if(child.getId() != plantLocationButton.getId())
+                ((CardView)child).setCardBackgroundColor( getResources().getColor(R.color.white_cardview_color));
+        }
+        ((CardView)plantLocationButton).setCardBackgroundColor( getResources().getColor(R.color.green_cardview_color) );
+    }
+
     private void handlePlantStateButtons(View plantStateButton){
         final LinearLayout plantSizeContainer = dataBinding.plantSizeContainer;
         final int childCount = plantSizeContainer.getChildCount();
@@ -385,13 +401,12 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                 ((CardView)child).setCardBackgroundColor( getResources().getColor(R.color.white_cardview_color));
         }
         ((CardView)plantStateButton).setCardBackgroundColor( getResources().getColor(R.color.green_cardview_color) );
-        Log.d(TAG, "handlePlantStateButtons: THİSS");
     }
     @Override
     public void onClick(View v) {
         Log.d(TAG, "onClick: Clicked " + v.getId());
         switch (v.getId()){
-            case R.id.addNewPlantButton:
+            case R.id.addNewPlantButton:{
                 if(validateForm()){
                     if(capturedImagePath.equals("")){
                         saveForm();
@@ -402,18 +417,27 @@ public class PlantAddFragment extends BaseFragment<PlantAddFragmentViewModel, Fr
                     Toast.makeText(getContext(), R.string.form_fill_alert, Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.takePictureButton:
+            }
+            case R.id.takePictureButton:{
                 //dispatchInAppImageTakeIntent();
                 dispatchTakePictureIntent();
                 Log.d(TAG, "onClick: takePicutre");
                 break;
-
+            }
+            case R.id.plant_location_1:
+            case R.id.plant_location_2:{
+                handlePlantLocationButtons(v);
+                break;
+            }
             case R.id.plant_state_1:
             case R.id.plant_state_2:
             case R.id.plant_state_3:
-            case R.id.plant_state_4:{
+            case R.id.plant_state_4:
+            case R.id.plant_state_5:
+            case R.id.plant_state_6:{
                 handlePlantStateButtons(v);
-            }break;
+                break;
+            }
         }
     }
 }

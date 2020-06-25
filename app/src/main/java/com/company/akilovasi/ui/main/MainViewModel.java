@@ -10,6 +10,7 @@ import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Banner;
 import com.company.akilovasi.data.local.entities.Notification;
 import com.company.akilovasi.data.local.entities.Plant;
+import com.company.akilovasi.data.local.entities.User;
 import com.company.akilovasi.data.remote.ApiConstants;
 import com.company.akilovasi.data.remote.models.other.Message;
 import com.company.akilovasi.data.remote.models.requests.LogoutRequest;
@@ -77,6 +78,10 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Resource<Response<Message>>> logout(){
         return userRepository.logout(new LogoutRequest(getAuthenticatedUserId()));
+    }
+
+    public LiveData<Resource<User>> getUserData(){
+        return userRepository.getUserData();
     }
 
     public Long getAuthenticatedUserId(){
