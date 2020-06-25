@@ -17,7 +17,7 @@ import static androidx.recyclerview.widget.LinearSmoothScroller.SNAP_TO_START;
 public class CustomLayoutManager extends GridLayoutManager {
     private static final String TAG = "CustomLayoutManager";
 
-    private final float mShrinkAmount = 0.07f;
+    private final float mShrinkAmount = 0.01f;
     private final float mShrinkDistance = 2.3f;
 
     private RecyclerView recyclerView;

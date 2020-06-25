@@ -71,6 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content">
                         <Spinner
+                            android:id="@+id/support_subject_spinner"
                             android:entries="@array/support_subjects"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
@@ -153,7 +154,7 @@
                             android:background="@color/transparent"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
-                            android:id="@+id/etMessageBox"
+                            android:id="@+id/support_description"
                             android:autoLink="all"
                             android:hint="@string/support_decription_hint"
                             android:lines="5"
@@ -174,7 +175,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/addNewPlantButton"
+                        android:id="@+id/create_new_support_ticket"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

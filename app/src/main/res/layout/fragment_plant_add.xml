@@ -192,7 +192,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:visibility="@{plantType.plantCategory.equals(`Meyve`) ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{plantType.plantCategory.equals(`Yeşillik`) ? View.VISIBLE : View.GONE}"
                         bind:cardBackgroundColor="@color/white_cardview_color"
                         android:id="@+id/plant_state_2"
                         android:layout_margin="10dp"
@@ -247,7 +247,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:visibility="@{plantType.plantCategory.equals(`Meyve`) ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{plantType.plantCategory.equals(`Yeşillik`) ? View.GONE : View.VISIBLE}"
                         bind:cardBackgroundColor="@color/white_cardview_color"
                         android:id="@+id/plant_state_5"
                         android:layout_margin="10dp"
@@ -266,7 +266,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:visibility="@{plantType.plantCategory.equals(`Meyve`) ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{plantType.plantCategory.equals(`Yeşillik`) ? View.GONE : View.VISIBLE}"
                         bind:cardBackgroundColor="@color/white_cardview_color"
                         android:id="@+id/plant_state_6"
                         android:layout_margin="10dp"

@@ -1,5 +1,6 @@
 package com.company.akilovasi.ui.main.fragments.support.create;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +21,14 @@ import androidx.lifecycle.LiveData;
 import com.company.akilovasi.R;
 import com.company.akilovasi.data.Resource;
 import com.company.akilovasi.data.local.entities.Plant;
+import com.company.akilovasi.data.local.entities.SupportTicket;
 import com.company.akilovasi.databinding.FragmentSupportBinding;
 import com.company.akilovasi.databinding.FragmentSupportCreateBinding;
 import com.company.akilovasi.ui.BaseFragment;
 
 import java.util.List;
 
-public class SupportCreateFragment extends BaseFragment<SupportCreateFragmentViewModel, FragmentSupportCreateBinding> {
+public class SupportCreateFragment extends BaseFragment<SupportCreateFragmentViewModel, FragmentSupportCreateBinding> implements View.OnClickListener {
     private static final String TAG = "SupportCreateFragment";
     public static SupportCreateFragment newInstance(){
         return new SupportCreateFragment();
@@ -56,6 +59,7 @@ public class SupportCreateFragment extends BaseFragment<SupportCreateFragmentVie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         initObservers();
+        dataBinding.createNewSupportTicket.setOnClickListener(this);
         return dataBinding.getRoot();
     }
 
@@ -98,6 +102,26 @@ public class SupportCreateFragment extends BaseFragment<SupportCreateFragmentVie
     @Override
     public String toString() {
         return "Destek Oluştur";
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.create_new_support_ticket:{
+                AsyncTask.execute(() -> {
+                    //TODO: TEMP CODE THIS WILL BE REPLACED BY TICKET REQUEST ONCE SERVER HAS ALL THE NECESSARY COMPONENTS
+                    final SupportTicket supportTicket = new SupportTicket();
+                    supportTicket.setStatus( "created" );
+                    supportTicket.setDescription( dataBinding.supportDescription.getText().toString() );
+                    supportTicket.setSubject(dataBinding.supportSubjectSpinner.getSelectedItem().toString() );
+                    supportTicket.setUserPlantId( ((SpinnerContainer)dataBinding.plantNameSpinner.getSelectedItem()).id );
+                    viewModel.temp_saveTickets(supportTicket);
+                });
+                Toast.makeText(getContext(), "Destek Oluşturuldu", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+                break;
+            }
+        }
     }
 
     static class SpinnerContainer{

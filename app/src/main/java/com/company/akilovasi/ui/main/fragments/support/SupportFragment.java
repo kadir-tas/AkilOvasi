@@ -17,9 +17,12 @@ import com.company.akilovasi.ui.BaseFragment;
 import com.company.akilovasi.ui.common.FragmentPagerAdapter;
 import com.company.akilovasi.ui.main.fragments.support.create.SupportCreateFragment;
 import com.company.akilovasi.ui.main.fragments.support.mysupports.MySupportsFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class SupportFragment extends BaseFragment<SupportFragmentViewModel , FragmentSupportBinding> {
     public static final String TAG = "SupportFragment";
