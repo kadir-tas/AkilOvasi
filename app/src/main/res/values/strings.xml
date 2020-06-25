@@ -77,6 +77,14 @@
     <string name="your_plant_name">Bitkinizin İsmi</string>
     <string name="plant_location">Bitkiniz Nerde</string>
     <string name="pot_depth">Saksınızın Derinliği</string>
+    <string name="support">Destek</string>
+    <string name="create_support">Destek Oluştur</string>
+    <string name="my_supports">Desteklerim</string>
+    <string name="support_select_plant">Bitkinizi Seçin</string>
+    <string name="support_subject">Destek Konusu</string>
+    <string name="support_take_picture">İlgili Fotoğraf Ekleyin</string>
+    <string name="support_decription">Açıklama</string>
+    <string name="support_decription_hint">Açıklamanızı Yazın</string>
 
 
     <string-array name="plant_depth_sizes">
@@ -84,6 +92,13 @@
         <item>12 - 25 cm</item>
         <item>25 - 40 cm</item>
         <item>&gt; 40 cm</item>
+    </string-array>
+
+    <string-array name="support_subjects">
+        <item> Ekim Süreci </item>
+        <item> Toprak </item>
+        <item> Bitki Hastalıkları </item>
+        <item> Bit ve Diğer Haşereler </item>
     </string-array>
 
 </resources>
