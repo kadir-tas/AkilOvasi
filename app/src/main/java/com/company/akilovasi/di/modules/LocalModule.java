@@ -6,12 +6,15 @@ import androidx.room.Room;
 
 import com.company.akilovasi.data.local.AppDatabase;
 import com.company.akilovasi.data.local.dao.BannerDao;
+import com.company.akilovasi.data.local.dao.BlogDao;
 import com.company.akilovasi.data.local.dao.NotificationDao;
 import com.company.akilovasi.data.local.dao.PlantDao;
 import com.company.akilovasi.data.local.dao.PlantHistoryDao;
 import com.company.akilovasi.data.local.dao.PlantTypeDao;
+import com.company.akilovasi.data.local.dao.ShopItemDao;
 import com.company.akilovasi.data.local.dao.SupportTicketDao;
 import com.company.akilovasi.data.local.dao.UserDao;
+import com.company.akilovasi.data.remote.ApiConstants;
 
 import javax.inject.Singleton;
 import dagger.Module;
@@ -60,8 +63,15 @@ public class LocalModule {
     @Singleton
     NotificationDao provideNotificationDao(AppDatabase appDatabase){ return appDatabase.notificationDao(); }
 
-
     @Provides
     @Singleton
     SupportTicketDao provideSupportTicketDao(AppDatabase appDatabase){ return appDatabase.supportTicketDao(); }
+
+    @Provides
+    @Singleton
+    BlogDao provideBlogDao(AppDatabase appDatabase){ return appDatabase.blogDao();}
+
+    @Provides
+    @Singleton
+    ShopItemDao provideShopItemDao(AppDatabase appDatabase){ return  appDatabase.shopItemDao(); }
 }

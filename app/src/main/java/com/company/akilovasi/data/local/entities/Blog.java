@@ -30,6 +30,14 @@ public class Blog {
     @SerializedName("date")
     private Date date;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public Long getBlogId() {
         return blogId;
     }

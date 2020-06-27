@@ -29,6 +29,14 @@ public class BlogPreview {
     @SerializedName("date")
     private Date date;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public Long getBlogId() {
         return blogId;
     }
@@ -69,11 +77,12 @@ public class BlogPreview {
         this.writtenBy = writtenBy;
     }
 
-    public BlogPreview(Long blogId, int pageId, String header, String previewText, String writtenBy) {
+    public BlogPreview(Long blogId, int pageId, String header, String previewText, String writtenBy, Date date) {
         this.blogId = blogId;
         this.pageId = pageId;
         this.header = header;
         this.previewText = previewText;
         this.writtenBy = writtenBy;
+        this.date = date;
     }
 }
