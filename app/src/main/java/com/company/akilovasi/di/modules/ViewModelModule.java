@@ -12,6 +12,7 @@ import com.company.akilovasi.ui.main.MainViewModel;
 import com.company.akilovasi.ui.main.fragments.blog.BlogViewModel;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragmentViewModel;
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragmentViewModel;
+import com.company.akilovasi.ui.main.fragments.shop.ShopViewModel;
 import com.company.akilovasi.ui.main.fragments.support.SupportFragmentViewModel;
 import com.company.akilovasi.ui.main.fragments.support.create.SupportCreateFragment;
 import com.company.akilovasi.ui.main.fragments.support.create.SupportCreateFragmentViewModel;
@@ -114,6 +115,10 @@ public abstract class ViewModelModule {
     @ViewModelKey(BlogViewModel.class)
     abstract ViewModel bindBlogViewModel(BlogViewModel blogViewModel);
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(ShopViewModel.class)
+    abstract ViewModel bindShopViewModel(ShopViewModel shopViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory userViewModelFactory);

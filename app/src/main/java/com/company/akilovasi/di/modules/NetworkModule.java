@@ -66,7 +66,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     Picasso providePicasso(OkHttpClient client, Application application){
-        return new Picasso.Builder(application).downloader(new OkHttp3Downloader(client)).loggingEnabled(true).indicatorsEnabled(true).build();
+        return new Picasso.Builder(application).downloader(new OkHttp3Downloader(client)).loggingEnabled(false).indicatorsEnabled(false).build();
 
     }
 }

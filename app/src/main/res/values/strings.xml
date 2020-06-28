@@ -89,6 +89,7 @@
     <string name="blog_header">Başlık</string>
     <string name="blog_preview">Blog Ön İzleme..</string>
     <string name="blog_writer">Yazan</string>
+    <string name="shop">Organik Market</string>
 
 
     <string-array name="plant_depth_sizes">

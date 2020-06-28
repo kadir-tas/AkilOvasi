@@ -8,12 +8,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 @Module
 public class ShopItemModule {
     @Provides
     @Singleton
-    ShopItemsRepository provideBlogRepository(ShopItemService shopItemService , ShopItemDao shopItemDao){
-        return new ShopItemsRepositoryImpl(shopItemDao , shopItemService);
+    ShopItemsRepository provideBlogRepository(Retrofit retrofit, ShopItemDao shopItemDao){
+        return new ShopItemsRepositoryImpl(retrofit , shopItemDao);
     }
 }

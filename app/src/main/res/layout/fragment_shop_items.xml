@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="subCategoryName"
+            type="String" />
+        <variable
+            name="loading"
+            type="boolean" />
+    </data>
+    <FrameLayout
+        android:background="@drawable/plant_add_bg"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/wooden_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:contentDescription="TODO" />
+
+                <TextView
+                    android:text="@{subCategoryName}"
+                    android:layout_gravity="center"
+                    android:textColor="@color/layout_white"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="19dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:background="@drawable/rounded_tab_button_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{loading? View.VISIBLE : View.GONE}" />
+    </FrameLayout>
+</layout>

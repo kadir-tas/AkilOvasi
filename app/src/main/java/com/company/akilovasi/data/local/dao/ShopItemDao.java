@@ -26,6 +26,9 @@ public interface ShopItemDao {
     @Query("SELECT * FROM shopItems WHERE subCategory=:subCategory")
     LiveData<List<ShopItem>> loadPlantBySubCategories( String subCategory );
 
+    @Query("SELECT * FROM shopItems WHERE category=:category AND subCategory=:subCategory")
+    LiveData<List<ShopItem>> loadPlantByCategoryAndSubCategories(String category , String subCategory );
+
     @Query("SELECT DISTINCT category FROM shopItems  ORDER BY category ASC")
     LiveData<List<String>> getListOfCategory();
 }

@@ -15,15 +15,18 @@ import com.company.akilovasi.data.remote.repositories.ShopItemsRepository;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Retrofit;
 
 public class ShopItemsRepositoryImpl implements ShopItemsRepository {
 
     private final ShopItemDao shopItemDao;
     private final ShopItemService shopItemService;
+    private final Retrofit retrofit;
 
-    public ShopItemsRepositoryImpl(ShopItemDao shopItemDao, ShopItemService shopItemService) {
+    public ShopItemsRepositoryImpl(Retrofit retrofit, ShopItemDao shopItemDao) {
+        this.retrofit = retrofit;
         this.shopItemDao = shopItemDao;
-        this.shopItemService = shopItemService;
+        this.shopItemService = retrofit.create(ShopItemService.class);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class ShopItemsRepositoryImpl implements ShopItemsRepository {
     }
 
     @Override
-    public LiveData<Resource<List<ShopItem>>> loadPlantBySubCategories(String subCategory) {
+    public LiveData<Resource<List<ShopItem>>> loadShopItemsBySubCategories(String subCategory) {
         return new NetworkBoundResource<List<ShopItem>, Response<List<ShopItem>>>() {
 
             @Override
@@ -106,6 +109,36 @@ public class ShopItemsRepositoryImpl implements ShopItemsRepository {
             @Override
             protected LiveData< List<ShopItem>>  loadFromDb() {
                 return shopItemDao.loadPlantBySubCategories(subCategory);
+            }
+
+            @NonNull
+            @Override
+            protected Call< Response<List<ShopItem>> > createCall() {
+                return shopItemService.getAllShopItems();
+            }
+        }.getAsLiveData();
+    }
+
+    @Override
+    public LiveData<Resource<List<ShopItem>>> loadShopItemsByCategoryAndSubCategories(String category, String subCategory) {
+        return new NetworkBoundResource<List<ShopItem>, Response<List<ShopItem>>>() {
+
+            @Override
+            protected void saveCallResult(@NonNull Response<List<ShopItem>> item) {
+                if(item.getSuccess()){
+                    shopItemDao.saveShopItems(item.getResults());
+                }
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<ShopItem> data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData< List<ShopItem>>  loadFromDb() {
+                return shopItemDao.loadPlantByCategoryAndSubCategories(category ,subCategory);
             }
 
             @NonNull

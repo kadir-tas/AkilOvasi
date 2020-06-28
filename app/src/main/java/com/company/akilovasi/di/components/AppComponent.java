@@ -17,6 +17,7 @@ import com.company.akilovasi.di.modules.notification.NotificationModule;
 import com.company.akilovasi.di.modules.plant.PlantHistoryModule;
 import com.company.akilovasi.di.modules.plant.PlantModule;
 import com.company.akilovasi.di.modules.plantType.PlantTypeModule;
+import com.company.akilovasi.di.modules.shopItem.ShopItemModule;
 import com.company.akilovasi.di.modules.supportTicket.SupportTicketModule;
 import com.company.akilovasi.di.modules.user.UserModule;
 
@@ -45,6 +46,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         NotificationModule.class,
         SupportTicketModule.class,
         BlogModule.class,
+        ShopItemModule.class,
         ServiceModule.class})
 public interface AppComponent {
 
