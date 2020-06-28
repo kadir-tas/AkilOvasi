@@ -21,17 +21,20 @@ import java.util.List;
 import javax.inject.Inject;
 
 import retrofit2.Call;
+import retrofit2.Retrofit;
 
 public class BlogRepositoryImpl implements BlogRepository {
     private static final String TAG = "BlogRepositoryImpl";
 
     private final BlogService blogService;
     private final BlogDao blogDao;
+    private final Retrofit retrofit;
 
     @Inject
-    public BlogRepositoryImpl(BlogService blogService, BlogDao blogDao) {
-        this.blogService = blogService;
+    public BlogRepositoryImpl(Retrofit retrofit, BlogDao blogDao) {
+        this.retrofit = retrofit;
         this.blogDao = blogDao;
+        blogService = this.retrofit.create(BlogService.class);
     }
 
     @Override

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="loading"
+            type="boolean" />
+        <variable
+            name="blog"
+            type="com.company.akilovasi.data.local.entities.Blog" />
+    </data>
+
+    <ScrollView
+        android:background="@drawable/plant_add_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_margin="5dp"
+                            blogImage="@{blog.blogId.toString()}"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:contentDescription="TODO" />
+
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:textColor="@color/dark_green"
+                            android:textStyle="bold"
+                            android:hint="@string/blog_header"
+                            android:textSize="25sp"
+                            android:text="@{blog.blogHeader}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:textStyle="normal"
+                            android:hint="@string/blog_preview"
+                            android:textSize="19sp"
+                            android:text="@{blog.blogText}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <FrameLayout
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_gravity="start|center"
+                                android:layout_marginHorizontal="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:hint="@string/date"
+                                    android:textStyle="italic"
+                                    android:text="@{String.valueOf( blog.date )}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                                <TextView
+                                    android:hint="@string/blog_writer"
+                                    android:textStyle="italic"
+                                    android:text="@{blog.writtenBy.toString()}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                                <TextView
+                                    android:visibility="@{ blog.lastEditedBy == null ? View.GONE: View.VISIBLE}"
+                                    android:hint="@string/blog_writer"
+                                    android:textStyle="italic"
+                                    android:text="@{blog.lastEditedBy.toString()}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleLarge"
+                android:background="@drawable/rounded_tab_button_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{loading? View.VISIBLE : View.GONE}" />
+        </FrameLayout>
+
+    </ScrollView>
+</layout>

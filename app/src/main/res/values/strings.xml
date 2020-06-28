@@ -85,6 +85,10 @@
     <string name="support_take_picture">İlgili Fotoğraf Ekleyin</string>
     <string name="support_decription">Açıklama</string>
     <string name="support_decription_hint">Açıklamanızı Yazın</string>
+    <string name="organic_content">Organik İçerikler</string>
+    <string name="blog_header">Başlık</string>
+    <string name="blog_preview">Blog Ön İzleme..</string>
+    <string name="blog_writer">Yazan</string>
 
 
     <string-array name="plant_depth_sizes">

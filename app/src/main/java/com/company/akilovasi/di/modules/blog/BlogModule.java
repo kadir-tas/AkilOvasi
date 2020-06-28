@@ -9,12 +9,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 @Module
 public class BlogModule {
     @Provides
     @Singleton
-    BlogRepository provideBlogRepository(BlogService blogService , BlogDao blogDao){
-        return new BlogRepositoryImpl(blogService,blogDao);
+    BlogRepository provideBlogRepository(Retrofit retrofit, BlogDao blogDao){
+        return new BlogRepositoryImpl(retrofit,blogDao);
     }
 }

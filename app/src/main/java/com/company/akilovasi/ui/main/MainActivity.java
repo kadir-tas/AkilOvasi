@@ -50,6 +50,7 @@ import com.company.akilovasi.ui.main.callbacks.LogoutButtonClick;
 import com.company.akilovasi.ui.main.callbacks.NotificationClick;
 import com.company.akilovasi.ui.main.callbacks.OnBottomAppBarClicked;
 import com.company.akilovasi.ui.main.callbacks.ProfileButtonClick;
+import com.company.akilovasi.ui.main.fragments.blog.BlogFragment;
 import com.company.akilovasi.ui.main.fragments.history.PlantHistoryFragment;
 import com.company.akilovasi.ui.main.fragments.profile.ProfileFragment;
 import com.company.akilovasi.ui.main.fragments.support.SupportFragment;
@@ -517,6 +518,15 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 Fragment f = getSupportFragmentManager().findFragmentByTag(SupportFragment.TAG);
                 if (f == null) {
                     getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, SupportFragment.newInstance(), SupportFragment.TAG).addToBackStack("main").commit();
+                } else {
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SupportFragment.newInstance(), SupportFragment.TAG).commit();
+                }
+                break;
+            }
+            case R.id.bottom_bar_blog:{
+                Fragment f = getSupportFragmentManager().findFragmentByTag(BlogFragment.TAG);
+                if (f == null) {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, BlogFragment.newInstance(), BlogFragment.TAG).addToBackStack("main").commit();
                 } else {
                     //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SupportFragment.newInstance(), SupportFragment.TAG).commit();
                 }

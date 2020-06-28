@@ -18,6 +18,6 @@ public interface BlogService {
     Call<Response<List<BlogPreview>>> getBlogPreviewPaged(@Query("pageId") int pageId);
 
     @Headers("Cache-Control: public, max-stale=604800")
-    @POST("blog/get")
+    @GET("blog/get")
     Call<Response<Blog>> getBlog(@Query("blogId") Long blogId);
 }
