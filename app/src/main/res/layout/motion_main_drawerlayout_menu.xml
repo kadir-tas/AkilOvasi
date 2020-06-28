@@ -14,6 +14,15 @@
         <variable
             name="notificationClick"
             type="com.company.akilovasi.ui.main.callbacks.NotificationClick" />
+        
+        <variable
+            name="onSupportClick"
+            type="com.company.akilovasi.ui.main.callbacks.OnSupportItemClick" />
+        
+        <variable
+            name="onShopClick"
+            type="com.company.akilovasi.ui.main.callbacks.OnShopClick" />
+        
     </data>
 
     <com.company.akilovasi.util.DrawerContent
@@ -102,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:textSize="14sp"
+                    android:onClick="@{ () -> onSupportClick.onCreateSupportClick() }"
                     android:text="@string/create_support"
                     app:fontFamily="sans-serif-smallcaps"
                     android:textColor="#FFF" />
@@ -109,6 +119,7 @@
                 <TextView
                     android:id="@+id/left_menu_active_support_ticket"
                     android:layout_width="wrap_content"
+                    android:onClick="@{ () -> onSupportClick.onActiveSupportClick() }"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:textSize="14sp"
@@ -118,6 +129,7 @@
 
                 <TextView
                     android:id="@+id/left_menu_old_support_ticket"
+                    android:onClick="@{ () -> onSupportClick.onOldSupportClick() }"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -130,6 +142,7 @@
 
             <TextView
                 android:id="@+id/left_menu_shop"
+                android:onClick="@{ () -> onShopClick.onShopButtonClick() }"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

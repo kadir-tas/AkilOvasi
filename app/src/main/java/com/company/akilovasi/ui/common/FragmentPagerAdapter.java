@@ -20,6 +20,7 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     public void setPlantCategoryFragments( List<Fragment> fragments){
         this.fragments = fragments;
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -1,6 +1,7 @@
 package com.company.akilovasi.ui.main.fragments.support;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +28,15 @@ import javax.inject.Inject;
 public class SupportFragment extends BaseFragment<SupportFragmentViewModel , FragmentSupportBinding> {
     public static final String TAG = "SupportFragment";
 
-    public static SupportFragment newInstance(){
-        return new SupportFragment();
+    public SupportFragment(String defaultPage) {
+        this.defaultPage = defaultPage;
     }
+
+    public static SupportFragment newInstance(String defaultPage){
+        return new SupportFragment(defaultPage);
+    }
+
+    private final String defaultPage;
 
     @Override
     public Class<SupportFragmentViewModel> getViewModel() {
@@ -53,8 +60,13 @@ public class SupportFragment extends BaseFragment<SupportFragmentViewModel , Fra
         fragments.add(SupportCreateFragment.newInstance());
         fragments.add(MySupportsFragment.newInstance());
         final FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getParentFragmentManager());
-        fragmentPagerAdapter.setPlantCategoryFragments( fragments );
         dataBinding.setPagerAdapter(fragmentPagerAdapter);
+        fragmentPagerAdapter.setPlantCategoryFragments( fragments );
+        final ViewPager viewpager = dataBinding.viewpager;
+        if(defaultPage.equals("active")){
+            //TODO: DOES NOT WORK
+            viewpager.setCurrentItem(1);
+        }
         return dataBinding.getRoot();
     }
 
