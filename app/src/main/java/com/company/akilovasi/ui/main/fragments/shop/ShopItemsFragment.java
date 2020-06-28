@@ -1,5 +1,7 @@
 package com.company.akilovasi.ui.main.fragments.shop;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -109,6 +111,11 @@ public class ShopItemsFragment extends BaseFragment<ShopViewModel , FragmentShop
 
     @Override
     public void onClick(ShopItem shopItem) {
-        Log.d(TAG, "onClick: Clicked on " + shopItem.getLink());
+        if (shopItem.getLinkType().equals("external")) {
+            String url = shopItem.getLink();
+            if (!url.startsWith("http://") && !url.startsWith("https://")) url = "http://" + url;
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        }
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Akil Ovasi</string>
+    <string name="app_name">Organik Balkon</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -90,6 +90,9 @@
     <string name="blog_preview">Blog Ön İzleme..</string>
     <string name="blog_writer">Yazan</string>
     <string name="shop">Organik Market</string>
+    <string name="old_support">Eski Desteklerim</string>
+    <string name="current_support">Aktif Desteklerim</string>
+    <string name="shopping">Alışveriş</string>
 
 
     <string-array name="plant_depth_sizes">

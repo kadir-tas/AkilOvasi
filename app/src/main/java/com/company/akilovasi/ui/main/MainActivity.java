@@ -243,8 +243,9 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     private void initPlantRecyclerView() {
 
         mPlantsRecyclerView = dataBinding.content.wrapper.plantRecyclerView.plantRecyclerView;
-        mPlantsRecyclerView.setLayoutManager( new GridLayoutManager(this ,2) );
-        //mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false));
+
+        mPlantsRecyclerView.setLayoutManager( new GridLayoutManager(this ,2) ); /*Normal grid layout bunu yorumdan çıkar*/
+        //mPlantsRecyclerView.setLayoutManager(new CustomLayoutManager(this, 2, CustomLayoutManager.VERTICAL, false)); /*Animasyonlu Layout isteniyorsa yorumdan çıkar*/
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mPlantsRecyclerView);
         mPlantsRecyclerView.setHasFixedSize(true);
@@ -539,6 +540,15 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ShopFragment.newInstance(), ShopFragment.TAG).addToBackStack("main").commit();
                 } else {
                     //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SupportFragment.newInstance(), SupportFragment.TAG).commit();
+                }
+                break;
+            }
+            case R.id.bottom_bar_profile:{
+                Fragment f = getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
+                if (f == null) {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).addToBackStack("main").commit();
+                } else {
+                    //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ProfileFragment.newInstance(), ProfileFragment.TAG).commit();
                 }
                 break;
             }
